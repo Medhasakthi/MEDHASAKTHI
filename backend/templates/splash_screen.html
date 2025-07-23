@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDHASAKTHI - Loading</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 50%, #0d47a1 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .splash-container {
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .logo-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 0.1em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: titleSlide 1s ease-out 0.5s both;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+            animation: subtitleSlide 1s ease-out 0.8s both;
+        }
+
+        .loading-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            animation: loadingFade 1s ease-out 1.2s both;
+        }
+
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: backgroundPulse 4s ease-in-out infinite;
+        }
+
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 35%; top: 50%; animation-delay: 0.5s; }
+        .particle:nth-child(3) { left: 50%; top: 20%; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 65%; top: 60%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { left: 80%; top: 40%; animation-delay: 2s; }
+        .particle:nth-child(6) { left: 15%; top: 70%; animation-delay: 2.5s; }
+
+        .version-info {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            animation: versionFade 1s ease-out 2s both;
+        }
+
+        /* Animations */
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes titleSlide {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes subtitleSlide {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 0.9; }
+        }
+
+        @keyframes loadingFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes versionFade {
+            from { opacity: 0; }
+            to { opacity: 0.7; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.7; 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg); 
+                opacity: 1; 
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .logo-container {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .logo-text {
+                font-size: 2rem;
+            }
+        }
+
+        /* Auto-hide after 3 seconds */
+        .splash-container.fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation"></div>
+    
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Main Splash Content -->
+    <div class="splash-container" id="splashContainer">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-text">M</div>
+        </div>
+
+        <!-- Title -->
+        <h1 class="title">MEDHASAKTHI</h1>
+
+        <!-- Subtitle -->
+        <p class="subtitle">{{ subtitle|default:"Educational Excellence Platform" }}</p>
+
+        <!-- Loading Indicator -->
+        <div class="loading-container">
+            <div class="progress-circle"></div>
+            <span class="loading-text">{{ loading_text|default:"Loading your experience..." }}</span>
+        </div>
+
+        <!-- Version Info -->
+        <div class="version-info">
+            Powered by MEDHASAKTHI v{{ version|default:"1.0.0" }}
+        </div>
+    </div>
+
+    <script>
+        // Auto-hide splash screen after 3 seconds
+        setTimeout(function() {
+            const splashContainer = document.getElementById('splashContainer');
+            splashContainer.classList.add('fade-out');
+            
+            // Redirect or hide after animation
+            setTimeout(function() {
+                {% if redirect_url %}
+                    window.location.href = "{{ redirect_url }}";
+                {% else %}
+                    document.body.style.display = 'none';
+                {% endif %}
+            }, 500);
+        }, {{ duration|default:3000 }});
+
+        // Optional: Hide on click
+        document.addEventListener('click', function() {
+            const splashContainer = document.getElementById('splashContainer');
+            splashContainer.classList.add('fade-out');
+            
+            setTimeout(function() {
+                {% if redirect_url %}
+                    window.location.href = "{{ redirect_url }}";
+                {% else %}
+                    document.body.style.display = 'none';
+                {% endif %}
+            }, 500);
+        });
+    </script>
+</body>
+</html>
