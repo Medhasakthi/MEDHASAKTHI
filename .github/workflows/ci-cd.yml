@@ -54,6 +54,12 @@ jobs:
       env:
         DATABASE_URL: postgresql://postgres:test_password@localhost:5432/test_db
         SECRET_KEY: test-secret-key-for-ci
+        JWT_SECRET_KEY: test-jwt-secret-key-for-ci
+        CSRF_SECRET_KEY: test-csrf-secret-key-for-ci
+        REDIS_URL: redis://localhost:6379
+        OPENAI_API_KEY: test-openai-key
+        DEBUG: true
+        ENVIRONMENT: test
       run: |
         cd backend
         pytest tests/ -v --cov=app --cov-report=xml
@@ -188,8 +194,8 @@ jobs:
         script: |
           cd /opt/medhasakthi
           git pull origin main
-          docker-compose -f docker-compose.staging.yml pull
-          docker-compose -f docker-compose.staging.yml up -d
+          docker-compose pull
+          docker-compose up -d
           docker system prune -f
           
     - name: Run health checks

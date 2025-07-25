@@ -44,15 +44,68 @@ spec:
             secretKeyRef:
               name: medhasakthi-secrets
               key: secret-key
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: medhasakthi-secrets
+              key: jwt-secret-key
+        - name: CSRF_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: medhasakthi-secrets
+              key: csrf-secret-key
         - name: OPENAI_API_KEY
           valueFrom:
             secretKeyRef:
               name: medhasakthi-secrets
               key: openai-api-key
+        - name: SMTP_HOST
+          valueFrom:
+            secretKeyRef:
+              name: medhasakthi-secrets
+              key: smtp-host
+        - name: SMTP_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: medhasakthi-secrets
+              key: smtp-username
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: medhasakthi-secrets
+              key: smtp-password
         - name: ENVIRONMENT
           value: "production"
+        - name: DEBUG
+          value: "false"
         - name: LOG_LEVEL
           value: "INFO"
+        # ConfigMap values
+        - name: DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: medhasakthi-config
+              key: DOMAIN
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: medhasakthi-config
+              key: FRONTEND_URL
+        - name: BACKEND_CORS_ORIGINS
+          valueFrom:
+            configMapKeyRef:
+              name: medhasakthi-config
+              key: BACKEND_CORS_ORIGINS
+        - name: FROM_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              name: medhasakthi-config
+              key: FROM_EMAIL
+        - name: FROM_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: medhasakthi-config
+              key: FROM_NAME
         resources:
           requests:
             memory: "512Mi"
