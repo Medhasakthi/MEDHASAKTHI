@@ -10,8 +10,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --production
+# Install dependencies (skip husky in Docker)
+ENV HUSKY=0
+RUN npm install --production --ignore-scripts
 
 # Copy source code
 COPY . .
