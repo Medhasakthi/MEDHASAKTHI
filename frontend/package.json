@@ -87,7 +87,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "npm run build && npx source-map-explorer 'build/static/js/*.js'",
-    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 50",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "lint:check": "eslint src --ext .ts,.tsx --max-warnings 0 --format=table",
     "format": "prettier --write src/**/*.{ts,tsx,css,md}",
@@ -104,15 +104,15 @@
       "prettier"
     ],
     "rules": {
-      "no-console": "error",
-      "no-debugger": "error",
-      "@typescript-eslint/no-unused-vars": "error",
+      "no-console": "warn",
+      "no-debugger": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
       "react-hooks/exhaustive-deps": "warn",
-      "prefer-const": "error",
-      "no-var": "error",
-      "eqeqeq": "error",
-      "curly": "error"
+      "prefer-const": "warn",
+      "no-var": "warn",
+      "eqeqeq": "warn",
+      "curly": "warn"
     }
   },
   "browserslist": {

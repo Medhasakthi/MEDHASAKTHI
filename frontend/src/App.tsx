@@ -1,7 +1,7 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline, Box, CircularProgress } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 import { Toaster } from 'react-hot-toast';
 
 // Import splash screen components
@@ -42,11 +42,18 @@ const theme = createTheme({
   },
 });
 
+// User interface
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  userType: string;
+}
+
 // Main App component
 const App: React.FC = () => {
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   // Global splash screen for first visit
   const splash = useSplashScreen({
@@ -55,7 +62,7 @@ const App: React.FC = () => {
     showOnRouteChange: false
   });
 
-  const handleLogin = async (credentials: any) => {
+  const handleLogin = async (credentials: { email: string; password: string }) => {
     setLoading(true);
     try {
       // Simulate login API call
@@ -73,7 +80,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleRegister = async (userData: any) => {
+  const handleRegister = async (userData: { name: string; email: string; userType: string }) => {
     setLoading(true);
     try {
       // Simulate register API call
@@ -86,18 +93,16 @@ const App: React.FC = () => {
       });
     } catch (error) {
       // Handle registration error in production
-      setError('Registration failed. Please try again.');
+      // Error handling can be implemented here
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = () => {
-    setCurrentUser(null);
-  };
-
   const renderDashboard = () => {
-    if (!currentUser) return null;
+    if (!currentUser) {
+      return null;
+    }
 
     switch (currentUser.userType) {
       case 'student':

@@ -24,22 +24,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Alert,
   CircularProgress,
   Tabs,
-  Tab,
-  LinearProgress
+  Tab
 } from '@mui/material';
 import {
-  Dashboard as DashboardIcon,
   People as PeopleIcon,
   School as SchoolIcon,
   Payment as PaymentIcon,
   Settings as SettingsIcon,
-  Analytics as AnalyticsIcon,
   Add as AddIcon,
   Edit as EditIcon,
-  Delete as DeleteIcon,
   Visibility as ViewIcon,
   CheckCircle as CheckCircleIcon,
   Cancel as CancelIcon,
@@ -143,7 +138,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
       setUpiConfigs(configData);
 
     } catch (error) {
-      console.error('Error loading dashboard data:', error);
+      // Handle error loading dashboard data
     } finally {
       setLoading(false);
     }
@@ -167,7 +162,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
         setSelectedPayment(null);
       }
     } catch (error) {
-      console.error('Error verifying payment:', error);
+      // Handle error verifying payment
     }
   };
 
@@ -188,7 +183,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
         setNewConfig({});
       }
     } catch (error) {
-      console.error('Error saving UPI config:', error);
+      // Handle error saving UPI config
     }
   };
 

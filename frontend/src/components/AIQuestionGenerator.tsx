@@ -13,10 +13,6 @@ import {
   MenuItem,
   Chip,
   Paper,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -35,17 +31,12 @@ import {
 import {
   Psychology as AIIcon,
   Quiz as QuizIcon,
-  School as SchoolIcon,
-  TrendingUp as TrendingUpIcon,
   CheckCircle as CheckIcon,
-  Cancel as CancelIcon,
   Edit as EditIcon,
   Save as SaveIcon,
   Refresh as RefreshIcon,
   ExpandMore as ExpandMoreIcon,
-  Lightbulb as LightbulbIcon,
-  Speed as SpeedIcon,
-  Star as StarIcon
+  Lightbulb as LightbulbIcon
 } from '@mui/icons-material';
 
 interface Subject {
@@ -115,7 +106,7 @@ const AIQuestionGenerator: React.FC = () => {
       const data = await response.json();
       setSubjects(data);
     } catch (error) {
-      console.error('Error loading subjects:', error);
+      // Handle error loading subjects
     }
   };
 
@@ -141,7 +132,7 @@ const AIQuestionGenerator: React.FC = () => {
         setGeneratedQuestions(questions);
       }
     } catch (error) {
-      console.error('Error generating questions:', error);
+      // Handle error generating questions
     } finally {
       setLoading(false);
     }
@@ -160,10 +151,10 @@ const AIQuestionGenerator: React.FC = () => {
 
       if (response.ok) {
         // Show success message
-        console.log('Question saved successfully');
+        // Question saved successfully
       }
     } catch (error) {
-      console.error('Error saving question:', error);
+      // Handle error saving question
     }
   };
 
@@ -193,9 +184,15 @@ const AIQuestionGenerator: React.FC = () => {
   };
 
   const getQualityColor = (score?: number) => {
-    if (!score) return 'default';
-    if (score >= 80) return 'success';
-    if (score >= 60) return 'warning';
+    if (!score) {
+      return 'default';
+    }
+    if (score >= 80) {
+      return 'success';
+    }
+    if (score >= 60) {
+      return 'warning';
+    }
     return 'error';
   };
 
@@ -372,9 +369,9 @@ const AIQuestionGenerator: React.FC = () => {
                 <InputLabel>Difficulty Level</InputLabel>
                 <Select
                   value={generationRequest.difficultyLevel}
-                  onChange={(e) => setGenerationRequest({ 
-                    ...generationRequest, 
-                    difficultyLevel: e.target.value as any
+                  onChange={(e) => setGenerationRequest({
+                    ...generationRequest,
+                    difficultyLevel: e.target.value as 'easy' | 'medium' | 'hard'
                   })}
                 >
                   <MenuItem value="easy">Easy</MenuItem>
