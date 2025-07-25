@@ -76,6 +76,7 @@ services:
     environment:
       - REACT_APP_API_URL=https://${DOMAIN:-medhasakthi.com}/api
       - REACT_APP_APP_NAME=MEDHASAKTHI
+      - NODE_ENV=production
     ports:
       - "3000:3000"
     depends_on:
