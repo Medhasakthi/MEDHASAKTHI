@@ -19,6 +19,9 @@ RUN npm install --ignore-scripts
 # Copy source code
 COPY . .
 
+# Run linting and type checking before build
+RUN npm run lint && npm run type-check
+
 # Build the application
 RUN npm run build
 

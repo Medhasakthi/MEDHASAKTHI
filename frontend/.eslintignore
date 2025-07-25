@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build/
+dist/
+.next/
+
+# Generated files
+*.d.ts
+!src/**/*.d.ts
+
+# Test coverage
+coverage/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Service worker
+public/sw.js
+public/workbox-*.js
+
+# Storybook
+.storybook/
+storybook-static/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-  UsersIcon,
-  AcademicCapIcon,
-  ChartBarIcon,
-  BookOpenIcon,
-  ClockIcon,
-  TrophyIcon,
-  ChatBubbleLeftRightIcon,
-  DocumentTextIcon
-} from '@heroicons/react/24/outline';
+  People as UsersIcon,
+  School as AcademicCapIcon,
+  BarChart as ChartBarIcon,
+  MenuBook as BookOpenIcon,
+  Schedule as ClockIcon,
+  EmojiEvents as TrophyIcon,
+  Chat as ChatBubbleLeftRightIcon,
+  Description as DocumentTextIcon
+} from '@mui/icons-material';
 
 // Import splash screen components
 import PageSplashScreen from './PageSplashScreen';
@@ -62,6 +62,7 @@ const TeacherDashboard: React.FC = () => {
   const [needsAttention, setNeedsAttention] = useState<StudentPerformance[]>([]);
   const [profile, setProfile] = useState<TeacherProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Page splash screen for teacher dashboard
   const splash = useRouteSplashScreen('teacher-dashboard', 2000);
@@ -91,7 +92,8 @@ const TeacherDashboard: React.FC = () => {
         setProfile(dashboardData.data.teacher_info);
       }
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+      // Handle dashboard data fetch error in production
+      setError('Failed to load dashboard data. Please refresh the page.');
     } finally {
       setLoading(false);
     }

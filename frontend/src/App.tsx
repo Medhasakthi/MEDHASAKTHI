@@ -46,6 +46,7 @@ const theme = createTheme({
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Global splash screen for first visit
   const splash = useSplashScreen({
@@ -84,7 +85,8 @@ const App: React.FC = () => {
         userType: userData.userType
       });
     } catch (error) {
-      console.error('Registration failed:', error);
+      // Handle registration error in production
+      setError('Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

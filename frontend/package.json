@@ -87,10 +87,15 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "npm run build && npx source-map-explorer 'build/static/js/*.js'",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "lint:check": "eslint src --ext .ts,.tsx --max-warnings 0 --format=table",
     "format": "prettier --write src/**/*.{ts,tsx,css,md}",
-    "prepare": "husky install"
+    "format:check": "prettier --check src/**/*.{ts,tsx,css,md}",
+    "type-check": "tsc --noEmit",
+    "lint-production": "chmod +x lint-production.sh && ./lint-production.sh",
+    "prepare": "husky install",
+    "pre-build": "npm run lint && npm run format && npm run type-check"
   },
   "eslintConfig": {
     "extends": [
@@ -99,9 +104,15 @@
       "prettier"
     ],
     "rules": {
-      "no-console": "warn",
-      "no-debugger": "warn",
-      "@typescript-eslint/no-unused-vars": "warn"
+      "no-console": "error",
+      "no-debugger": "error",
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "react-hooks/exhaustive-deps": "warn",
+      "prefer-const": "error",
+      "no-var": "error",
+      "eqeqeq": "error",
+      "curly": "error"
     }
   },
   "browserslist": {
