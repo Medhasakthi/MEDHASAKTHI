@@ -25,8 +25,7 @@ import AIQuestionGenerator from './components/AIQuestionGenerator';
 import UPIPayment from './components/UPIPayment';
 import UserFeedbackSystem from './components/UserFeedbackSystem';
 
-// Development components
-const SplashTestPage = React.lazy(() => import('./components/SplashTestPage'));
+
 
 // Create theme
 const theme = createTheme({
@@ -67,7 +66,7 @@ const App: React.FC = () => {
         userType: 'student'
       });
     } catch (error) {
-      console.error('Login failed:', error);
+      // Handle login error in production
     } finally {
       setLoading(false);
     }
@@ -196,11 +195,7 @@ const App: React.FC = () => {
                 element={currentUser ? <UPIPayment amount={500} onSuccess={() => {}} onCancel={() => {}} /> : <Navigate to="/auth" />}
               />
 
-              {/* Development routes */}
-              <Route
-                path="/splash-test"
-                element={<SplashTestPage />}
-              />
+
 
               {/* Catch all route */}
               <Route path="*" element={<Navigate to="/" />} />
