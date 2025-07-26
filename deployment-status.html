@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDHASAKTHI - Local Deployment Status</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .service {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid;
+        }
+        .running {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        .starting {
+            border-color: #FF9800;
+            background: rgba(255, 152, 0, 0.1);
+        }
+        .stopped {
+            border-color: #F44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        .service-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .service-url {
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        .service-url a {
+            color: #81C784;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .service-url a:hover {
+            text-decoration: underline;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-running { background: #4CAF50; }
+        .status-starting { background: #FF9800; }
+        .status-stopped { background: #F44336; }
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 1em;
+        }
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .command {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 MEDHASAKTHI Local Deployment</h1>
+        
+        <div class="service starting" id="frontend-service">
+            <div class="service-name">
+                <span class="status-indicator status-starting"></span>
+                Frontend (React)
+            </div>
+            <div class="service-url">
+                <strong>URL:</strong> <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+            </div>
+            <div>Status: <span id="frontend-status">Starting...</span></div>
+        </div>
+
+        <div class="service starting" id="backend-service">
+            <div class="service-name">
+                <span class="status-indicator status-starting"></span>
+                Backend (FastAPI)
+            </div>
+            <div class="service-url">
+                <strong>API:</strong> <a href="http://localhost:8000" target="_blank">http://localhost:8000</a>
+            </div>
+            <div class="service-url">
+                <strong>Docs:</strong> <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
+            </div>
+            <div>Status: <span id="backend-status">Installing dependencies...</span></div>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="refresh-btn" onclick="checkServices()">🔄 Refresh Status</button>
+            <button class="refresh-btn" onclick="openFrontend()">🌐 Open Frontend</button>
+            <button class="refresh-btn" onclick="openBackendDocs()">📚 Open API Docs</button>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Manual Start Instructions</h3>
+            <p><strong>If services aren't starting automatically:</strong></p>
+            
+            <h4>Frontend:</h4>
+            <div class="command">cd frontend<br>npm start</div>
+            
+            <h4>Backend:</h4>
+            <div class="command">cd backend<br>python start_local.py</div>
+            
+            <h4>Or use batch files:</h4>
+            <div class="command">Double-click: start-frontend.bat<br>Double-click: start-backend.bat</div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎯 What's Deployed</h3>
+            <ul>
+                <li>✅ <strong>Frontend:</strong> React app with Material-UI, updated dependencies</li>
+                <li>✅ <strong>Backend:</strong> FastAPI with SQLite database (local development)</li>
+                <li>✅ <strong>Hot Reload:</strong> Both services auto-refresh on code changes</li>
+                <li>✅ <strong>No Docker:</strong> Direct local development for faster iteration</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function checkService(url) {
+            try {
+                const response = await fetch(url, { 
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+                return true;
+            } catch (error) {
+                try {
+                    // Try a different approach for CORS issues
+                    const img = new Image();
+                    img.src = url + '/favicon.ico?' + Date.now();
+                    return new Promise((resolve) => {
+                        img.onload = () => resolve(true);
+                        img.onerror = () => resolve(false);
+                        setTimeout(() => resolve(false), 3000);
+                    });
+                } catch {
+                    return false;
+                }
+            }
+        }
+
+        async function checkServices() {
+            // Check frontend
+            const frontendRunning = await checkService('http://localhost:3000');
+            const frontendService = document.getElementById('frontend-service');
+            const frontendStatus = document.getElementById('frontend-status');
+            
+            if (frontendRunning) {
+                frontendService.className = 'service running';
+                frontendService.querySelector('.status-indicator').className = 'status-indicator status-running';
+                frontendStatus.textContent = 'Running ✅';
+            } else {
+                frontendService.className = 'service starting';
+                frontendStatus.textContent = 'Starting... ⏳';
+            }
+
+            // Check backend
+            const backendRunning = await checkService('http://localhost:8000');
+            const backendService = document.getElementById('backend-service');
+            const backendStatus = document.getElementById('backend-status');
+            
+            if (backendRunning) {
+                backendService.className = 'service running';
+                backendService.querySelector('.status-indicator').className = 'status-indicator status-running';
+                backendStatus.textContent = 'Running ✅';
+            } else {
+                backendService.className = 'service starting';
+                backendStatus.textContent = 'Starting... ⏳';
+            }
+        }
+
+        function openFrontend() {
+            window.open('http://localhost:3000', '_blank');
+        }
+
+        function openBackendDocs() {
+            window.open('http://localhost:8000/docs', '_blank');
+        }
+
+        // Check services every 5 seconds
+        setInterval(checkServices, 5000);
+        
+        // Initial check
+        setTimeout(checkServices, 2000);
+    </script>
+</body>
+</html>

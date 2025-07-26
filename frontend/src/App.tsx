@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Box } from '@mui/material';
 import { Toaster } from 'react-hot-toast';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Import splash screen components
 import SplashScreen from './components/SplashScreen';
@@ -39,6 +40,17 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+});
+
+// Create QueryClient
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (replaces cacheTime)
+    },
   },
 });
 
@@ -136,9 +148,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <SplashProvider enableRouteBasedSplash={true} globalSplashDuration={3000}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SplashProvider enableRouteBasedSplash={true} globalSplashDuration={3000}>
         <Router>
           <Box sx={{ minHeight: '100vh' }}>
             <Suspense fallback={
@@ -226,7 +239,8 @@ const App: React.FC = () => {
 
       {/* User Feedback System */}
       <UserFeedbackSystem />
-    </ThemeProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 
