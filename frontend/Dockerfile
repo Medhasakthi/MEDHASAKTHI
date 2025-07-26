@@ -9,17 +9,17 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY tsconfig.json ./
 
-# Install dependencies (skip husky in Docker)
+# Install dependencies with force to resolve conflicts
 ENV HUSKY=0
 ENV CI=true
-RUN npm install --ignore-scripts
+ENV NODE_OPTIONS=--max-old-space-size=4096
+RUN npm install --force --no-audit --no-fund
 
 # Copy source code
 COPY . .
 
-# Build the application (skip linting for now to allow build)
+# Build the application
 RUN npm run build
 
 # Stage 2: Production stage
