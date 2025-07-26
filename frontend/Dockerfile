@@ -10,11 +10,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with force to resolve conflicts
+# Install dependencies with legacy peer deps to resolve conflicts
 ENV HUSKY=0
 ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
-RUN npm install --force --no-audit --no-fund
+RUN npm ci --legacy-peer-deps --no-audit --no-fund || npm install --legacy-peer-deps --no-audit --no-fund
+
+# Verify react-scripts is installed
+RUN which react-scripts || ls -la node_modules/.bin/react-scripts || echo "react-scripts not found in PATH"
 
 # Copy source code
 COPY . .
