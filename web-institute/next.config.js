@@ -56,9 +56,9 @@ const nextConfig = {
     return config;
   },
   
-  // Experimental features
+  // Experimental features (appDir is now stable in Next.js 13+)
   experimental: {
-    appDir: true,
+    // Add any needed experimental features here
   },
 };
 

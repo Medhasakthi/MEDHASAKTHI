@@ -15,9 +15,9 @@ const nextConfig = {
     unoptimized: true
   },
   
-  // Experimental features
+  // Experimental features (removed deprecated appDir)
   experimental: {
-    appDir: false
+    // Add any needed experimental features here
   },
   
   // Webpack configuration
