@@ -53,8 +53,6 @@ import {
   ArrowForward as ArrowForwardIcon,
   Business as BusinessIcon,
   PersonOutline as StudentIcon,
-  PersonOutline as PersonOutlineIcon,
-  School as SchoolIcon,
   AdminPanelSettings as AdminIcon,
   Smartphone as MobileIcon,
   Web as WebIcon,
