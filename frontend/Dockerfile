@@ -15,8 +15,12 @@ ENV HUSKY=0
 ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
 
+# Clear npm cache and ensure clean install
+RUN npm cache clean --force
+RUN rm -rf node_modules package-lock.json
+
 # Clean install with force to resolve dependency conflicts
-RUN npm ci --legacy-peer-deps --no-audit --no-fund || npm install --legacy-peer-deps --no-audit --no-fund --force
+RUN npm install --legacy-peer-deps --no-audit --no-fund
 
 # Install missing dependencies explicitly
 RUN npm install ajv@^8.12.0 ajv-keywords@^5.1.0 --legacy-peer-deps
