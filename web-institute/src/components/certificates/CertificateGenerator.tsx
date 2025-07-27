@@ -415,7 +415,11 @@ export const CertificateGenerator: React.FC = () => {
                         label="Completion Date"
                         value={certificateData.completionDate || null}
                         onChange={(date) => handleInputChange('completionDate', date)}
-                        renderInput={(params) => <TextField {...params} fullWidth />}
+                        slotProps={{
+                          textField: {
+                            fullWidth: true
+                          }
+                        }}
                       />
                     </Grid>
 
