@@ -118,7 +118,7 @@ const EnhancedLandingPage: React.FC = () => {
       id: 'independent_learner',
       title: 'Independent Learner',
       subtitle: 'Individual learners',
-      icon: <PersonOutlineIcon sx={{ fontSize: 40 }} />,
+      icon: <StudentIcon sx={{ fontSize: 40 }} />,
       color: '#9C27B0',
       gradient: 'linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%)',
       description: 'Self-paced learners and professionals',

@@ -31,7 +31,7 @@ import {
 } from '@mui/material';
 import {
   School as SchoolIcon,
-  Certificate as CertificateIcon,
+  EmojiEvents as CertificateIcon,
   Payment as PaymentIcon,
   Person as PersonIcon,
   Share as ShareIcon,
@@ -218,7 +218,7 @@ const IndependentLearnerDashboard: React.FC = () => {
       <PageSplashScreen
         title={splashConfig.title}
         subtitle={splashConfig.subtitle}
-        icon={<SchoolIcon className="w-8 h-8" />}
+        icon={<SchoolIcon sx={{ fontSize: 32 }} />}
         color={splashConfig.color}
         onComplete={splash.hide}
       />
