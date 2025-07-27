@@ -1,5 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Tabs,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Chip,
+  CircularProgress,
+  Avatar,
+  Divider,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from '@mui/material';
+import {
   People as UsersIcon,
   School as AcademicCapIcon,
   BarChart as ChartBarIcon,
@@ -121,7 +147,7 @@ const TeacherDashboard: React.FC = () => {
       <PageSplashScreen
         title="Teacher Dashboard"
         subtitle="Empowering Education Excellence"
-        icon={<AcademicCapIcon className="w-8 h-8" />}
+        icon={<AcademicCapIcon sx={{ fontSize: 32 }} />}
         color="#0d47a1"
         onComplete={splash.hide}
       />
@@ -130,141 +156,207 @@ const TeacherDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <Box sx={{ flexGrow: 1, bgcolor: 'background.default', minHeight: '100vh' }}>
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Teacher Dashboard</h1>
+      <Paper elevation={1} sx={{ mb: 3 }}>
+        <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 3 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
+                Teacher Dashboard
+              </Typography>
               {profile && (
-                <p className="text-sm text-gray-600">
-                  Welcome back, {profile.name} - {profile.department}
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Typography variant="body2" color="text.secondary">
+                    Welcome back, {profile.name} - {profile.department}
+                  </Typography>
                   {profile.is_class_teacher && profile.class_teacher_of && (
-                    <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                      Class Teacher: {profile.class_teacher_of}
-                    </span>
+                    <Chip
+                      label={`Class Teacher: ${profile.class_teacher_of}`}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
                   )}
-                </p>
+                </Box>
               )}
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">
+            </Box>
+            <Box display="flex" alignItems="center">
+              <Typography variant="body2" color="text.secondary">
                 {profile?.institute_name}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Paper>
 
       {/* Navigation Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'overview', name: 'Overview', icon: ChartBarIcon },
-              { id: 'classes', name: 'My Classes', icon: AcademicCapIcon },
-              { id: 'students', name: 'Students', icon: UsersIcon },
-              { id: 'analytics', name: 'Analytics', icon: DocumentTextIcon },
-              { id: 'profile', name: 'Profile', icon: BookOpenIcon }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm flex items-center`}
-              >
-                <tab.icon className="h-5 w-5 mr-2" />
-                {tab.name}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3 }}>
+        <Tabs
+          value={activeTab}
+          onChange={(e, newValue) => setActiveTab(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+        >
+          <Tab
+            value="overview"
+            label="Overview"
+            icon={<ChartBarIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="classes"
+            label="My Classes"
+            icon={<AcademicCapIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="students"
+            label="Students"
+            icon={<UsersIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="analytics"
+            label="Analytics"
+            icon={<DocumentTextIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="profile"
+            label="Profile"
+            icon={<BookOpenIcon />}
+            iconPosition="start"
+          />
+        </Tabs>
+      </Box>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 3 }}>
         {/* Overview Tab */}
         {activeTab === 'overview' && stats && (
-          <div className="space-y-6">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <UsersIcon className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Total Students</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.total_students}</p>
-                  </div>
-                </div>
-              </div>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <UsersIcon sx={{ fontSize: 32, color: 'primary.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Total Students
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.total_students}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <AcademicCapIcon className="h-8 w-8 text-green-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Classes</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.classes_handled}</p>
-                  </div>
-                </div>
-              </div>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <AcademicCapIcon sx={{ fontSize: 32, color: 'success.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Classes
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.classes_handled}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <BookOpenIcon className="h-8 w-8 text-purple-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Subjects</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.subjects_taught}</p>
-                  </div>
-                </div>
-              </div>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <BookOpenIcon sx={{ fontSize: 32, color: 'secondary.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Subjects
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.subjects_taught}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <ChartBarIcon className="h-8 w-8 text-yellow-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Avg Performance</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.average_class_performance}%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <ChartBarIcon sx={{ fontSize: 32, color: 'warning.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Avg Performance
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.average_class_performance}%
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
-                  <ChatBubbleLeftRightIcon className="h-6 w-6 text-blue-600 mr-3" />
-                  <span className="text-sm font-medium">Send Message to Class</span>
-                </button>
-                <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
-                  <DocumentTextIcon className="h-6 w-6 text-green-600 mr-3" />
-                  <span className="text-sm font-medium">Create Assignment</span>
-                </button>
-                <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
-                  <TrophyIcon className="h-6 w-6 text-yellow-600 mr-3" />
-                  <span className="text-sm font-medium">View Results</span>
-                </button>
-              </div>
-            </div>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Quick Actions
+                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={4}>
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      startIcon={<ChatBubbleLeftRightIcon />}
+                      sx={{ py: 2, justifyContent: 'flex-start' }}
+                    >
+                      Send Message to Class
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      startIcon={<DocumentTextIcon />}
+                      sx={{ py: 2, justifyContent: 'flex-start' }}
+                    >
+                      Create Assignment
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      startIcon={<TrophyIcon />}
+                      sx={{ py: 2, justifyContent: 'flex-start' }}
+                    >
+                      View Results
+                    </Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
 
             {/* Student Performance Overview */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -529,8 +621,25 @@ const TeacherDashboard: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-    </div>
+
+        {/* Other tabs can be implemented similarly */}
+        {activeTab !== 'overview' && (
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {activeTab === 'classes' && 'My Classes'}
+                {activeTab === 'students' && 'Students Management'}
+                {activeTab === 'analytics' && 'Performance Analytics'}
+                {activeTab === 'profile' && 'Teacher Profile'}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                This section is under development. Please check back later.
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+      </Box>
+    </Box>
   );
 };
 

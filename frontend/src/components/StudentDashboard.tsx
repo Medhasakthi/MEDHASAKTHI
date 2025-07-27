@@ -1,5 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Tabs,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Chip,
+  CircularProgress,
+  Avatar,
+  Divider
+} from '@mui/material';
+import {
   School as AcademicCapIcon,
   BarChart as ChartBarIcon,
   Description as DocumentTextIcon,
@@ -110,7 +131,7 @@ const StudentDashboard: React.FC = () => {
       <PageSplashScreen
         title="Student Dashboard"
         subtitle="Your Learning Journey Awaits"
-        icon={<AcademicCapIcon className="w-8 h-8" />}
+        icon={<AcademicCapIcon sx={{ fontSize: 32 }} />}
         color="#1976d2"
         onComplete={splash.hide}
       />
@@ -119,340 +140,426 @@ const StudentDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <Box sx={{ flexGrow: 1, bgcolor: 'background.default', minHeight: '100vh' }}>
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Student Dashboard</h1>
+      <Paper elevation={1} sx={{ mb: 3 }}>
+        <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 3 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
+                Student Dashboard
+              </Typography>
               {profile && (
-                <p className="text-sm text-gray-600">
+                <Typography variant="body2" color="text.secondary">
                   Welcome back, {profile.name} - {profile.class_level} {profile.section}
-                </p>
+                </Typography>
               )}
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">
+            </Box>
+            <Box display="flex" alignItems="center">
+              <Typography variant="body2" color="text.secondary">
                 {profile?.institute_name}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Paper>
 
       {/* Navigation Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'overview', name: 'Overview', icon: ChartBarIcon },
-              { id: 'exams', name: 'My Exams', icon: DocumentTextIcon },
-              { id: 'results', name: 'Results', icon: TrophyIcon },
-              { id: 'profile', name: 'Profile', icon: UserIcon }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                } whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm flex items-center`}
-              >
-                <tab.icon className="h-5 w-5 mr-2" />
-                {tab.name}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3 }}>
+        <Tabs
+          value={activeTab}
+          onChange={(e, newValue) => setActiveTab(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+        >
+          <Tab
+            value="overview"
+            label="Overview"
+            icon={<ChartBarIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="exams"
+            label="My Exams"
+            icon={<DocumentTextIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="results"
+            label="Results"
+            icon={<TrophyIcon />}
+            iconPosition="start"
+          />
+          <Tab
+            value="profile"
+            label="Profile"
+            icon={<UserIcon />}
+            iconPosition="start"
+          />
+        </Tabs>
+      </Box>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 3 }}>
         {/* Overview Tab */}
         {activeTab === 'overview' && stats && (
-          <div className="space-y-6">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <DocumentTextIcon className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Total Exams</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.total_exams_registered}</p>
-                  </div>
-                </div>
-              </div>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <DocumentTextIcon sx={{ fontSize: 32, color: 'primary.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Total Exams
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.total_exams_registered}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <AcademicCapIcon className="h-8 w-8 text-green-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Completed</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.exams_completed}</p>
-                  </div>
-                </div>
-              </div>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <AcademicCapIcon sx={{ fontSize: 32, color: 'success.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Completed
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.exams_completed}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <ChartBarIcon className="h-8 w-8 text-purple-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Average Score</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.average_score}%</p>
-                  </div>
-                </div>
-              </div>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <ChartBarIcon sx={{ fontSize: 32, color: 'secondary.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Average Score
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.average_score}%
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <TrophyIcon className="h-8 w-8 text-yellow-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Certificates</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.certificates_earned}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <Grid item xs={12} sm={6} md={3}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center">
+                      <TrophyIcon sx={{ fontSize: 32, color: 'warning.main', mr: 2 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary">
+                          Certificates
+                        </Typography>
+                        <Typography variant="h4" component="div">
+                          {stats.certificates_earned}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
 
             {/* Recent Activity */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Grid container spacing={3}>
               {/* Recent Exams */}
-              <div className="bg-white rounded-lg shadow">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900">Recent Exams</h3>
-                </div>
-                <div className="p-6">
-                  {recentExams.length > 0 ? (
-                    <div className="space-y-4">
-                      {recentExams.slice(0, 5).map((exam) => (
-                        <div key={exam.id} className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{exam.exam_name}</p>
-                            <p className="text-xs text-gray-500">{exam.exam_date}</p>
-                          </div>
-                          <div className="text-right">
-                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(exam.status)}`}>
-                              {exam.status}
-                            </span>
-                            {exam.score && (
-                              <p className="text-sm font-medium text-gray-900 mt-1">{exam.score}%</p>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 text-center py-4">No recent exams</p>
-                  )}
-                </div>
-              </div>
+              <Grid item xs={12} lg={6}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Recent Exams
+                    </Typography>
+                    <Divider sx={{ mb: 2 }} />
+                    {recentExams.length > 0 ? (
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {recentExams.slice(0, 5).map((exam) => (
+                          <Box key={exam.id} display="flex" justifyContent="space-between" alignItems="center">
+                            <Box>
+                              <Typography variant="body2" fontWeight="medium">
+                                {exam.exam_name}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {exam.exam_date}
+                              </Typography>
+                            </Box>
+                            <Box textAlign="right">
+                              <Chip
+                                label={exam.status}
+                                size="small"
+                                color={exam.status === 'completed' ? 'success' : 'default'}
+                              />
+                              {exam.score && (
+                                <Typography variant="body2" fontWeight="medium" sx={{ mt: 0.5 }}>
+                                  {exam.score}%
+                                </Typography>
+                              )}
+                            </Box>
+                          </Box>
+                        ))}
+                      </Box>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ py: 2 }}>
+                        No recent exams
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </Grid>
 
               {/* Upcoming Exams */}
-              <div className="bg-white rounded-lg shadow">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900">Upcoming Exams</h3>
-                </div>
-                <div className="p-6">
-                  {upcomingExams.length > 0 ? (
-                    <div className="space-y-4">
-                      {upcomingExams.slice(0, 5).map((exam) => (
-                        <div key={exam.id} className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{exam.exam_name}</p>
-                            <p className="text-xs text-gray-500">{exam.exam_date} at {exam.exam_time}</p>
-                          </div>
-                          <div>
-                            <ClockIcon className="h-5 w-5 text-yellow-500" />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 text-center py-4">No upcoming exams</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+              <Grid item xs={12} lg={6}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Upcoming Exams
+                    </Typography>
+                    <Divider sx={{ mb: 2 }} />
+                    {upcomingExams.length > 0 ? (
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {upcomingExams.slice(0, 5).map((exam) => (
+                          <Box key={exam.id} display="flex" justifyContent="space-between" alignItems="center">
+                            <Box>
+                              <Typography variant="body2" fontWeight="medium">
+                                {exam.exam_name}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {exam.exam_date} at {exam.exam_time}
+                              </Typography>
+                            </Box>
+                            <ClockIcon sx={{ fontSize: 20, color: 'warning.main' }} />
+                          </Box>
+                        ))}
+                      </Box>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ py: 2 }}>
+                        No upcoming exams
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Box>
         )}
 
         {/* Exams Tab */}
         {activeTab === 'exams' && (
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900">My Exam Registrations</h3>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Exam Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date & Time
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {[...recentExams, ...upcomingExams].map((exam) => (
-                    <tr key={exam.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {exam.exam_name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {exam.exam_date} {exam.exam_time && `at ${exam.exam_time}`}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(exam.status)}`}>
-                          {exam.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {exam.status === 'upcoming' && (
-                          <button className="text-blue-600 hover:text-blue-900">
-                            Take Exam
-                          </button>
-                        )}
-                        {exam.certificate_available && (
-                          <button className="text-green-600 hover:text-green-900 ml-4">
-                            Download Certificate
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                My Exam Registrations
+              </Typography>
+              <TableContainer component={Paper} variant="outlined">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Exam Name</TableCell>
+                      <TableCell>Date & Time</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Actions</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {[...recentExams, ...upcomingExams].map((exam) => (
+                      <TableRow key={exam.id}>
+                        <TableCell>
+                          <Typography variant="body2" fontWeight="medium">
+                            {exam.exam_name}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="body2" color="text.secondary">
+                            {exam.exam_date} {exam.exam_time && `at ${exam.exam_time}`}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Chip
+                            label={exam.status}
+                            size="small"
+                            color={exam.status === 'completed' ? 'success' : exam.status === 'upcoming' ? 'primary' : 'default'}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Box display="flex" gap={1}>
+                            {exam.status === 'upcoming' && (
+                              <Button size="small" variant="contained">
+                                Take Exam
+                              </Button>
+                            )}
+                            {exam.certificate_available && (
+                              <Button size="small" variant="outlined" color="success">
+                                Download Certificate
+                              </Button>
+                            )}
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
         )}
 
         {/* Results Tab */}
         {activeTab === 'results' && (
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900">Exam Results</h3>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Exam Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Score
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Result
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Certificate
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {recentExams.filter(exam => exam.score !== undefined).map((exam) => (
-                    <tr key={exam.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {exam.exam_name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {exam.exam_date}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {exam.score}%
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`text-sm font-medium ${getResultColor(exam.result || '')}`}>
-                          {exam.result?.toUpperCase()}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {exam.certificate_available ? (
-                          <button className="text-green-600 hover:text-green-900">
-                            Download
-                          </button>
-                        ) : (
-                          <span className="text-gray-400">Not Available</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Exam Results
+              </Typography>
+              <TableContainer component={Paper} variant="outlined">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Exam Name</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Score</TableCell>
+                      <TableCell>Result</TableCell>
+                      <TableCell>Certificate</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {recentExams.filter(exam => exam.score !== undefined).map((exam) => (
+                      <TableRow key={exam.id}>
+                        <TableCell>
+                          <Typography variant="body2" fontWeight="medium">
+                            {exam.exam_name}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="body2" color="text.secondary">
+                            {exam.exam_date}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="body2">
+                            {exam.score}%
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Chip
+                            label={exam.result?.toUpperCase() || 'N/A'}
+                            size="small"
+                            color={exam.result === 'pass' ? 'success' : exam.result === 'fail' ? 'error' : 'default'}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          {exam.certificate_available ? (
+                            <Button size="small" variant="outlined" color="success">
+                              Download
+                            </Button>
+                          ) : (
+                            <Typography variant="body2" color="text.disabled">
+                              Not Available
+                            </Typography>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
         )}
 
         {/* Profile Tab */}
         {activeTab === 'profile' && profile && (
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900">Student Profile</h3>
-            </div>
-            <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Student ID</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.student_id}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.name}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Class</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.class_level} {profile.section}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Institute</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.institute_name}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Email</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.email}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Phone</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.phone || 'Not provided'}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Guardian Email</label>
-                  <p className="mt-1 text-sm text-gray-900">{profile.guardian_email || 'Not provided'}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Student Profile
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Student ID
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.student_id}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Full Name
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Class
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.class_level} {profile.section}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Institute
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.institute_name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Email
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.email}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Phone
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.phone || 'Not provided'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Guardian Email
+                  </Typography>
+                  <Typography variant="body1">
+                    {profile.guardian_email || 'Not provided'}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
