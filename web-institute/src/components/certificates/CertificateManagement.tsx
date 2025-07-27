@@ -316,7 +316,11 @@ export const CertificateManagement: React.FC = () => {
                   label="From Date"
                   value={searchFilters.dateFrom || null}
                   onChange={(date) => handleFilterChange('dateFrom', date)}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true
+                    }
+                  }}
                 />
               </Grid>
 

@@ -531,7 +531,11 @@ export const StudentRegistration: React.FC = () => {
                 label="Date of Birth *"
                 value={currentStudent.dateOfBirth}
                 onChange={(date) => handleStudentChange('dateOfBirth', date)}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+                slotProps={{
+                  textField: {
+                    fullWidth: true
+                  }
+                }}
               />
             </Grid>
             
