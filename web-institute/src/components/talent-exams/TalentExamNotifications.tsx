@@ -272,8 +272,8 @@ export const TalentExamNotifications: React.FC = () => {
 
   const getNotificationIcon = (type: string) => {
     const typeInfo = NOTIFICATION_TYPES[type as keyof typeof NOTIFICATION_TYPES];
-    if (!typeInfo) return NotificationsIcon;
-    
+    if (!typeInfo) return <NotificationsIcon />;
+
     const IconComponent = typeInfo.icon;
     return <IconComponent />;
   };
