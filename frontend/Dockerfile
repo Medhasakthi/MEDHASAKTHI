@@ -14,7 +14,12 @@ COPY package*.json ./
 ENV HUSKY=0
 ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
-RUN npm ci --legacy-peer-deps --no-audit --no-fund || npm install --legacy-peer-deps --no-audit --no-fund
+
+# Clean install with force to resolve dependency conflicts
+RUN npm ci --legacy-peer-deps --no-audit --no-fund || npm install --legacy-peer-deps --no-audit --no-fund --force
+
+# Install missing dependencies explicitly
+RUN npm install ajv@^8.12.0 ajv-keywords@^5.1.0 --legacy-peer-deps
 
 # Verify react-scripts is installed
 RUN which react-scripts || ls -la node_modules/.bin/react-scripts || echo "react-scripts not found in PATH"
