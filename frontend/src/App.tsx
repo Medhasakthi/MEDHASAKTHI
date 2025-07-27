@@ -123,7 +123,7 @@ const App: React.FC = () => {
         return <TeacherDashboard />;
       case 'super_admin':
       case 'institute_admin':
-        return <AdminDashboard />;
+        return <AdminDashboard userRole={currentUser.userType as 'super_admin' | 'institute_admin'} />;
       case 'independent_learner':
         return <IndependentLearnerDashboard />;
       default:

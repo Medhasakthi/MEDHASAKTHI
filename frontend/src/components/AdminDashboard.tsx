@@ -222,7 +222,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
       <PageSplashScreen
         title="Admin Dashboard"
         subtitle={`Welcome, ${userRole === 'super_admin' ? 'Super Admin' : 'Administrator'}`}
-        icon={<SettingsIcon className="w-8 h-8" />}
+        icon={<SettingsIcon sx={{ fontSize: 32 }} />}
         color="#1565c0"
         onComplete={splash.hide}
       />
