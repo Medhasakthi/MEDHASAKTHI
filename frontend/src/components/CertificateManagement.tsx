@@ -34,7 +34,7 @@ import {
   Divider
 } from '@mui/material';
 import {
-  Certificate as CertificateIcon,
+  School as CertificateIcon,
   Download as DownloadIcon,
   Share as ShareIcon,
   Visibility as ViewIcon,
