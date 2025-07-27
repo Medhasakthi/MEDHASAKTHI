@@ -155,7 +155,7 @@ const LoadBalancerManagement: React.FC = () => {
   };
 
   const removeServer = async (serverId: number) => {
-    if (!confirm('Are you sure you want to remove this server?')) return;
+    if (!window.confirm('Are you sure you want to remove this server?')) return;
 
     try {
       const response = await fetch(`/api/v1/load-balancer/servers/${serverId}`, {

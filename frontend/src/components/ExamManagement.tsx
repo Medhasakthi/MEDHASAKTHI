@@ -44,7 +44,8 @@ import {
   Timer as TimerIcon,
   Group as GroupIcon,
   Security as SecurityIcon,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  Assignment as AssignmentIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 
@@ -237,7 +238,7 @@ const ExamManagement: React.FC = () => {
       <PageSplashScreen
         title={splashConfig.title}
         subtitle={splashConfig.subtitle}
-        icon={<AssignmentIcon className="w-8 h-8" />}
+        icon={<AssignmentIcon sx={{ fontSize: 32 }} />}
         color={splashConfig.color}
         onComplete={splash.hide}
       />
