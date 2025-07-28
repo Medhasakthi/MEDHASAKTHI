@@ -212,7 +212,7 @@ const App: React.FC = () => {
               />
               <Route
                 path="/payment"
-                element={currentUser ? <UPIPayment amount={500} onSuccess={() => {}} onCancel={() => {}} /> : <Navigate to="/auth" />}
+                element={currentUser ? <UPIPayment amount={500} description="Payment for services" onSuccess={() => {}} onError={() => {}} /> : <Navigate to="/auth" />}
               />
 
 
