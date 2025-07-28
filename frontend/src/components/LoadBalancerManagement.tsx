@@ -434,12 +434,12 @@ const LoadBalancerManagement: React.FC = () => {
               <TableBody>
                 <AnimatePresence>
                   {servers.map((server) => (
-                    <motion.tr
+                    <TableRow
                       key={server.id}
+                      component={motion.tr}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
-                      component={TableRow}
                     >
                       <TableCell>
                         <Box>
@@ -523,7 +523,7 @@ const LoadBalancerManagement: React.FC = () => {
                           </Tooltip>
                         </Box>
                       </TableCell>
-                    </motion.tr>
+                    </TableRow>
                   ))}
                 </AnimatePresence>
               </TableBody>
