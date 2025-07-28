@@ -27,7 +27,6 @@ import {
   Tabs,
   Tab
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import {
   People as PeopleIcon,
   School as SchoolIcon,
@@ -244,45 +243,48 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
       </Typography>
 
       {/* Dashboard Statistics */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid xs={12} sm={6} md={3}>
-          <StatCard
-            title="Total Users"
-            value={stats?.totalUsers || 0}
-            icon={<PeopleIcon />}
-            color="#1976d2"
-            trend={stats?.monthlyGrowth}
-          />
-        </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <StatCard
-            title="Total Revenue"
-            value={`₹${(stats?.totalRevenue || 0).toLocaleString()}`}
-            icon={<MoneyIcon />}
-            color="#2e7d32"
-          />
-        </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <StatCard
-            title="Pending Verifications"
-            value={stats?.pendingVerifications || 0}
-            icon={<PaymentIcon />}
-            color="#ed6c02"
-          />
-        </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <StatCard
-            title="Active Exams"
-            value={stats?.activeExams || 0}
-            icon={<SchoolIcon />}
-            color="#9c27b0"
-          />
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          mb: 4,
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)'
+          },
+          gap: 3
+        }}
+      >
+        <StatCard
+          title="Total Users"
+          value={stats?.totalUsers || 0}
+          icon={<PeopleIcon />}
+          color="#1976d2"
+          trend={stats?.monthlyGrowth}
+        />
+        <StatCard
+          title="Total Revenue"
+          value={`₹${(stats?.totalRevenue || 0).toLocaleString()}`}
+          icon={<MoneyIcon />}
+          color="#2e7d32"
+        />
+        <StatCard
+          title="Pending Verifications"
+          value={stats?.pendingVerifications || 0}
+          icon={<PaymentIcon />}
+          color="#ed6c02"
+        />
+        <StatCard
+          title="Active Exams"
+          value={stats?.activeExams || 0}
+          icon={<SchoolIcon />}
+          color="#9c27b0"
+        />
+      </Box>
 
       {/* Tabs for different sections */}
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
+        <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)}>
           <Tab label="Payment Verifications" />
           <Tab label="UPI Configuration" />
           <Tab label="Analytics" />
