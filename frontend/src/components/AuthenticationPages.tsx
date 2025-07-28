@@ -19,7 +19,7 @@ import {
   InputAdornment,
   Chip,
   Paper,
-  Grid,
+
   Avatar,
   Dialog,
   DialogTitle,
@@ -126,7 +126,7 @@ const AuthenticationPages: React.FC<AuthProps> = ({ onLogin, onRegister, loading
     'Bachelor\'s Degree', 'Master\'s Degree', 'Doctorate', 'Professional Certification'
   ];
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData({ ...formData, [field]: value });
     if (errors[field]) {
       setErrors({ ...errors, [field]: '' });
@@ -492,17 +492,22 @@ const AuthenticationPages: React.FC<AuthProps> = ({ onLogin, onRegister, loading
                     <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>
                       Select User Type
                     </Typography>
-                    <Grid container spacing={1}>
+                    <Box
+                      sx={{
+                        display: 'grid',
+                        gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)' },
+                        gap: 1
+                      }}
+                    >
                       {userTypes.map((type) => (
-                        <Grid item xs={6} sm={4} key={type.value}>
-                          <UserTypeCard
-                            type={type}
-                            selected={formData.userType === type.value}
-                            onClick={() => handleInputChange('userType', type.value)}
-                          />
-                        </Grid>
+                        <UserTypeCard
+                          key={type.value}
+                          type={type}
+                          selected={formData.userType === type.value}
+                          onClick={() => handleInputChange('userType', type.value)}
+                        />
                       ))}
-                    </Grid>
+                    </Box>
                     {errors.userType && (
                       <Typography color="error" variant="body2" sx={{ mt: 1 }}>
                         {errors.userType}
@@ -656,39 +661,37 @@ const AuthenticationPages: React.FC<AuthProps> = ({ onLogin, onRegister, loading
             <Step>
               <StepLabel>Choose Authentication Method</StepLabel>
               <StepContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <FormControl fullWidth>
-                      <InputLabel>Authentication Method</InputLabel>
-                      <Select
-                        value={twoFactorData.method}
-                        onChange={(e) => setTwoFactorData({
-                          ...twoFactorData,
-                          method: e.target.value as any
-                        })}
-                      >
-                        <MenuItem value="2fa_app">
-                          <Box display="flex" alignItems="center">
-                            <QrCodeIcon sx={{ mr: 1 }} />
-                            Authenticator App (Recommended)
-                          </Box>
-                        </MenuItem>
-                        <MenuItem value="sms">
-                          <Box display="flex" alignItems="center">
-                            <SmsIcon sx={{ mr: 1 }} />
-                            SMS Text Message
-                          </Box>
-                        </MenuItem>
-                        <MenuItem value="email">
-                          <Box display="flex" alignItems="center">
-                            <EmailIcon sx={{ mr: 1 }} />
-                            Email Verification
-                          </Box>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
+                <Box>
+                  <FormControl fullWidth>
+                    <InputLabel>Authentication Method</InputLabel>
+                    <Select
+                      value={twoFactorData.method}
+                      onChange={(e) => setTwoFactorData({
+                        ...twoFactorData,
+                        method: e.target.value as any
+                      })}
+                    >
+                      <MenuItem value="2fa_app">
+                        <Box display="flex" alignItems="center">
+                          <QrCodeIcon sx={{ mr: 1 }} />
+                          Authenticator App (Recommended)
+                        </Box>
+                      </MenuItem>
+                      <MenuItem value="sms">
+                        <Box display="flex" alignItems="center">
+                          <SmsIcon sx={{ mr: 1 }} />
+                          SMS Text Message
+                        </Box>
+                      </MenuItem>
+                      <MenuItem value="email">
+                        <Box display="flex" alignItems="center">
+                          <EmailIcon sx={{ mr: 1 }} />
+                          Email Verification
+                        </Box>
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
                 <Box sx={{ mt: 2 }}>
                   <Button
                     variant="contained"

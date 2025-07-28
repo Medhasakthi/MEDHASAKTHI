@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -211,8 +210,8 @@ const StudentDashboard: React.FC = () => {
         {activeTab === 'overview' && stats && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Stats Cards */}
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6} md={3}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -228,9 +227,9 @@ const StudentDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -246,9 +245,9 @@ const StudentDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -264,9 +263,9 @@ const StudentDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -282,13 +281,13 @@ const StudentDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
 
             {/* Recent Activity */}
-            <Grid container spacing={3}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
               {/* Recent Exams */}
-              <Grid item xs={12} lg={6}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
@@ -329,10 +328,10 @@ const StudentDashboard: React.FC = () => {
                     )}
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
               {/* Upcoming Exams */}
-              <Grid item xs={12} lg={6}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
@@ -362,8 +361,8 @@ const StudentDashboard: React.FC = () => {
                     )}
                   </CardContent>
                 </Card>
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
           </Box>
         )}
 
@@ -497,64 +496,64 @@ const StudentDashboard: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 Student Profile
               </Typography>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Student ID
                   </Typography>
                   <Typography variant="body1">
                     {profile.student_id}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                </Box>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Full Name
                   </Typography>
                   <Typography variant="body1">
                     {profile.name}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                </Box>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Class
                   </Typography>
                   <Typography variant="body1">
                     {profile.class_level} {profile.section}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                </Box>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Institute
                   </Typography>
                   <Typography variant="body1">
                     {profile.institute_name}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                </Box>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Email
                   </Typography>
                   <Typography variant="body1">
                     {profile.email}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                </Box>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Phone
                   </Typography>
                   <Typography variant="body1">
                     {profile.phone || 'Not provided'}
                   </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                </Box>
+                <Box>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Guardian Email
                   </Typography>
                   <Typography variant="body1">
                     {profile.guardian_email || 'Not provided'}
                   </Typography>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             </CardContent>
           </Card>
         )}

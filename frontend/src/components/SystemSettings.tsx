@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -280,8 +279,8 @@ const SystemSettings: React.FC = () => {
 
       {/* General Settings */}
       {activeTab === 0 && config && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+          <Box>
             <SettingCard title="Basic Information" icon={<InfoIcon />}>
               <TextField
                 fullWidth
@@ -315,9 +314,9 @@ const SystemSettings: React.FC = () => {
                 margin="normal"
               />
             </SettingCard>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={6}>
+          <Box>
             <SettingCard title="Regional Settings" icon={<SettingsIcon />}>
               <FormControl fullWidth margin="normal">
                 <InputLabel>Timezone</InputLabel>
@@ -362,17 +361,17 @@ const SystemSettings: React.FC = () => {
                 label="Maintenance Mode"
               />
             </SettingCard>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* Email Settings */}
       {activeTab === 1 && config && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+          <Box>
             <SettingCard title="SMTP Configuration" icon={<EmailIcon />}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+                <Box>
                   <TextField
                     fullWidth
                     label="SMTP Host"
@@ -383,8 +382,8 @@ const SystemSettings: React.FC = () => {
                     })}
                     margin="normal"
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Box>
+                <Box>
                   <TextField
                     fullWidth
                     label="SMTP Port"
@@ -396,8 +395,8 @@ const SystemSettings: React.FC = () => {
                     })}
                     margin="normal"
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Box>
+                <Box>
                   <TextField
                     fullWidth
                     label="Username"
@@ -408,8 +407,8 @@ const SystemSettings: React.FC = () => {
                     })}
                     margin="normal"
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Box>
+                <Box>
                   <TextField
                     fullWidth
                     label="Password"
@@ -421,8 +420,8 @@ const SystemSettings: React.FC = () => {
                     })}
                     margin="normal"
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Box>
+                <Box>
                   <TextField
                     fullWidth
                     label="From Email"
@@ -434,8 +433,8 @@ const SystemSettings: React.FC = () => {
                     })}
                     margin="normal"
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Box>
+                <Box>
                   <TextField
                     fullWidth
                     label="From Name"
@@ -446,8 +445,8 @@ const SystemSettings: React.FC = () => {
                     })}
                     margin="normal"
                   />
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
 
               <FormControlLabel
                 control={
@@ -463,9 +462,9 @@ const SystemSettings: React.FC = () => {
                 sx={{ mt: 2 }}
               />
             </SettingCard>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={4}>
+          <Box>
             <SettingCard title="Email Testing" icon={<CheckIcon />}>
               <Alert severity="info" sx={{ mb: 2 }}>
                 Test your email configuration by sending a test email.
@@ -479,14 +478,14 @@ const SystemSettings: React.FC = () => {
                 Send Test Email
               </Button>
             </SettingCard>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* Payment Settings */}
       {activeTab === 2 && config && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+          <Box>
             <SettingCard title="Payment Methods" icon={<PaymentIcon />}>
               <FormControlLabel
                 control={
@@ -548,9 +547,9 @@ const SystemSettings: React.FC = () => {
                 margin="normal"
               />
             </SettingCard>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={6}>
+          <Box>
             <SettingCard title="UPI Providers" icon={<PaymentIcon />}>
               <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <Typography variant="h6">Configured Providers</Typography>
@@ -584,14 +583,14 @@ const SystemSettings: React.FC = () => {
                 ))}
               </List>
             </SettingCard>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* Security Settings */}
       {activeTab === 3 && config && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+          <Box>
             <SettingCard title="Password Policy" icon={<SecurityIcon />}>
               <TextField
                 fullWidth
@@ -639,9 +638,9 @@ const SystemSettings: React.FC = () => {
                 label="Enable Two-Factor Authentication"
               />
             </SettingCard>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={6}>
+          <Box>
             <SettingCard title="Access Control" icon={<SecurityIcon />}>
               <Alert severity="warning" sx={{ mb: 2 }}>
                 IP whitelist is currently disabled. Enable for enhanced security.
@@ -663,8 +662,8 @@ const SystemSettings: React.FC = () => {
                 placeholder="192.168.1.1&#10;10.0.0.1"
               />
             </SettingCard>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* UPI Provider Dialog */}

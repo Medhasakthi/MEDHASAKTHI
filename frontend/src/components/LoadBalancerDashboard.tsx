@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -37,14 +36,14 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip as RechartsTooltip,
   ResponsiveContainer,
   BarChart,
   Bar,
   PieChart,
   Pie,
-  Cell
+  Cell,
+  CartesianGrid
 } from 'recharts';
 
 interface ServerMetrics {
@@ -203,8 +202,8 @@ const LoadBalancerDashboard: React.FC = () => {
       {loading && <LinearProgress sx={{ mb: 2 }} />}
 
       {/* Key Metrics */}
-      <Grid container spacing={3} mb={3}>
-        <Grid item xs={12} md={3}>
+      <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+        <Box>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -226,9 +225,9 @@ const LoadBalancerDashboard: React.FC = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={3}>
+        <Box>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -250,9 +249,9 @@ const LoadBalancerDashboard: React.FC = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={3}>
+        <Box>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -274,9 +273,9 @@ const LoadBalancerDashboard: React.FC = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={3}>
+        <Box>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -298,12 +297,12 @@ const LoadBalancerDashboard: React.FC = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Charts */}
-      <Grid container spacing={3} mb={3}>
-        <Grid item xs={12} md={8}>
+      <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+        <Box>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -336,9 +335,9 @@ const LoadBalancerDashboard: React.FC = () => {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={4}>
+        <Box>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -365,8 +364,8 @@ const LoadBalancerDashboard: React.FC = () => {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Server Details Table */}
       <Card>

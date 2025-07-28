@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -243,8 +242,8 @@ const TeacherDashboard: React.FC = () => {
         {activeTab === 'overview' && stats && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Stats Cards */}
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6} md={3}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -260,9 +259,9 @@ const TeacherDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -278,9 +277,9 @@ const TeacherDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -296,9 +295,9 @@ const TeacherDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Box>
                 <Card>
                   <CardContent>
                     <Box display="flex" alignItems="center">
@@ -314,8 +313,8 @@ const TeacherDashboard: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
 
             {/* Quick Actions */}
             <Card>
@@ -323,8 +322,8 @@ const TeacherDashboard: React.FC = () => {
                 <Typography variant="h6" gutterBottom>
                   Quick Actions
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={4}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+                  <Box>
                     <Button
                       variant="outlined"
                       fullWidth
@@ -333,8 +332,8 @@ const TeacherDashboard: React.FC = () => {
                     >
                       Send Message to Class
                     </Button>
-                  </Grid>
-                  <Grid item xs={12} md={4}>
+                  </Box>
+                  <Box>
                     <Button
                       variant="outlined"
                       fullWidth
@@ -343,8 +342,8 @@ const TeacherDashboard: React.FC = () => {
                     >
                       Create Assignment
                     </Button>
-                  </Grid>
-                  <Grid item xs={12} md={4}>
+                  </Box>
+                  <Box>
                     <Button
                       variant="outlined"
                       fullWidth
@@ -353,8 +352,8 @@ const TeacherDashboard: React.FC = () => {
                     >
                       View Results
                     </Button>
-                  </Grid>
-                </Grid>
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
 

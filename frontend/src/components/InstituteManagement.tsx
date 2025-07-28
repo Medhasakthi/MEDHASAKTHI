@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -302,8 +301,8 @@ const InstituteManagement: React.FC = () => {
       </Box>
 
       {/* Statistics Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      <Box sx={{ mb: 4, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+        <Box>
           <StatCard
             title="Total Institutes"
             value={institutes.length}
@@ -312,8 +311,8 @@ const InstituteManagement: React.FC = () => {
             trend={12}
             subtitle="Active institutes"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box>
           <StatCard
             title="Total Students"
             value={students.length.toLocaleString()}
@@ -322,8 +321,8 @@ const InstituteManagement: React.FC = () => {
             trend={8}
             subtitle="Enrolled students"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box>
           <StatCard
             title="Total Teachers"
             value={teachers.length}
@@ -332,8 +331,8 @@ const InstituteManagement: React.FC = () => {
             trend={5}
             subtitle="Active teachers"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box>
           <StatCard
             title="Active Classes"
             value={institutes.reduce((sum, inst) => sum + inst.totalClasses, 0)}
@@ -341,8 +340,8 @@ const InstituteManagement: React.FC = () => {
             color="#9c27b0"
             subtitle="Running classes"
           />
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Tabs */}
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -627,24 +626,24 @@ const InstituteManagement: React.FC = () => {
       <Dialog open={createDialog} onClose={() => setCreateDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>Create New Institute</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} sm={6}>
+          <Box sx={{ mt: 1, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+            <Box>
               <TextField
                 fullWidth
                 label="Institute Name"
                 value={newInstitute.name || ''}
                 onChange={(e) => setNewInstitute({ ...newInstitute, name: e.target.value })}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Institute Code"
                 value={newInstitute.code || ''}
                 onChange={(e) => setNewInstitute({ ...newInstitute, code: e.target.value })}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <FormControl fullWidth>
                 <InputLabel>Institute Type</InputLabel>
                 <Select
@@ -657,8 +656,8 @@ const InstituteManagement: React.FC = () => {
                   <MenuItem value="coaching">Coaching Center</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Contact Email"
@@ -666,8 +665,8 @@ const InstituteManagement: React.FC = () => {
                 value={newInstitute.contactEmail || ''}
                 onChange={(e) => setNewInstitute({ ...newInstitute, contactEmail: e.target.value })}
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Address"
@@ -676,8 +675,8 @@ const InstituteManagement: React.FC = () => {
                 value={newInstitute.address || ''}
                 onChange={(e) => setNewInstitute({ ...newInstitute, address: e.target.value })}
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setCreateDialog(false)}>Cancel</Button>

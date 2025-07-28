@@ -20,7 +20,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Grid,
   LinearProgress,
   IconButton,
   Tooltip,
@@ -198,16 +197,16 @@ const UserFeedbackSystem: React.FC = () => {
         </Box>
         
         {feedbackStats && (
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+            <Box>
               <Typography variant="body2" color="textSecondary">
                 Total Feedback
               </Typography>
               <Typography variant="h4" fontWeight="bold">
                 {feedbackStats.totalFeedback}
               </Typography>
-            </Grid>
-            <Grid item xs={6}>
+            </Box>
+            <Box>
               <Typography variant="body2" color="textSecondary">
                 Average Rating
               </Typography>
@@ -217,9 +216,9 @@ const UserFeedbackSystem: React.FC = () => {
                 </Typography>
                 <Rating value={feedbackStats.averageRating} readOnly size="small" />
               </Box>
-            </Grid>
+            </Box>
             
-            <Grid item xs={12}>
+            <Box>
               <Typography variant="body2" color="textSecondary" gutterBottom>
                 Feedback Distribution
               </Typography>
@@ -238,8 +237,8 @@ const UserFeedbackSystem: React.FC = () => {
                   </Box>
                 </Box>
               ))}
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         )}
       </CardContent>
     </Card>
@@ -288,17 +287,17 @@ const UserFeedbackSystem: React.FC = () => {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             What type of feedback do you have?
           </Typography>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
             {feedbackTypes.map((type) => (
-              <Grid item xs={6} sm={3} key={type.value}>
+              <Box key={type.value}>
                 <FeedbackTypeCard
                   type={type}
                   selected={feedbackType === type.value}
                   onClick={() => setFeedbackType(type.value as any)}
                 />
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
 
           {/* Rating */}
           <Box sx={{ mb: 3 }}>
@@ -345,8 +344,8 @@ const UserFeedbackSystem: React.FC = () => {
           />
 
           {/* Category and Priority */}
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} sm={6}>
+          <Box sx={{ mt: 1, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+            <Box>
               <FormControl fullWidth>
                 <InputLabel>Category</InputLabel>
                 <Select
@@ -358,8 +357,8 @@ const UserFeedbackSystem: React.FC = () => {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <FormControl fullWidth>
                 <InputLabel>Priority</InputLabel>
                 <Select
@@ -371,15 +370,15 @@ const UserFeedbackSystem: React.FC = () => {
                   <MenuItem value="high">High</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
 
           {/* Contact Information */}
           <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
             Contact Information (Optional)
           </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+            <Box>
               <TextField
                 fullWidth
                 label="Your Name"
@@ -387,8 +386,8 @@ const UserFeedbackSystem: React.FC = () => {
                 onChange={(e) => setName(e.target.value)}
                 margin="normal"
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Email Address"
@@ -397,8 +396,8 @@ const UserFeedbackSystem: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 margin="normal"
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
 
           <Alert severity="info" sx={{ mt: 2 }}>
             Your feedback helps us improve MEDHASAKTHI. We read every submission and use your input to enhance the platform.

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -251,44 +250,44 @@ const IndependentLearnerDashboard: React.FC = () => {
       </Box>
 
       {/* Statistics Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      <Box sx={{ mb: 4, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+        <Box>
           <StatCard
             title="Enrolled Programs"
             value={enrolledPrograms.length}
             icon={<SchoolIcon />}
             color="#1976d2"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box>
           <StatCard
             title="Certificates Earned"
             value={enrolledPrograms.filter(p => p.certificateUrl).length}
             icon={<CertificateIcon />}
             color="#2e7d32"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box>
           <StatCard
             title="Referral Earnings"
             value={`₹${referralStats?.totalEarnings || 0}`}
             icon={<TrendingUpIcon />}
             color="#ed6c02"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box>
           <StatCard
             title="Total Referrals"
             value={referralStats?.totalReferrals || 0}
             icon={<ShareIcon />}
             color="#9c27b0"
           />
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
-      <Grid container spacing={3}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
         {/* Enrolled Programs */}
-        <Grid item xs={12} md={8}>
+        <Box>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -363,9 +362,9 @@ const IndependentLearnerDashboard: React.FC = () => {
                 Recommended Programs
               </Typography>
               
-              <Grid container spacing={2}>
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
                 {programs.slice(0, 6).map((program) => (
-                  <Grid item xs={12} sm={6} key={program.id}>
+                  <Box key={program.id}>
                     <Card variant="outlined">
                       <CardContent>
                         <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
@@ -418,15 +417,15 @@ const IndependentLearnerDashboard: React.FC = () => {
                         </Box>
                       </CardContent>
                     </Card>
-                  </Grid>
+                  </Box>
                 ))}
-              </Grid>
+              </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
         {/* Referral Section */}
-        <Grid item xs={12} md={4}>
+        <Box>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -506,8 +505,8 @@ const IndependentLearnerDashboard: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Enrollment Dialog */}
       <Dialog open={enrollmentDialog} onClose={() => setEnrollmentDialog(false)} maxWidth="sm" fullWidth>

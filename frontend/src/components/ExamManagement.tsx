@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -153,32 +152,31 @@ const ExamManagement: React.FC = () => {
             <Chip label={exam.examType} variant="outlined" size="small" />
           </Box>
 
-          <Grid container spacing={2} sx={{ mb: 2 }}>
-            <Grid item xs={6}>
-              <Box display="flex" alignItems="center">
-                <TimerIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body2">{exam.duration} min</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box display="flex" alignItems="center">
-                <QuizIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body2">{exam.totalQuestions} questions</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box display="flex" alignItems="center">
-                <GroupIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body2">{exam.enrolledStudents} enrolled</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box display="flex" alignItems="center">
-                <AssessmentIcon fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body2">{exam.totalMarks} marks</Typography>
-              </Box>
-            </Grid>
-          </Grid>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: 2,
+              mb: 2
+            }}
+          >
+            <Box display="flex" alignItems="center">
+              <TimerIcon fontSize="small" sx={{ mr: 1 }} />
+              <Typography variant="body2">{exam.duration} min</Typography>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <QuizIcon fontSize="small" sx={{ mr: 1 }} />
+              <Typography variant="body2">{exam.totalQuestions} questions</Typography>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <GroupIcon fontSize="small" sx={{ mr: 1 }} />
+              <Typography variant="body2">{exam.enrolledStudents} enrolled</Typography>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <AssessmentIcon fontSize="small" sx={{ mr: 1 }} />
+              <Typography variant="body2">{exam.totalMarks} marks</Typography>
+            </Box>
+          </Box>
 
           {exam.completedStudents > 0 && (
             <Box mb={2}>
@@ -276,43 +274,46 @@ const ExamManagement: React.FC = () => {
       </Box>
 
       {/* Statistics */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Total Exams"
-            value={exams.length}
-            icon={<QuizIcon />}
-            color="#1976d2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Active Exams"
-            value={exams.filter(e => e.status === 'active').length}
-            icon={<ScheduleIcon />}
-            color="#2e7d32"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Total Students"
-            value={exams.reduce((sum, exam) => sum + exam.enrolledStudents, 0)}
-            icon={<GroupIcon />}
-            color="#ed6c02"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Avg Score"
-            value={`${Math.round(exams.reduce((sum, exam) => sum + exam.averageScore, 0) / exams.length || 0)}%`}
-            icon={<AssessmentIcon />}
-            color="#9c27b0"
-          />
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          mb: 4,
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)'
+          },
+          gap: 3
+        }}
+      >
+        <StatCard
+          title="Total Exams"
+          value={exams.length}
+          icon={<QuizIcon />}
+          color="#1976d2"
+        />
+        <StatCard
+          title="Active Exams"
+          value={exams.filter(e => e.status === 'active').length}
+          icon={<ScheduleIcon />}
+          color="#2e7d32"
+        />
+        <StatCard
+          title="Total Students"
+          value={exams.reduce((sum, exam) => sum + exam.enrolledStudents, 0)}
+          icon={<GroupIcon />}
+          color="#ed6c02"
+        />
+        <StatCard
+          title="Avg Score"
+          value={`${Math.round(exams.reduce((sum, exam) => sum + exam.averageScore, 0) / exams.length || 0)}%`}
+          icon={<AssessmentIcon />}
+          color="#9c27b0"
+        />
+      </Box>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
+      <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
         <Tab label="All Exams" />
         <Tab label="Scheduled" />
         <Tab label="Active" />
@@ -320,7 +321,17 @@ const ExamManagement: React.FC = () => {
       </Tabs>
 
       {/* Exams Grid */}
-      <Grid container spacing={3}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)'
+          },
+          gap: 3
+        }}
+      >
         {exams
           .filter(exam => {
             if (activeTab === 0) return true;
@@ -330,11 +341,9 @@ const ExamManagement: React.FC = () => {
             return true;
           })
           .map((exam) => (
-            <Grid item xs={12} sm={6} md={4} key={exam.id}>
-              <ExamCard exam={exam} />
-            </Grid>
+            <ExamCard key={exam.id} exam={exam} />
           ))}
-      </Grid>
+      </Box>
 
       {/* Create Exam Dialog */}
       <Dialog open={createDialog} onClose={() => setCreateDialog(false)} maxWidth="md" fullWidth>
@@ -466,20 +475,18 @@ const ExamManagement: React.FC = () => {
                         {newExam.description}
                       </Typography>
                       <Divider sx={{ my: 2 }} />
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <Typography variant="body2"><strong>Subject:</strong> {newExam.subject}</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="body2"><strong>Type:</strong> {newExam.examType}</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="body2"><strong>Duration:</strong> {newExam.duration} min</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="body2"><strong>Questions:</strong> {newExam.totalQuestions}</Typography>
-                        </Grid>
-                      </Grid>
+                      <Box
+                        sx={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(2, 1fr)',
+                          gap: 2
+                        }}
+                      >
+                        <Typography variant="body2"><strong>Subject:</strong> {newExam.subject}</Typography>
+                        <Typography variant="body2"><strong>Type:</strong> {newExam.examType}</Typography>
+                        <Typography variant="body2"><strong>Duration:</strong> {newExam.duration} min</Typography>
+                        <Typography variant="body2"><strong>Questions:</strong> {newExam.totalQuestions}</Typography>
+                      </Box>
                     </Box>
                   )}
 

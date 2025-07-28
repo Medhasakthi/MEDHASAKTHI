@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -245,44 +244,47 @@ const CertificateManagement: React.FC = () => {
       </Box>
 
       {/* Statistics Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Total Issued"
-            value={stats?.totalIssued || 0}
-            icon={<CertificateIcon />}
-            color="#1976d2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Active Certificates"
-            value={stats?.activeCount || 0}
-            icon={<VerifiedIcon />}
-            color="#2e7d32"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="This Month"
-            value={stats?.thisMonthIssued || 0}
-            icon={<CalendarIcon />}
-            color="#ed6c02"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
-            title="Verifications"
-            value={stats?.verificationRequests || 0}
-            icon={<QrCodeIcon />}
-            color="#9c27b0"
-          />
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          mb: 4,
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)'
+          },
+          gap: 3
+        }}
+      >
+        <StatCard
+          title="Total Issued"
+          value={stats?.totalIssued || 0}
+          icon={<CertificateIcon />}
+          color="#1976d2"
+        />
+        <StatCard
+          title="Active Certificates"
+          value={stats?.activeCount || 0}
+          icon={<VerifiedIcon />}
+          color="#2e7d32"
+        />
+        <StatCard
+          title="This Month"
+          value={stats?.thisMonthIssued || 0}
+          icon={<CalendarIcon />}
+          color="#ed6c02"
+        />
+        <StatCard
+          title="Verifications"
+          value={stats?.verificationRequests || 0}
+          icon={<QrCodeIcon />}
+          color="#9c27b0"
+        />
+      </Box>
 
       {/* Tabs */}
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
+        <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)}>
           <Tab label="All Certificates" />
           <Tab label="Templates" />
           <Tab label="Verification" />
@@ -389,43 +391,51 @@ const CertificateManagement: React.FC = () => {
 
       {/* Templates Tab */}
       {activeTab === 1 && (
-        <Grid container spacing={3}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)'
+            },
+            gap: 3
+          }}
+        >
           {templates.map((template) => (
-            <Grid item xs={12} sm={6} md={4} key={template.id}>
-              <Card>
-                <CardContent>
-                  <Box display="flex" justifyContent="between" alignItems="start" mb={2}>
-                    <Typography variant="h6" gutterBottom>
-                      {template.name}
-                    </Typography>
-                    <Chip 
-                      label={template.isActive ? 'Active' : 'Inactive'} 
-                      color={template.isActive ? 'success' : 'default'}
-                      size="small"
-                    />
-                  </Box>
-                  <Typography variant="body2" color="textSecondary" mb={2}>
-                    {template.description}
+            <Card key={template.id}>
+              <CardContent>
+                <Box display="flex" justifyContent="between" alignItems="start" mb={2}>
+                  <Typography variant="h6" gutterBottom>
+                    {template.name}
                   </Typography>
-                  <Typography variant="body2" mb={1}>
-                    <strong>Category:</strong> {template.category}
-                  </Typography>
-                  <Typography variant="body2" mb={2}>
-                    <strong>Used:</strong> {template.usageCount} times
-                  </Typography>
-                  <Box display="flex" gap={1}>
-                    <Button size="small" startIcon={<EditIcon />}>
-                      Edit
-                    </Button>
-                    <Button size="small" startIcon={<ViewIcon />}>
-                      Preview
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+                  <Chip
+                    label={template.isActive ? 'Active' : 'Inactive'}
+                    color={template.isActive ? 'success' : 'default'}
+                    size="small"
+                  />
+                </Box>
+                <Typography variant="body2" color="textSecondary" mb={2}>
+                  {template.description}
+                </Typography>
+                <Typography variant="body2" mb={1}>
+                  <strong>Category:</strong> {template.category}
+                </Typography>
+                <Typography variant="body2" mb={2}>
+                  <strong>Used:</strong> {template.usageCount} times
+                </Typography>
+                <Box display="flex" gap={1}>
+                  <Button size="small" startIcon={<EditIcon />}>
+                    Edit
+                  </Button>
+                  <Button size="small" startIcon={<ViewIcon />}>
+                    Preview
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
           ))}
-        </Grid>
+        </Box>
       )}
 
       {/* Certificate View Dialog */}
@@ -433,38 +443,42 @@ const CertificateManagement: React.FC = () => {
         <DialogTitle>Certificate Details</DialogTitle>
         <DialogContent>
           {selectedCertificate && (
-            <Box>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="h6" gutterBottom>Certificate Information</Typography>
-                  <Typography><strong>Number:</strong> {selectedCertificate.certificateNumber}</Typography>
-                  <Typography><strong>Recipient:</strong> {selectedCertificate.recipientName}</Typography>
-                  <Typography><strong>Program:</strong> {selectedCertificate.programTitle}</Typography>
-                  <Typography><strong>Issue Date:</strong> {new Date(selectedCertificate.issueDate).toLocaleDateString()}</Typography>
-                  {selectedCertificate.score && (
-                    <Typography><strong>Score:</strong> {selectedCertificate.score}%</Typography>
-                  )}
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="h6" gutterBottom>Verification</Typography>
-                  <Typography variant="body2" gutterBottom>
-                    Verification URL:
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                gap: 2
+              }}
+            >
+              <Box>
+                <Typography variant="h6" gutterBottom>Certificate Information</Typography>
+                <Typography><strong>Number:</strong> {selectedCertificate.certificateNumber}</Typography>
+                <Typography><strong>Recipient:</strong> {selectedCertificate.recipientName}</Typography>
+                <Typography><strong>Program:</strong> {selectedCertificate.programTitle}</Typography>
+                <Typography><strong>Issue Date:</strong> {new Date(selectedCertificate.issueDate).toLocaleDateString()}</Typography>
+                {selectedCertificate.score && (
+                  <Typography><strong>Score:</strong> {selectedCertificate.score}%</Typography>
+                )}
+              </Box>
+              <Box>
+                <Typography variant="h6" gutterBottom>Verification</Typography>
+                <Typography variant="body2" gutterBottom>
+                  Verification URL:
+                </Typography>
+                <Paper sx={{ p: 1, bgcolor: 'grey.100', mb: 2 }}>
+                  <Typography variant="body2" fontFamily="monospace" sx={{ wordBreak: 'break-all' }}>
+                    {selectedCertificate.verificationUrl}
                   </Typography>
-                  <Paper sx={{ p: 1, bgcolor: 'grey.100', mb: 2 }}>
-                    <Typography variant="body2" fontFamily="monospace" sx={{ wordBreak: 'break-all' }}>
-                      {selectedCertificate.verificationUrl}
-                    </Typography>
-                  </Paper>
-                  <Box display="flex" gap={1}>
-                    <Button size="small" startIcon={<QrCodeIcon />}>
-                      QR Code
-                    </Button>
-                    <Button size="small" startIcon={<EmailIcon />}>
-                      Email
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>
+                </Paper>
+                <Box display="flex" gap={1}>
+                  <Button size="small" startIcon={<QrCodeIcon />}>
+                    QR Code
+                  </Button>
+                  <Button size="small" startIcon={<EmailIcon />}>
+                    Email
+                  </Button>
+                </Box>
+              </Box>
             </Box>
           )}
         </DialogContent>

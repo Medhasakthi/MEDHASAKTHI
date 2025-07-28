@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -208,47 +207,50 @@ const AnalyticsDashboard: React.FC = () => {
       </Box>
 
       {/* KPI Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Total Users"
-            value={analyticsData?.kpis.totalUsers.toLocaleString() || '0'}
-            change={analyticsData?.kpis.userGrowthRate || 0}
-            icon={<PeopleIcon />}
-            color="#1976d2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Total Revenue"
-            value={`₹${analyticsData?.kpis.totalRevenue.toLocaleString() || '0'}`}
-            change={analyticsData?.kpis.revenueGrowthRate || 0}
-            icon={<MoneyIcon />}
-            color="#2e7d32"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Active Exams"
-            value={analyticsData?.kpis.activeExams || 0}
-            change={15}
-            icon={<AssessmentIcon />}
-            color="#ed6c02"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Completion Rate"
-            value={`${analyticsData?.kpis.completionRate || 0}%`}
-            change={8}
-            icon={<CheckCircleIcon />}
-            color="#9c27b0"
-          />
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          mb: 4,
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)'
+          },
+          gap: 3
+        }}
+      >
+        <KPICard
+          title="Total Users"
+          value={analyticsData?.kpis.totalUsers.toLocaleString() || '0'}
+          change={analyticsData?.kpis.userGrowthRate || 0}
+          icon={<PeopleIcon />}
+          color="#1976d2"
+        />
+        <KPICard
+          title="Total Revenue"
+          value={`₹${analyticsData?.kpis.totalRevenue.toLocaleString() || '0'}`}
+          change={analyticsData?.kpis.revenueGrowthRate || 0}
+          icon={<MoneyIcon />}
+          color="#2e7d32"
+        />
+        <KPICard
+          title="Active Exams"
+          value={analyticsData?.kpis.activeExams || 0}
+          change={15}
+          icon={<AssessmentIcon />}
+          color="#ed6c02"
+        />
+        <KPICard
+          title="Completion Rate"
+          value={`${analyticsData?.kpis.completionRate || 0}%`}
+          change={8}
+          icon={<CheckCircleIcon />}
+          color="#9c27b0"
+        />
+      </Box>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
+      <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
         <Tab label="Overview" />
         <Tab label="User Analytics" />
         <Tab label="Revenue" />
@@ -257,9 +259,17 @@ const AnalyticsDashboard: React.FC = () => {
 
       {/* Overview Tab */}
       {activeTab === 0 && (
-        <Grid container spacing={3}>
-          {/* User Growth Chart */}
-          <Grid item xs={12} md={8}>
+        <Box>
+          {/* First row with User Growth Chart and Category Distribution */}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
+              gap: 3,
+              mb: 3
+            }}
+          >
+            {/* User Growth Chart */}
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -271,20 +281,18 @@ const AnalyticsDashboard: React.FC = () => {
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
-                    <Area 
-                      type="monotone" 
-                      dataKey="users" 
-                      stroke="#1976d2" 
-                      fill="#1976d220" 
+                    <Area
+                      type="monotone"
+                      dataKey="users"
+                      stroke="#1976d2"
+                      fill="#1976d220"
                     />
                   </AreaChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
-          </Grid>
 
-          {/* Category Distribution */}
-          <Grid item xs={12} md={4}>
+            {/* Category Distribution */}
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -310,10 +318,17 @@ const AnalyticsDashboard: React.FC = () => {
                 </ResponsiveContainer>
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
-          {/* Top Performers */}
-          <Grid item xs={12} md={6}>
+          {/* Second row with Top Performers and Recent Activities */}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+              gap: 3
+            }}
+          >
+            {/* Top Performers */}
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -340,10 +355,10 @@ const AnalyticsDashboard: React.FC = () => {
                             </Box>
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={`${performer.score}%`} 
-                              color="success" 
-                              size="small" 
+                            <Chip
+                              label={`${performer.score}%`}
+                              color="success"
+                              size="small"
                             />
                           </TableCell>
                           <TableCell>
@@ -359,10 +374,8 @@ const AnalyticsDashboard: React.FC = () => {
                 </TableContainer>
               </CardContent>
             </Card>
-          </Grid>
 
-          {/* Recent Activities */}
-          <Grid item xs={12} md={6}>
+            {/* Recent Activities */}
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -387,35 +400,41 @@ const AnalyticsDashboard: React.FC = () => {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* Revenue Tab */}
       {activeTab === 2 && (
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Revenue Analytics
-                </Typography>
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart data={analyticsData?.revenueData || []}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="revenue" fill="#2e7d32" />
-                    <Bar dataKey="target" fill="#81c784" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </Grid>
+        <Box>
+          {/* Revenue Analytics Chart */}
+          <Card sx={{ mb: 3 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Revenue Analytics
+              </Typography>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={analyticsData?.revenueData || []}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="revenue" fill="#2e7d32" />
+                  <Bar dataKey="target" fill="#81c784" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
 
-          <Grid item xs={12} md={4}>
+          {/* Revenue Breakdown and Payment Methods */}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
+              gap: 3
+            }}
+          >
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -444,9 +463,7 @@ const AnalyticsDashboard: React.FC = () => {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
 
-          <Grid item xs={12} md={8}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -487,34 +504,30 @@ const AnalyticsDashboard: React.FC = () => {
                 </TableContainer>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* Performance Tab */}
       {activeTab === 3 && (
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Exam Performance Trends
-                </Typography>
-                <ResponsiveContainer width="100%" height={400}>
-                  <LineChart data={analyticsData?.examPerformance || []}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="averageScore" stroke="#1976d2" strokeWidth={2} />
-                    <Line type="monotone" dataKey="completionRate" stroke="#2e7d32" strokeWidth={2} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Exam Performance Trends
+            </Typography>
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={analyticsData?.examPerformance || []}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="averageScore" stroke="#1976d2" strokeWidth={2} />
+                <Line type="monotone" dataKey="completionRate" stroke="#2e7d32" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
       )}
     </Box>
   );

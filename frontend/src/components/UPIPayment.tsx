@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { CheckCircle as CheckCircleIcon, Schedule as ClockIcon, Warning as ExclamationCircleIcon } from '@mui/icons-material';
 
 interface UPIPaymentProps {

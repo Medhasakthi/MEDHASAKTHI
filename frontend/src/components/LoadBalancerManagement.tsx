@@ -19,7 +19,6 @@ import {
   Paper,
   Chip,
   IconButton,
-  Grid,
   FormControl,
   InputLabel,
   Select,
@@ -327,8 +326,8 @@ const LoadBalancerManagement: React.FC = () => {
       </Box>
 
       {/* Status Overview */}
-      <Grid container spacing={3} mb={3}>
-        <Grid item xs={12} md={3}>
+      <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+        <Box>
           <Card>
             <CardContent>
               <Box display="flex" alignItems="center">
@@ -344,9 +343,9 @@ const LoadBalancerManagement: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
         
-        <Grid item xs={12} md={3}>
+        <Box>
           <Card>
             <CardContent>
               <Box display="flex" alignItems="center">
@@ -362,9 +361,9 @@ const LoadBalancerManagement: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
         
-        <Grid item xs={12} md={3}>
+        <Box>
           <Card>
             <CardContent>
               <Box display="flex" alignItems="center">
@@ -380,9 +379,9 @@ const LoadBalancerManagement: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
         
-        <Grid item xs={12} md={3}>
+        <Box>
           <Card>
             <CardContent>
               <Box display="flex" alignItems="center">
@@ -398,8 +397,8 @@ const LoadBalancerManagement: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Servers Table */}
       <Card>
@@ -537,8 +536,8 @@ const LoadBalancerManagement: React.FC = () => {
       <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>Add New Server</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} md={6}>
+          <Box sx={{ mt: 1, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
+            <Box>
               <TextField
                 fullWidth
                 label="Hostname"
@@ -546,8 +545,8 @@ const LoadBalancerManagement: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, hostname: e.target.value })}
                 required
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="IP Address"
@@ -555,8 +554,8 @@ const LoadBalancerManagement: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, ip_address: e.target.value })}
                 required
               />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Port"
@@ -565,8 +564,8 @@ const LoadBalancerManagement: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, port: parseInt(e.target.value) })}
                 required
               />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </Box>
+            <Box>
               <FormControl fullWidth>
                 <InputLabel>Server Type</InputLabel>
                 <Select
@@ -578,8 +577,8 @@ const LoadBalancerManagement: React.FC = () => {
                   <MenuItem value="database">Database</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Weight"
@@ -588,16 +587,16 @@ const LoadBalancerManagement: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, weight: parseInt(e.target.value) })}
                 inputProps={{ min: 1, max: 100 }}
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Region"
                 value={formData.region}
                 onChange={(e) => setFormData({ ...formData, region: e.target.value })}
               />
-            </Grid>
-            <Grid item xs={12} md={3}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="CPU Cores"
@@ -605,8 +604,8 @@ const LoadBalancerManagement: React.FC = () => {
                 value={formData.cpu_cores}
                 onChange={(e) => setFormData({ ...formData, cpu_cores: parseInt(e.target.value) })}
               />
-            </Grid>
-            <Grid item xs={12} md={3}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Memory (GB)"
@@ -614,8 +613,8 @@ const LoadBalancerManagement: React.FC = () => {
                 value={formData.memory_gb}
                 onChange={(e) => setFormData({ ...formData, memory_gb: parseInt(e.target.value) })}
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+            <Box>
               <TextField
                 fullWidth
                 label="Notes"
@@ -624,8 +623,8 @@ const LoadBalancerManagement: React.FC = () => {
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenAddDialog(false)}>Cancel</Button>

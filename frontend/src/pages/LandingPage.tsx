@@ -4,7 +4,6 @@ import {
   Container,
   Typography,
   Button,
-  Grid,
   Card,
   CardContent,
   Avatar,
@@ -119,8 +118,8 @@ const LandingPage: React.FC = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={6}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4, alignItems: 'center' }}>
+            <Box>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -192,8 +191,8 @@ const LandingPage: React.FC = () => {
                   </Button>
                 </Box>
               </motion.div>
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Box>
+            <Box>
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -211,17 +210,17 @@ const LandingPage: React.FC = () => {
                   }}
                 />
               </motion.div>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Container>
       </Box>
 
       {/* Stats Section */}
       <Box sx={{ py: 6, bgcolor: 'grey.50' }}>
         <Container maxWidth="lg">
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
             {stats.map((stat, index) => (
-              <Grid item xs={6} md={3} key={index}>
+              <Box key={index}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -245,9 +244,9 @@ const LandingPage: React.FC = () => {
                     </Typography>
                   </Box>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
 
@@ -280,9 +279,9 @@ const LandingPage: React.FC = () => {
             </Typography>
           </motion.div>
 
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
             {features.map((feature, index) => (
-              <Grid item xs={12} md={6} lg={4} key={index}>
+              <Box key={index}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -323,9 +322,9 @@ const LandingPage: React.FC = () => {
                     </CardContent>
                   </Card>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
 
@@ -357,9 +356,9 @@ const LandingPage: React.FC = () => {
             </Typography>
           </motion.div>
 
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
             {testimonials.map((testimonial, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Box key={index}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -395,9 +394,9 @@ const LandingPage: React.FC = () => {
                     </CardContent>
                   </Card>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
 

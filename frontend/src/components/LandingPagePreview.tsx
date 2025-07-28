@@ -4,7 +4,6 @@ import {
   Typography,
   Button,
   Container,
-  Grid,
   Card,
   CardContent,
   Chip,
@@ -43,8 +42,8 @@ const LandingPagePreview: React.FC = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={6}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4, alignItems: 'center' }}>
+            <Box>
               <Chip 
                 label="🚀 Next-Generation AI Exam Platform" 
                 sx={{ 
@@ -107,9 +106,9 @@ const LandingPagePreview: React.FC = () => {
                   </Button>
                 </Stack>
               </Box>
-            </Grid>
+            </Box>
 
-            <Grid item xs={12} md={6}>
+            <Box>
               <Card 
                 elevation={20} 
                 sx={{ 
@@ -122,23 +121,23 @@ const LandingPagePreview: React.FC = () => {
                 <Typography variant="h5" gutterBottom color="primary" textAlign="center" fontWeight="bold">
                   🎯 Platform Highlights
                 </Typography>
-                <Grid container spacing={3}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
                   {[
                     { value: '100+', label: 'AI-Generated Questions', color: '#FF6B6B' },
                     { value: '₹0', label: 'Transaction Fees', color: '#4CAF50' },
                     { value: '99.9%', label: 'System Uptime', color: '#2196F3' },
                     { value: '24/7', label: 'Support Available', color: '#9C27B0' }
                   ].map((stat, index) => (
-                    <Grid item xs={6} key={index}>
+                    <Box key={index}>
                       <Box textAlign="center">
                         <Typography variant="h3" fontWeight="bold" sx={{ color: stat.color, mb: 1 }}>
                           {stat.value}
                         </Typography>
                         <Typography variant="body1" fontWeight="medium">{stat.label}</Typography>
                       </Box>
-                    </Grid>
+                    </Box>
                   ))}
-                </Grid>
+                </Box>
                 
                 <Box textAlign="center" sx={{ mt: 3 }}>
                   <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 1 }}>
@@ -151,8 +150,8 @@ const LandingPagePreview: React.FC = () => {
                   </Typography>
                 </Box>
               </Card>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Container>
       </Box>
 
@@ -166,7 +165,7 @@ const LandingPagePreview: React.FC = () => {
             Select the portal that best fits your educational needs
           </Typography>
 
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
             {[
               {
                 title: 'Student Portal',
@@ -185,7 +184,7 @@ const LandingPagePreview: React.FC = () => {
                 platform: 'Web Portal'
               }
             ].map((category, index) => (
-              <Grid item xs={12} md={6} key={index}>
+              <Box key={index}>
                 <Card 
                   sx={{ 
                     height: '100%',
@@ -250,9 +249,9 @@ const LandingPagePreview: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
     </Box>

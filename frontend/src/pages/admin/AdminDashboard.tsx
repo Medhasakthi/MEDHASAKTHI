@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -199,8 +198,8 @@ const AdminDashboard: React.FC = () => {
         )}
 
         {/* Statistics Cards */}
-        <Grid container spacing={3} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+          <Box>
             <StatCard
               title="Total Users"
               value={stats.total_users || 0}
@@ -209,8 +208,8 @@ const AdminDashboard: React.FC = () => {
               trend={stats.users_trend}
               subtitle={`${stats.active_users || 0} active today`}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          </Box>
+          <Box>
             <StatCard
               title="Total Institutes"
               value={stats.total_institutes || 0}
@@ -219,8 +218,8 @@ const AdminDashboard: React.FC = () => {
               trend={stats.institutes_trend}
               subtitle={`${stats.active_institutes || 0} active`}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          </Box>
+          <Box>
             <StatCard
               title="Exams Conducted"
               value={stats.exams_conducted || 0}
@@ -229,8 +228,8 @@ const AdminDashboard: React.FC = () => {
               trend={stats.exams_trend}
               subtitle={`${stats.ongoing_exams || 0} ongoing`}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          </Box>
+          <Box>
             <StatCard
               title="System Uptime"
               value={`${stats.uptime_percentage || 99.9}%`}
@@ -239,48 +238,48 @@ const AdminDashboard: React.FC = () => {
               trend={stats.uptime_trend}
               subtitle={`${stats.uptime_days || 0} days`}
             />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
 
         {/* Quick Actions */}
         <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
           Quick Actions
         </Typography>
-        <Grid container spacing={3} sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
           {quickActions.map((action, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Box key={index}>
               <QuickActionCard {...action} />
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
 
         {/* Main Content Grid */}
-        <Grid container spacing={3}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
           {/* System Health Overview */}
-          <Grid item xs={12} md={6}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   System Health Overview
                 </Typography>
-                <Grid container spacing={2}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
                   {systemHealth?.services?.map((service: any, index: number) => (
-                    <Grid item xs={12} sm={6} key={index}>
+                    <Box key={index}>
                       <SystemHealthCard
                         name={service.name}
                         status={service.status}
                         responseTime={service.response_time}
                         lastCheck={service.last_check}
                       />
-                    </Grid>
+                    </Box>
                   ))}
-                </Grid>
+                </Box>
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Real-time Metrics */}
-          <Grid item xs={12} md={6}>
+          <Box>
             <Card>
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -306,10 +305,10 @@ const AdminDashboard: React.FC = () => {
                 />
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Active Users */}
-          <Grid item xs={12} md={6}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -375,10 +374,10 @@ const AdminDashboard: React.FC = () => {
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Recent System Events */}
-          <Grid item xs={12} md={6}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -428,17 +427,17 @@ const AdminDashboard: React.FC = () => {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Performance Summary */}
-          <Grid item xs={12}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Performance Summary
                 </Typography>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6} md={3}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+                  <Box>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="h4" color="primary">
                         {performance.avg_response_time || 0}ms
@@ -447,8 +446,8 @@ const AdminDashboard: React.FC = () => {
                         Avg Response Time
                       </Typography>
                     </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
+                  </Box>
+                  <Box>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="h4" color="success.main">
                         {performance.cache_hit_rate || 0}%
@@ -457,8 +456,8 @@ const AdminDashboard: React.FC = () => {
                         Cache Hit Rate
                       </Typography>
                     </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
+                  </Box>
+                  <Box>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="h4" color="warning.main">
                         {performance.error_rate || 0}%
@@ -467,8 +466,8 @@ const AdminDashboard: React.FC = () => {
                         Error Rate
                       </Typography>
                     </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
+                  </Box>
+                  <Box>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="h4" color="info.main">
                         {performance.throughput || 0}
@@ -477,12 +476,12 @@ const AdminDashboard: React.FC = () => {
                         Requests/min
                       </Typography>
                     </Paper>
-                  </Grid>
-                </Grid>
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
     </DashboardLayout>
   );

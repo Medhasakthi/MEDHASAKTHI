@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -312,9 +311,15 @@ const AIQuestionGenerator: React.FC = () => {
         AI Question Generator
       </Typography>
 
-      <Grid container spacing={3}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
+          gap: 3
+        }}
+      >
         {/* Generation Controls */}
-        <Grid item xs={12} md={4}>
+        <Box>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -467,10 +472,10 @@ const AIQuestionGenerator: React.FC = () => {
               </Button>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
         {/* Generated Questions */}
-        <Grid item xs={12} md={8}>
+        <Box>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <Typography variant="h6">
               Generated Questions ({generatedQuestions.length})
@@ -503,8 +508,8 @@ const AIQuestionGenerator: React.FC = () => {
               ))}
             </Box>
           )}
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Edit Question Dialog */}
       <Dialog open={editDialog} onClose={() => setEditDialog(false)} maxWidth="md" fullWidth>

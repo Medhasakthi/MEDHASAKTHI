@@ -4,7 +4,6 @@ import {
   Typography,
   Button,
   Container,
-  Grid,
   Card,
   CardContent,
   Chip,
@@ -327,8 +326,8 @@ const EnhancedLandingPage: React.FC = () => {
         />
 
         <Container maxWidth="lg">
-          <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={6}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 6, alignItems: 'center' }}>
+            <Box>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -397,8 +396,8 @@ const EnhancedLandingPage: React.FC = () => {
                   </Button>
                 </Box>
               </motion.div>
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Box>
+            <Box>
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -418,9 +417,9 @@ const EnhancedLandingPage: React.FC = () => {
                   <Typography variant="h5" gutterBottom color="primary" textAlign="center" fontWeight="bold">
                     🎯 Platform Highlights
                   </Typography>
-                  <Grid container spacing={3}>
+                  <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
                     {implementationStats.map((stat, index) => (
-                      <Grid item xs={6} key={index}>
+                      <Box key={index}>
                         <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
@@ -433,9 +432,9 @@ const EnhancedLandingPage: React.FC = () => {
                             <Typography variant="body1" fontWeight="medium">{stat.label}</Typography>
                           </Box>
                         </motion.div>
-                      </Grid>
+                      </Box>
                     ))}
-                  </Grid>
+                  </Box>
 
                   <Divider sx={{ my: 3 }} />
 
@@ -454,8 +453,8 @@ const EnhancedLandingPage: React.FC = () => {
                   </Box>
                 </Paper>
               </motion.div>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Container>
       </Box>
 
@@ -479,9 +478,9 @@ const EnhancedLandingPage: React.FC = () => {
           </Box>
         </motion.div>
         
-        <Grid container spacing={4}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
           {worldClassFeatures.map((feature, index) => (
-            <Grid item xs={12} md={6} key={index}>
+            <Box key={index}>
               <Card 
                 sx={{ 
                   height: '100%', 
@@ -515,9 +514,9 @@ const EnhancedLandingPage: React.FC = () => {
                   </Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       </Container>
 
       {/* Pricing Section */}
@@ -532,9 +531,9 @@ const EnhancedLandingPage: React.FC = () => {
             </Typography>
           </Box>
           
-          <Grid container spacing={4} justifyContent="center">
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 4, justifyContent: 'center' }}>
             {pricingPlans.map((plan, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Box key={index}>
                 <Card 
                   sx={{ 
                     height: '100%',
@@ -605,9 +604,9 @@ const EnhancedLandingPage: React.FC = () => {
                     </Button>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
 
@@ -622,9 +621,9 @@ const EnhancedLandingPage: React.FC = () => {
           </Typography>
         </Box>
         
-        <Grid container spacing={4}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
           {testimonials.map((testimonial, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Box key={index}>
               <Card sx={{ height: '100%' }} elevation={3}>
                 <CardContent sx={{ p: 4 }}>
                   <Box display="flex" alignItems="center" mb={2}>
@@ -646,9 +645,9 @@ const EnhancedLandingPage: React.FC = () => {
                   </Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       </Container>
 
       {/* FAQ Section */}
@@ -779,9 +778,9 @@ const EnhancedLandingPage: React.FC = () => {
           </Typography>
         </DialogTitle>
         <DialogContent sx={{ px: 4, pb: 4 }}>
-          <Grid container spacing={3}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
             {userCategories.map((category) => (
-              <Grid item xs={12} sm={6} key={category.id}>
+              <Box key={category.id}>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -816,9 +815,9 @@ const EnhancedLandingPage: React.FC = () => {
                     </CardContent>
                   </Card>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
 
           <Box sx={{ mt: 3, textAlign: 'center' }}>
             <Typography variant="body2" color="text.secondary">

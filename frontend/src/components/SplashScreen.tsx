@@ -85,7 +85,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
       opacity: 1, 
       rotate: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 260,
         damping: 20,
         duration: 1.2
@@ -100,13 +100,13 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
 
   const textVariants = {
     hidden: { y: 50, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       transition: {
         delay: 0.5,
         duration: 0.8,
-        ease: "easeOut"
+        ease: [0.17, 0.67, 0.83, 0.67] as const // Type assertion for cubic-bezier array
       }
     }
   };

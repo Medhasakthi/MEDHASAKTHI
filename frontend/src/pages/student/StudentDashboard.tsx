@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -147,8 +146,8 @@ const StudentDashboard: React.FC = () => {
         </Paper>
 
         {/* Statistics Cards */}
-        <Grid container spacing={3} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+          <Box>
             <StatCard
               title="Exams Taken"
               value={stats.exams_taken || 0}
@@ -156,8 +155,8 @@ const StudentDashboard: React.FC = () => {
               color="primary"
               trend={stats.exams_trend}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          </Box>
+          <Box>
             <StatCard
               title="Average Score"
               value={`${stats.average_score || 0}%`}
@@ -165,8 +164,8 @@ const StudentDashboard: React.FC = () => {
               color="success"
               trend={stats.score_trend}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          </Box>
+          <Box>
             <StatCard
               title="Certificates Earned"
               value={stats.certificates_earned || 0}
@@ -174,8 +173,8 @@ const StudentDashboard: React.FC = () => {
               color="warning"
               trend={stats.certificates_trend}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          </Box>
+          <Box>
             <StatCard
               title="Study Hours"
               value={`${stats.study_hours || 0}h`}
@@ -183,25 +182,25 @@ const StudentDashboard: React.FC = () => {
               color="info"
               trend={stats.study_trend}
             />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
 
         {/* Quick Actions */}
         <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
           Quick Actions
         </Typography>
-        <Grid container spacing={3} sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
           {quickActions.map((action, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Box key={index}>
               <QuickActionCard {...action} />
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
 
         {/* Main Content Grid */}
-        <Grid container spacing={3}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
           {/* Performance Chart */}
-          <Grid item xs={12} md={8}>
+          <Box>
             <Card>
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -227,10 +226,10 @@ const StudentDashboard: React.FC = () => {
                 />
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Subject Progress */}
-          <Grid item xs={12} md={4}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -266,10 +265,10 @@ const StudentDashboard: React.FC = () => {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Upcoming Exams */}
-          <Grid item xs={12} md={6}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -282,10 +281,10 @@ const StudentDashboard: React.FC = () => {
                 />
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Recent Activity */}
-          <Grid item xs={12} md={6}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -297,18 +296,18 @@ const StudentDashboard: React.FC = () => {
                 />
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
 
           {/* Study Recommendations */}
-          <Grid item xs={12}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Personalized Study Recommendations
                 </Typography>
-                <Grid container spacing={2}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
                   {dashboardData?.recommendations?.map((rec: any, index: number) => (
-                    <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Box key={index}>
                       <Paper
                         sx={{
                           p: 2,
@@ -342,13 +341,13 @@ const StudentDashboard: React.FC = () => {
                           </Button>
                         </Box>
                       </Paper>
-                    </Grid>
+                    </Box>
                   ))}
-                </Grid>
+                </Box>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
     </DashboardLayout>
   );
