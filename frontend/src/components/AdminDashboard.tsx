@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -28,6 +27,7 @@ import {
   Tabs,
   Tab
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {
   People as PeopleIcon,
   School as SchoolIcon,
@@ -245,7 +245,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
 
       {/* Dashboard Statistics */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <StatCard
             title="Total Users"
             value={stats?.totalUsers || 0}
@@ -254,7 +254,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
             trend={stats?.monthlyGrowth}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <StatCard
             title="Total Revenue"
             value={`₹${(stats?.totalRevenue || 0).toLocaleString()}`}
@@ -262,7 +262,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
             color="#2e7d32"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <StatCard
             title="Pending Verifications"
             value={stats?.pendingVerifications || 0}
@@ -270,7 +270,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ userRole }) => {
             color="#ed6c02"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
           <StatCard
             title="Active Exams"
             value={stats?.activeExams || 0}
