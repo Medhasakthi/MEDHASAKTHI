@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -428,51 +427,54 @@ const AdvancedBusinessIntelligence: React.FC = () => {
       )}
 
       {/* KPI Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Total Revenue"
-            value={`₹${metrics?.revenue.total.toLocaleString() || '0'}`}
-            change={metrics?.revenue.growth || 0}
-            icon={<MoneyIcon />}
-            color="#2e7d32"
-            prediction={15}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Active Users"
-            value={metrics?.users.active.toLocaleString() || '0'}
-            change={12}
-            icon={<GroupIcon />}
-            color="#1976d2"
-            prediction={8}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="Exam Completion"
-            value={`${metrics?.performance.examCompletion || 0}%`}
-            change={5}
-            icon={<AssessmentIcon />}
-            color="#ed6c02"
-            prediction={3}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <KPICard
-            title="User Satisfaction"
-            value={`${metrics?.performance.satisfaction || 0}%`}
-            change={7}
-            icon={<SpeedIcon />}
-            color="#9c27b0"
-            prediction={2}
-          />
-        </Grid>
-      </Grid>
+      <Box
+        sx={{
+          mb: 4,
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)'
+          },
+          gap: 3
+        }}
+      >
+        <KPICard
+          title="Total Revenue"
+          value={`₹${metrics?.revenue.total.toLocaleString() || '0'}`}
+          change={metrics?.revenue.growth || 0}
+          icon={<MoneyIcon />}
+          color="#2e7d32"
+          prediction={15}
+        />
+        <KPICard
+          title="Active Users"
+          value={metrics?.users.active.toLocaleString() || '0'}
+          change={12}
+          icon={<GroupIcon />}
+          color="#1976d2"
+          prediction={8}
+        />
+        <KPICard
+          title="Exam Completion"
+          value={`${metrics?.performance.examCompletion || 0}%`}
+          change={5}
+          icon={<AssessmentIcon />}
+          color="#ed6c02"
+          prediction={3}
+        />
+        <KPICard
+          title="User Satisfaction"
+          value={`${metrics?.performance.satisfaction || 0}%`}
+          change={7}
+          icon={<SpeedIcon />}
+          color="#9c27b0"
+          prediction={2}
+        />
+      </Box>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
+      <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} sx={{ mb: 3 }}>
         <Tab label="Predictive Analytics" icon={<TimelineIcon />} />
         <Tab label="AI Insights" icon={<PsychologyIcon />} />
         <Tab label="Performance Metrics" icon={<AnalyticsIcon />} />
@@ -481,117 +483,123 @@ const AdvancedBusinessIntelligence: React.FC = () => {
 
       {/* Predictive Analytics Tab */}
       {activeTab === 0 && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <Card>
-              <CardContent>
-                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                  <Typography variant="h6">Predictive Forecasting</Typography>
-                  <FormControl size="small">
-                    <Select
-                      value={predictiveModel}
-                      onChange={(e) => setPredictiveModel(e.target.value)}
-                    >
-                      <MenuItem value="revenue">Revenue Forecast</MenuItem>
-                      <MenuItem value="users">User Growth</MenuItem>
-                      <MenuItem value="performance">Performance Trends</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-                <PredictiveChart 
-                  data={metrics?.revenue.forecast || []} 
-                  type={predictiveModel}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
+            gap: 3
+          }}
+        >
+          <Card>
+            <CardContent>
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h6">Predictive Forecasting</Typography>
+                <FormControl size="small">
+                  <Select
+                    value={predictiveModel}
+                    onChange={(e) => setPredictiveModel(e.target.value)}
+                  >
+                    <MenuItem value="revenue">Revenue Forecast</MenuItem>
+                    <MenuItem value="users">User Growth</MenuItem>
+                    <MenuItem value="performance">Performance Trends</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <PredictiveChart
+                data={metrics?.revenue.forecast || []}
+                type={predictiveModel}
+              />
+            </CardContent>
+          </Card>
 
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>Prediction Confidence</Typography>
-                <Box sx={{ mb: 3 }}>
-                  <Typography variant="body2" gutterBottom>
-                    Revenue Forecast: 87%
-                  </Typography>
-                  <LinearProgress variant="determinate" value={87} sx={{ height: 8 }} />
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                  <Typography variant="body2" gutterBottom>
-                    User Growth: 92%
-                  </Typography>
-                  <LinearProgress variant="determinate" value={92} sx={{ height: 8 }} />
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                  <Typography variant="body2" gutterBottom>
-                    Performance: 78%
-                  </Typography>
-                  <LinearProgress variant="determinate" value={78} sx={{ height: 8 }} />
-                </Box>
-                
-                <Alert severity="info" sx={{ mt: 2 }}>
-                  <Typography variant="body2">
-                    Predictions based on 12 months of historical data using advanced ML models.
-                  </Typography>
-                </Alert>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>Prediction Confidence</Typography>
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="body2" gutterBottom>
+                  Revenue Forecast: 87%
+                </Typography>
+                <LinearProgress variant="determinate" value={87} sx={{ height: 8 }} />
+              </Box>
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="body2" gutterBottom>
+                  User Growth: 92%
+                </Typography>
+                <LinearProgress variant="determinate" value={92} sx={{ height: 8 }} />
+              </Box>
+              <Box sx={{ mb: 3 }}>
+                <Typography variant="body2" gutterBottom>
+                  Performance: 78%
+                </Typography>
+                <LinearProgress variant="determinate" value={78} sx={{ height: 8 }} />
+              </Box>
+
+              <Alert severity="info" sx={{ mt: 2 }}>
+                <Typography variant="body2">
+                  Predictions based on 12 months of historical data using advanced ML models.
+                </Typography>
+              </Alert>
+            </CardContent>
+          </Card>
+        </Box>
       )}
 
       {/* AI Insights Tab */}
       {activeTab === 1 && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
+            gap: 3
+          }}
+        >
+          <Box>
             <Typography variant="h6" gutterBottom>
               AI-Powered Business Insights
             </Typography>
             {aiInsights.map((insight) => (
               <AIInsightCard key={insight.id} insight={insight} />
             ))}
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>Insight Summary</Typography>
-                <Box display="flex" justifyContent="space-between" mb={2}>
-                  <Typography variant="body2">High Impact</Typography>
-                  <Chip 
-                    label={aiInsights.filter(i => i.impact === 'high').length} 
-                    color="error" 
-                    size="small" 
-                  />
-                </Box>
-                <Box display="flex" justifyContent="space-between" mb={2}>
-                  <Typography variant="body2">Medium Impact</Typography>
-                  <Chip 
-                    label={aiInsights.filter(i => i.impact === 'medium').length} 
-                    color="warning" 
-                    size="small" 
-                  />
-                </Box>
-                <Box display="flex" justifyContent="space-between" mb={2}>
-                  <Typography variant="body2">Low Impact</Typography>
-                  <Chip 
-                    label={aiInsights.filter(i => i.impact === 'low').length} 
-                    color="info" 
-                    size="small" 
-                  />
-                </Box>
-                
-                <Typography variant="body2" sx={{ mt: 2 }}>
-                  <strong>Actionable Insights:</strong> {aiInsights.filter(i => i.actionable).length}
-                </Typography>
-                
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  <strong>Average Confidence:</strong> {Math.round(aiInsights.reduce((sum, i) => sum + i.confidence, 0) / aiInsights.length || 0)}%
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>Insight Summary</Typography>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="body2">High Impact</Typography>
+                <Chip
+                  label={aiInsights.filter(i => i.impact === 'high').length}
+                  color="error"
+                  size="small"
+                />
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="body2">Medium Impact</Typography>
+                <Chip
+                  label={aiInsights.filter(i => i.impact === 'medium').length}
+                  color="warning"
+                  size="small"
+                />
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="body2">Low Impact</Typography>
+                <Chip
+                  label={aiInsights.filter(i => i.impact === 'low').length}
+                  color="info"
+                  size="small"
+                />
+              </Box>
+
+              <Typography variant="body2" sx={{ mt: 2 }}>
+                <strong>Actionable Insights:</strong> {aiInsights.filter(i => i.actionable).length}
+              </Typography>
+
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                <strong>Average Confidence:</strong> {Math.round(aiInsights.reduce((sum, i) => sum + i.confidence, 0) / aiInsights.length || 0)}%
+              </Typography>
+            </CardContent>
+          </Card>
+        </Box>
       )}
     </Box>
   );
