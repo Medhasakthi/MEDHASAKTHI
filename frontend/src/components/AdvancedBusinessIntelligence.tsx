@@ -43,7 +43,7 @@ import {
   Insights as InsightsIcon,
   Psychology as PsychologyIcon,
   Speed as SpeedIcon,
-  Target as TargetIcon,
+  GpsFixed as TargetIcon,
   MonetizationOn as MoneyIcon,
   School as SchoolIcon,
   Group as GroupIcon,
