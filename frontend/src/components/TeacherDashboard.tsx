@@ -359,13 +359,14 @@ const TeacherDashboard: React.FC = () => {
             </Card>
 
             {/* Student Performance Overview */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' }, gap: 3 }}>
               {/* Top Performers */}
-              <div className="bg-white rounded-lg shadow">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900">Top Performers</h3>
-                </div>
-                <div className="p-6">
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Top Performers
+                  </Typography>
+                  <Box>
                   {topPerformers.length > 0 ? (
                     <div className="space-y-4">
                       {topPerformers.slice(0, 5).map((student, index) => (
@@ -391,17 +392,21 @@ const TeacherDashboard: React.FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-gray-500 text-center py-4">No performance data available</p>
+                    <Typography variant="body2" color="text.secondary" align="center" sx={{ py: 2 }}>
+                      No performance data available
+                    </Typography>
                   )}
-                </div>
-              </div>
+                  </Box>
+                </CardContent>
+              </Card>
 
               {/* Students Needing Attention */}
-              <div className="bg-white rounded-lg shadow">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900">Needs Attention</h3>
-                </div>
-                <div className="p-6">
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Needs Attention
+                  </Typography>
+                  <Box>
                   {needsAttention.length > 0 ? (
                     <div className="space-y-4">
                       {needsAttention.slice(0, 5).map((student) => (
@@ -420,12 +425,15 @@ const TeacherDashboard: React.FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-gray-500 text-center py-4">All students performing well!</p>
+                    <Typography variant="body2" color="text.secondary" align="center" sx={{ py: 2 }}>
+                      All students performing well!
+                    </Typography>
                   )}
-                </div>
-              </div>
-            </div>
-          </div>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Box>
+          </Box>
         )}
 
         {/* Classes Tab */}
