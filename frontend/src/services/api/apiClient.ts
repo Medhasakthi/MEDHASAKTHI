@@ -31,10 +31,7 @@ apiClient.interceptors.request.use(
     (config as any).metadata = { startTime: new Date() };
 
     // Add correlation ID for request tracking
-    config.headers = {
-      ...config.headers,
-      'X-Correlation-ID': generateCorrelationId(),
-    };
+    config.headers['X-Correlation-ID'] = generateCorrelationId();
 
     return config;
   },

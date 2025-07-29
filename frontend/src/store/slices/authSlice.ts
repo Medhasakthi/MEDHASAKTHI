@@ -271,9 +271,9 @@ const authSlice = createSlice({
           state.error = null;
         } else {
           state.user = action.payload.user;
-          state.token = action.payload.access_token;
-          state.refreshToken = action.payload.refresh_token;
-          state.deviceSession = action.payload.device_session_id;
+          state.token = action.payload.access_token || null;
+          state.refreshToken = action.payload.refresh_token || null;
+          state.deviceSession = action.payload.device_session_id || null;
           state.isAuthenticated = true;
           state.requires2FA = false;
           state.requiresDeviceVerification = false;
@@ -306,7 +306,7 @@ const authSlice = createSlice({
     // Refresh token
     builder
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
-        state.token = action.payload.access_token;
+        state.token = action.payload.access_token || null;
         if (action.payload.refresh_token) {
           state.refreshToken = action.payload.refresh_token;
         }
