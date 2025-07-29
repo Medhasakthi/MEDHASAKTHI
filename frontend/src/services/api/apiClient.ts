@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { store } from '../../store/store';
 import { refreshAccessToken, clearAuthState } from '../../store/slices/authSlice';
 import toast from 'react-hot-toast';
@@ -18,7 +18,7 @@ const apiClient: AxiosInstance = axios.create({
 
 // Request interceptor
 apiClient.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     // Add auth token to requests
     const state = store.getState();
     const token = state.auth.token;
@@ -28,7 +28,7 @@ apiClient.interceptors.request.use(
     }
 
     // Add request timestamp for performance monitoring
-    config.metadata = { startTime: new Date() };
+    (config as any).metadata = { startTime: new Date() };
 
     // Add correlation ID for request tracking
     config.headers = {
