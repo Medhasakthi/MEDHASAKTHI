@@ -262,13 +262,15 @@ const UserFeedbackSystem: React.FC = () => {
       </Fab>
 
       {/* Feedback Dialog */}
-      <Dialog 
-        open={open} 
-        onClose={() => setOpen(false)} 
-        maxWidth="md" 
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        maxWidth="md"
         fullWidth
         TransitionComponent={Slide}
-        TransitionProps={{ direction: 'up' }}
+        slotProps={{
+          transition: { direction: 'up' }
+        }}
       >
         <DialogTitle>
           <Box display="flex" alignItems="center" justifyContent="space-between">
