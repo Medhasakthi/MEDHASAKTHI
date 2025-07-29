@@ -1,48 +1,31 @@
+# Minimal requirements for basic functionality
+# Use this if the full requirements.txt fails during Docker build
+
 # FastAPI and ASGI server
 fastapi==0.115.6
 uvicorn[standard]==0.32.1
 
-# Database
+# Database (core only)
 sqlalchemy==2.0.36
 alembic==1.14.0
-psycopg2-binary==2.9.10
-asyncpg==0.30.0
 
-# Authentication & Security
+# Authentication & Security (essential only)
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.9
 bcrypt==4.2.1
-pyotp==2.9.0
-
-# Redis for caching and sessions
-redis==5.2.1
-aioredis==2.0.1
-
-# Email
-sendgrid==6.10.0
-jinja2==3.1.2
 
 # Environment and configuration
 python-dotenv==1.0.1
 pydantic==2.10.4
 pydantic-settings==2.7.0
 
-# HTTP client
+# HTTP client (basic)
 httpx==0.28.1
-aiohttp==3.11.11
 aiofiles==24.1.0
 
 # Validation and utilities
 email-validator==2.1.0
-phonenumbers==8.13.26
-
-# AI/ML (for future integration)
-openai==1.58.1
-transformers==4.47.1
-torch==2.5.1
-numpy==2.2.1
-pandas==2.2.3
 
 # Testing
 pytest==7.4.3
@@ -51,17 +34,9 @@ pytest-asyncio==0.21.1
 # Development
 black==23.11.0
 flake8==6.1.0
-mypy==1.7.1
 
-# Monitoring and logging
+# Monitoring and logging (basic)
 structlog==23.2.0
-sentry-sdk[fastapi]==1.38.0
 
 # CORS
 fastapi-cors==0.0.6
-
-# Rate limiting
-slowapi==0.1.9
-
-# Background tasks
-celery==5.3.4

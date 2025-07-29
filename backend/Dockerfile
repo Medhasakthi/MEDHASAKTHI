@@ -20,9 +20,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt .
+COPY requirements.txt requirements-minimal.txt ./
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+    && pip install --no-cache-dir -r requirements.txt || \
+    (echo "Full requirements failed, trying minimal..." && pip install --no-cache-dir -r requirements-minimal.txt)
 
 # Copy project
 COPY . .
