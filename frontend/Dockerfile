@@ -7,32 +7,40 @@ FROM node:18-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies with legacy peer deps to resolve conflicts
+# Set environment variables for build
 ENV HUSKY=0
 ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
+ENV GENERATE_SOURCEMAP=false
+ENV REACT_APP_API_URL=/api
+ENV REACT_APP_APP_NAME=MEDHASAKTHI
+ENV REACT_APP_STUDENT_URL=https://student.medhasakthi.com
+ENV REACT_APP_TEACHER_URL=https://teacher.medhasakthi.com
+ENV REACT_APP_ADMIN_URL=https://admin.medhasakthi.com
+ENV REACT_APP_LEARN_URL=https://learn.medhasakthi.com
 
-# Clear npm cache and ensure clean install
-RUN npm cache clean --force
-RUN rm -rf node_modules package-lock.json
-
-# Clean install with force to resolve dependency conflicts
-RUN npm install --legacy-peer-deps --no-audit --no-fund
-
-# Install missing dependencies explicitly
-RUN npm install ajv@^8.12.0 ajv-keywords@^5.1.0 --legacy-peer-deps
-
-# Verify react-scripts is installed
-RUN which react-scripts || ls -la node_modules/.bin/react-scripts || echo "react-scripts not found in PATH"
+# Install dependencies first
+COPY package*.json ./
+RUN npm cache clean --force && \
+    npm install --legacy-peer-deps --no-audit --no-fund --production=false
 
 # Copy source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Create environment file for build
+RUN echo "REACT_APP_API_URL=/api" > .env.local && \
+    echo "REACT_APP_APP_NAME=MEDHASAKTHI" >> .env.local && \
+    echo "REACT_APP_STUDENT_URL=https://student.medhasakthi.com" >> .env.local && \
+    echo "REACT_APP_TEACHER_URL=https://teacher.medhasakthi.com" >> .env.local && \
+    echo "REACT_APP_ADMIN_URL=https://admin.medhasakthi.com" >> .env.local && \
+    echo "REACT_APP_LEARN_URL=https://learn.medhasakthi.com" >> .env.local
+
+# Build the application with better error handling
+RUN set -e && \
+    echo "Starting React build..." && \
+    npm run build && \
+    echo "Build completed successfully" && \
+    ls -la build/
 
 # Stage 2: Production stage
 FROM nginx:alpine AS production
