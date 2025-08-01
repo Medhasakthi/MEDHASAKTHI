@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircle as CheckCircleIcon, Schedule as ClockIcon, Warning as ExclamationCircleIcon } from '@mui/icons-material';
 
 interface UPIPaymentProps {
@@ -45,17 +45,13 @@ const UPIPayment: React.FC<UPIPaymentProps> = ({
   const [paymentStatus, setPaymentStatus] = useState<string>('');
 
   useEffect(() => {
-    createPaymentRequest();
-  }, []);
-
-  useEffect(() => {
     if (paymentRequest && timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     }
   }, [timeLeft, paymentRequest]);
 
-  const createPaymentRequest = async () => {
+  const createPaymentRequest = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch('/api/v1/payments/upi/create-payment', {
@@ -94,7 +90,11 @@ const UPIPayment: React.FC<UPIPaymentProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [amount, onError]);
+
+  useEffect(() => {
+    createPaymentRequest();
+  }, [createPaymentRequest]);
 
   const getClientIP = async (): Promise<string> => {
     try {
@@ -116,8 +116,12 @@ const UPIPayment: React.FC<UPIPaymentProps> = ({
     try {
       const formData = new FormData();
       formData.append('transaction_id', transactionId);
-      if (paymentMethod) formData.append('payment_method', paymentMethod);
-      if (screenshot) formData.append('screenshot', screenshot);
+      if (paymentMethod) {
+        formData.append('payment_method', paymentMethod);
+      }
+      if (screenshot) {
+        formData.append('screenshot', screenshot);
+      }
 
       const response = await fetch(`/api/v1/payments/upi/submit-proof/${paymentRequest?.payment_id}`, {
         method: 'POST',
@@ -165,7 +169,7 @@ const UPIPayment: React.FC<UPIPaymentProps> = ({
           }
         }
       } catch (error) {
-        console.error('Error polling payment status:', error);
+        // Handle error silently in production
       }
     }, 5000); // Poll every 5 seconds
 

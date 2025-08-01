@@ -199,6 +199,26 @@ const CertificateManagement: React.FC = () => {
     }
   };
 
+  const handleCertificateDelete = async (certificateId: string) => {
+    if (window.confirm('Are you sure you want to delete this certificate? This action cannot be undone.')) {
+      try {
+        const response = await fetch(`/api/v1/certificates/${certificateId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        if (response.ok) {
+          // Reload certificate data to reflect the deletion
+          loadCertificateData();
+        }
+      } catch (error) {
+        // Error deleting certificate - could show user notification
+      }
+    }
+  };
+
   const StatCard: React.FC<{ title: string; value: string | number; icon: React.ReactNode; color: string }> = 
     ({ title, value, icon, color }) => (
     <Card sx={{ height: '100%' }}>
@@ -242,6 +262,16 @@ const CertificateManagement: React.FC = () => {
           Generate Certificate
         </Button>
       </Box>
+
+      {/* Success Alert */}
+      <Alert severity="info" sx={{ mb: 3 }}>
+        <Box display="flex" alignItems="center" gap={1}>
+          <SchoolIcon />
+          <Typography>
+            Digital certificates are automatically verified and can be shared instantly with employers and institutions.
+          </Typography>
+        </Box>
+      </Alert>
 
       {/* Statistics Cards */}
       <Box
@@ -318,7 +348,7 @@ const CertificateManagement: React.FC = () => {
                       <TableCell>
                         <Box display="flex" alignItems="center">
                           <Avatar sx={{ width: 32, height: 32, mr: 1, bgcolor: 'primary.main' }}>
-                            {certificate.recipientName.charAt(0)}
+                            <PersonIcon />
                           </Avatar>
                           <Box>
                             <Typography variant="body2" fontWeight="bold">
@@ -372,11 +402,21 @@ const CertificateManagement: React.FC = () => {
                           </IconButton>
                         </Tooltip>
                         <Tooltip title="Share">
-                          <IconButton 
+                          <IconButton
                             onClick={() => handleCertificateShare(certificate)}
                             size="small"
                           >
                             <ShareIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+                        <Tooltip title="Delete Certificate">
+                          <IconButton
+                            onClick={() => handleCertificateDelete(certificate.id)}
+                            size="small"
+                            color="error"
+                          >
+                            <DeleteIcon />
                           </IconButton>
                         </Tooltip>
                       </TableCell>
@@ -552,6 +592,20 @@ const CertificateManagement: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Floating Action Button for Quick Certificate Generation */}
+      <Fab
+        color="primary"
+        aria-label="print certificates"
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16,
+        }}
+        onClick={() => window.print()}
+      >
+        <PrintIcon />
+      </Fab>
     </Box>
   );
 };

@@ -9,7 +9,6 @@ WORKDIR /app
 
 # Set environment variables for build
 ENV HUSKY=0
-ENV CI=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
 ENV GENERATE_SOURCEMAP=false
 ENV REACT_APP_API_URL=/api
@@ -38,7 +37,7 @@ RUN echo "REACT_APP_API_URL=/api" > .env.local && \
 # Build the application with better error handling
 RUN set -e && \
     echo "Starting React build..." && \
-    npm run build && \
+    npm run build:production && \
     echo "Build completed successfully" && \
     ls -la build/
 

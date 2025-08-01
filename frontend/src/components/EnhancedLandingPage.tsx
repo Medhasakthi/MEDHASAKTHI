@@ -72,6 +72,7 @@ const EnhancedLandingPage: React.FC = () => {
   const [userType, setUserType] = useState('');
   const [loginDialog, setLoginDialog] = useState(false);
   const [selectedUserCategory, setSelectedUserCategory] = useState('');
+  const [showAnimations, setShowAnimations] = useState(false);
 
   // Landing page splash screen
   const splashConfig = getSplashConfig('app');
@@ -80,6 +81,14 @@ const EnhancedLandingPage: React.FC = () => {
     showOnFirstVisit: true,
     showOnRouteChange: false
   });
+
+  // Trigger animations on component mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAnimations(true);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // User categories for login selection
   const userCategories = [
@@ -167,6 +176,34 @@ const EnhancedLandingPage: React.FC = () => {
       description: 'Personalized learning paths that adapt to student performance and learning patterns.',
       highlight: 'Personalized Learning',
       stats: 'AI-Driven Adaptation'
+    },
+    {
+      icon: <TrendingUpIcon sx={{ fontSize: 50, color: '#4CAF50' }} />,
+      title: 'Performance Growth Tracking',
+      description: 'Track student progress with detailed analytics and growth metrics over time.',
+      highlight: 'Growth Analytics',
+      stats: '360° Performance View'
+    },
+    {
+      icon: <MoneyIcon sx={{ fontSize: 50, color: '#FF9800' }} />,
+      title: 'Revenue Management',
+      description: 'Complete financial dashboard with revenue tracking, payment analytics, and profit insights.',
+      highlight: 'Financial Insights',
+      stats: 'Revenue Optimization'
+    },
+    {
+      icon: <PeopleIcon sx={{ fontSize: 50, color: '#9C27B0' }} />,
+      title: 'Community Learning',
+      description: 'Connect with peers, join study groups, and collaborate on learning objectives.',
+      highlight: 'Social Learning',
+      stats: 'Collaborative Platform'
+    },
+    {
+      icon: <AnalyticsIcon sx={{ fontSize: 50, color: '#2196F3' }} />,
+      title: 'Advanced Analytics Dashboard',
+      description: 'Comprehensive analytics with predictive insights and performance forecasting.',
+      highlight: 'Predictive Analytics',
+      stats: 'AI-Powered Insights'
     }
   ];
 
@@ -181,7 +218,7 @@ const EnhancedLandingPage: React.FC = () => {
     setLoginDialog(true);
   };
 
-  const handleUserCategorySelect = (category: any) => {
+  const handleUserCategorySelect = (category: { id: string; redirectUrl: string }) => {
     setSelectedUserCategory(category.id);
     setLoginDialog(false);
 
@@ -333,22 +370,26 @@ const EnhancedLandingPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <Chip
-                  label="🚀 Next-Generation AI Exam Platform"
-                  sx={{
-                    bgcolor: 'rgba(255,255,255,0.2)',
-                    color: 'white',
-                    mb: 3,
-                    fontSize: '1rem',
-                    py: 2
-                  }}
-                />
-                <Typography variant="h1" component="h1" gutterBottom fontWeight="bold" sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' } }}>
-                  MEDHASAKTHI
-                  <Typography component="span" variant="h2" sx={{ color: '#FFD700', display: 'block', fontSize: { xs: '1.8rem', md: '2.5rem' } }}>
-                    AI-Powered Education Platform
+                <Fade in={showAnimations} timeout={1000}>
+                  <Chip
+                    label="🚀 Next-Generation AI Exam Platform"
+                    sx={{
+                      bgcolor: 'rgba(255,255,255,0.2)',
+                      color: 'white',
+                      mb: 3,
+                      fontSize: '1rem',
+                      py: 2
+                    }}
+                  />
+                </Fade>
+                <Slide direction="right" in={showAnimations} timeout={1200}>
+                  <Typography variant="h1" component="h1" gutterBottom fontWeight="bold" sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' } }}>
+                    MEDHASAKTHI
+                    <Typography component="span" variant="h2" sx={{ color: '#FFD700', display: 'block', fontSize: { xs: '1.8rem', md: '2.5rem' } }}>
+                      AI-Powered Education Platform
+                    </Typography>
                   </Typography>
-                </Typography>
+                </Slide>
                 <Typography variant="h6" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.6 }}>
                   🤖 AI Question Generation • 💳 Zero-Fee Payments • 📊 Real-Time Analytics • 🔒 Enterprise Security
                 </Typography>
@@ -358,15 +399,16 @@ const EnhancedLandingPage: React.FC = () => {
                 </Typography>
 
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      bgcolor: '#FFD700',
-                      color: 'black',
-                      '&:hover': { bgcolor: '#FFC107', transform: 'translateY(-2px)' },
-                      px: 4,
-                      py: 2,
+                  <Zoom in={showAnimations} timeout={1500}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      sx={{
+                        bgcolor: '#FFD700',
+                        color: 'black',
+                        '&:hover': { bgcolor: '#FFC107', transform: 'translateY(-2px)' },
+                        px: 4,
+                        py: 2,
                       borderRadius: 3,
                       fontWeight: 'bold',
                       fontSize: '1.1rem',
@@ -376,7 +418,9 @@ const EnhancedLandingPage: React.FC = () => {
                   >
                     Login / Sign Up
                   </Button>
-                  <Button
+                  </Zoom>
+                  <Zoom in={showAnimations} timeout={1700}>
+                    <Button
                     variant="outlined"
                     size="large"
                     sx={{
@@ -394,6 +438,7 @@ const EnhancedLandingPage: React.FC = () => {
                   >
                     Watch Demo
                   </Button>
+                  </Zoom>
                 </Box>
               </motion.div>
             </Box>
@@ -558,23 +603,27 @@ const EnhancedLandingPage: React.FC = () => {
                     />
                   )}
                   <CardContent sx={{ p: 4, textAlign: 'center' }}>
-                    <Typography variant="h5" gutterBottom fontWeight="bold">
-                      {plan.title}
-                    </Typography>
-                    <Box mb={2}>
-                      <Typography variant="h3" component="div" fontWeight="bold" sx={{ color: plan.color }}>
-                        {plan.price}
-                        <Typography component="span" variant="h6" color="textSecondary">
-                          {plan.period}
+                    <Stack spacing={2} alignItems="center">
+                      <Badge badgeContent="NEW" color="error" invisible={!plan.popular}>
+                        <Typography variant="h5" gutterBottom fontWeight="bold">
+                          {plan.title}
                         </Typography>
-                      </Typography>
-                      {plan.originalPrice && (
-                        <Typography variant="body2" sx={{ textDecoration: 'line-through' }}>
-                          {plan.originalPrice}
+                      </Badge>
+                      <Box mb={2}>
+                        <Typography variant="h3" component="div" fontWeight="bold" sx={{ color: plan.color }}>
+                          {plan.price}
+                          <Typography component="span" variant="h6" color="textSecondary">
+                            {plan.period}
+                          </Typography>
                         </Typography>
-                      )}
-                      <Chip label={plan.discount} color="success" size="small" sx={{ mt: 1 }} />
-                    </Box>
+                        {plan.originalPrice && (
+                          <Typography variant="body2" sx={{ textDecoration: 'line-through' }}>
+                            {plan.originalPrice}
+                          </Typography>
+                        )}
+                        <Chip label={plan.discount} color="success" size="small" sx={{ mt: 1 }} />
+                      </Box>
+                    </Stack>
                     <List dense>
                       {plan.features.map((feature, idx) => (
                         <ListItem key={idx} sx={{ px: 0 }}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -18,8 +18,6 @@ import {
   IconButton,
   InputAdornment,
   Chip,
-  Paper,
-
   Avatar,
   Dialog,
   DialogTitle,
@@ -49,8 +47,6 @@ import {
   Security as SecurityIcon,
   Sms as SmsIcon,
   QrCode as QrCodeIcon,
-  VpnKey as VpnKeyIcon,
-  CheckCircle as CheckCircleIcon,
   Send as SendIcon,
   Refresh as RefreshIcon,
   Timer as TimerIcon

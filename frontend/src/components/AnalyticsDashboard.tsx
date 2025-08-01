@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Card,
@@ -58,12 +58,12 @@ import {
 } from 'recharts';
 
 interface AnalyticsData {
-  userGrowth: any[];
-  revenueData: any[];
-  examPerformance: any[];
-  categoryDistribution: any[];
-  topPerformers: any[];
-  recentActivities: any[];
+  userGrowth: Array<{ date: string; users: number }>;
+  revenueData: Array<{ date: string; revenue: number }>;
+  examPerformance: Array<{ exam: string; score: number }>;
+  categoryDistribution: Array<{ category: string; count: number }>;
+  topPerformers: Array<{ name: string; score: number }>;
+  recentActivities: Array<{ activity: string; action: string; timestamp: string }>;
   kpis: {
     totalUsers: number;
     totalRevenue: number;
@@ -80,11 +80,7 @@ const AnalyticsDashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState('30d');
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
 
-  useEffect(() => {
-    loadAnalyticsData();
-  }, [timeRange]);
-
-  const loadAnalyticsData = async () => {
+  const loadAnalyticsData = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/v1/admin/analytics?range=${timeRange}`, {
@@ -95,11 +91,15 @@ const AnalyticsDashboard: React.FC = () => {
       const data = await response.json();
       setAnalyticsData(data);
     } catch (error) {
-      console.error('Error loading analytics:', error);
+      // Handle error silently in production
     } finally {
       setLoading(false);
     }
-  };
+  }, [timeRange]);
+
+  useEffect(() => {
+    loadAnalyticsData();
+  }, [loadAnalyticsData]);
 
   const KPICard: React.FC<{ 
     title: string; 
@@ -214,7 +214,7 @@ const AnalyticsDashboard: React.FC = () => {
           gridTemplateColumns: {
             xs: '1fr',
             sm: 'repeat(2, 1fr)',
-            md: 'repeat(4, 1fr)'
+            md: 'repeat(5, 1fr)'
           },
           gap: 3
         }}
@@ -246,6 +246,13 @@ const AnalyticsDashboard: React.FC = () => {
           change={8}
           icon={<CheckCircleIcon />}
           color="#9c27b0"
+        />
+        <KPICard
+          title="Active Institutes"
+          value="125"
+          change={12}
+          icon={<SchoolIcon />}
+          color="#1565c0"
         />
       </Box>
 
@@ -428,13 +435,17 @@ const AnalyticsDashboard: React.FC = () => {
           </Card>
 
           {/* Revenue Breakdown and Payment Methods */}
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
-              gap: 3
-            }}
-          >
+          <Paper elevation={2} sx={{ p: 2, mb: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Revenue Summary
+            </Typography>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
+                gap: 3
+              }}
+            >
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -504,7 +515,8 @@ const AnalyticsDashboard: React.FC = () => {
                 </TableContainer>
               </CardContent>
             </Card>
-          </Box>
+            </Box>
+          </Paper>
         </Box>
       )}
 

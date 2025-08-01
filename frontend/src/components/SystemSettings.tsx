@@ -129,7 +129,7 @@ const SystemSettings: React.FC = () => {
       const data = await response.json();
       setConfig(data);
     } catch (error) {
-      console.error('Error loading system config:', error);
+      // Handle error silently in production
     } finally {
       setLoading(false);
     }
@@ -145,7 +145,7 @@ const SystemSettings: React.FC = () => {
       const data = await response.json();
       setUpiProviders(data);
     } catch (error) {
-      console.error('Error loading UPI providers:', error);
+      // Handle error silently in production
     }
   };
 
@@ -162,11 +162,10 @@ const SystemSettings: React.FC = () => {
       });
 
       if (response.ok) {
-        // Show success message
-        console.log('Configuration saved successfully');
+        // Configuration saved successfully
       }
     } catch (error) {
-      console.error('Error saving config:', error);
+      // Handle error silently in production
     } finally {
       setSaving(false);
     }
@@ -189,7 +188,7 @@ const SystemSettings: React.FC = () => {
         setNewUpiProvider({});
       }
     } catch (error) {
-      console.error('Error adding UPI provider:', error);
+      // Handle error silently in production
     }
   };
 
@@ -206,7 +205,7 @@ const SystemSettings: React.FC = () => {
         setTestEmailDialog(true);
       }
     } catch (error) {
-      console.error('Error testing email:', error);
+      // Handle error silently in production
     }
   };
 

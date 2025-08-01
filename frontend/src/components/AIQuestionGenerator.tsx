@@ -209,13 +209,13 @@ const AIQuestionGenerator: React.FC = () => {
               <Chip 
                 label={question.difficultyLevel} 
                 size="small" 
-                color={getDifficultyColor(question.difficultyLevel) as any}
+                color={getDifficultyColor(question.difficultyLevel) as "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"}
               />
               {question.qualityScore && (
                 <Chip 
                   label={`Quality: ${question.qualityScore}%`} 
                   size="small" 
-                  color={getQualityColor(question.qualityScore) as any}
+                  color={getQualityColor(question.qualityScore) as "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"}
                 />
               )}
               <Chip 
@@ -361,7 +361,7 @@ const AIQuestionGenerator: React.FC = () => {
                   value={generationRequest.questionType}
                   onChange={(e) => setGenerationRequest({ 
                     ...generationRequest, 
-                    questionType: e.target.value as any
+                    questionType: e.target.value as string
                   })}
                 >
                   <MenuItem value="multiple_choice">Multiple Choice</MenuItem>

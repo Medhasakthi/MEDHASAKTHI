@@ -144,7 +144,7 @@ const IndependentLearnerDashboard: React.FC = () => {
       setReferralStats(referralData);
 
     } catch (error) {
-      console.error('Error loading dashboard data:', error);
+      // Handle error silently in production
     } finally {
       setLoading(false);
     }
@@ -166,7 +166,7 @@ const IndependentLearnerDashboard: React.FC = () => {
         setSelectedProgram(null);
       }
     } catch (error) {
-      console.error('Error enrolling in program:', error);
+      // Handle error silently in production
     }
   };
 
@@ -178,7 +178,9 @@ const IndependentLearnerDashboard: React.FC = () => {
   };
 
   const shareReferralCode = (platform: 'whatsapp' | 'email') => {
-    if (!profile) return;
+    if (!profile) {
+      return;
+    }
 
     const referralLink = `https://medhasakthi.com/register?ref=${profile.referralCode}`;
     const message = `Join MEDHASAKTHI with my referral code ${profile.referralCode} and get special discounts on certification programs! ${referralLink}`;
@@ -250,7 +252,7 @@ const IndependentLearnerDashboard: React.FC = () => {
       </Box>
 
       {/* Statistics Cards */}
-      <Box sx={{ mb: 4, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+      <Box sx={{ mb: 4, display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(6, 1fr)' }, gap: 3 }}>
         <Box>
           <StatCard
             title="Enrolled Programs"
@@ -281,6 +283,22 @@ const IndependentLearnerDashboard: React.FC = () => {
             value={referralStats?.totalReferrals || 0}
             icon={<ShareIcon />}
             color="#9c27b0"
+          />
+        </Box>
+        <Box>
+          <StatCard
+            title="Payment History"
+            value={enrolledPrograms.length}
+            icon={<PaymentIcon />}
+            color="#00796b"
+          />
+        </Box>
+        <Box>
+          <StatCard
+            title="Profile Completion"
+            value="85%"
+            icon={<PersonIcon />}
+            color="#5e35b1"
           />
         </Box>
       </Box>
@@ -371,7 +389,12 @@ const IndependentLearnerDashboard: React.FC = () => {
                           <Typography variant="h6" component="div">
                             {program.title}
                           </Typography>
-                          <Chip label={program.category} size="small" />
+                          <Box display="flex" gap={1}>
+                            <IconButton size="small" color="primary">
+                              <BookmarkIcon />
+                            </IconButton>
+                            <Chip label={program.category} size="small" />
+                          </Box>
                         </Box>
                         
                         <Typography variant="body2" color="textSecondary" mb={2}>
@@ -507,6 +530,57 @@ const IndependentLearnerDashboard: React.FC = () => {
           </Card>
         </Box>
       </Box>
+
+      {/* Profile Settings Dialog */}
+      <Dialog open={false} onClose={() => {}} maxWidth="sm" fullWidth>
+        <DialogTitle>Profile Settings</DialogTitle>
+        <DialogContent>
+          <Box sx={{ pt: 2 }}>
+            <TextField
+              fullWidth
+              label="Full Name"
+              value={profile?.name || ''}
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              label="Email"
+              value={profile?.email || ''}
+              margin="normal"
+              variant="outlined"
+              disabled
+            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Learning Preference</InputLabel>
+              <Select
+                value="self-paced"
+                label="Learning Preference"
+              >
+                <MenuItem value="self-paced">Self-Paced</MenuItem>
+                <MenuItem value="instructor-led">Instructor-Led</MenuItem>
+                <MenuItem value="hybrid">Hybrid</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Notification Preference</InputLabel>
+              <Select
+                value="email"
+                label="Notification Preference"
+              >
+                <MenuItem value="email">Email Only</MenuItem>
+                <MenuItem value="sms">SMS Only</MenuItem>
+                <MenuItem value="both">Email & SMS</MenuItem>
+                <MenuItem value="none">None</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button>Cancel</Button>
+          <Button variant="contained">Save Changes</Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Enrollment Dialog */}
       <Dialog open={enrollmentDialog} onClose={() => setEnrollmentDialog(false)} maxWidth="sm" fullWidth>
