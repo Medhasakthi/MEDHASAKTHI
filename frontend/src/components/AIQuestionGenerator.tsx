@@ -359,9 +359,9 @@ const AIQuestionGenerator: React.FC = () => {
                 <InputLabel>Question Type</InputLabel>
                 <Select
                   value={generationRequest.questionType}
-                  onChange={(e) => setGenerationRequest({ 
-                    ...generationRequest, 
-                    questionType: e.target.value as string
+                  onChange={(e) => setGenerationRequest({
+                    ...generationRequest,
+                    questionType: e.target.value as 'multiple_choice' | 'true_false' | 'short_answer'
                   })}
                 >
                   <MenuItem value="multiple_choice">Multiple Choice</MenuItem>
