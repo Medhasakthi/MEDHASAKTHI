@@ -132,7 +132,7 @@ const CertificateManagement: React.FC = () => {
       setStats(statsData);
 
     } catch (error) {
-      console.error('Error loading certificate data:', error);
+      // Error loading certificate data - could show user notification
     } finally {
       setLoading(false);
     }
@@ -155,7 +155,7 @@ const CertificateManagement: React.FC = () => {
         setNewCertificate({});
       }
     } catch (error) {
-      console.error('Error generating certificate:', error);
+      // Error generating certificate - could show user notification
     }
   };
 
@@ -179,7 +179,7 @@ const CertificateManagement: React.FC = () => {
         document.body.removeChild(a);
       }
     } catch (error) {
-      console.error('Error downloading certificate:', error);
+      // Error downloading certificate - could show user notification
     }
   };
 

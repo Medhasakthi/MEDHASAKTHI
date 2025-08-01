@@ -79,6 +79,10 @@ const ExamManagement: React.FC = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
   const [createDialog, setCreateDialog] = useState(false);
+  const [viewDialog, setViewDialog] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
+  const [settingsDialog, setSettingsDialog] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Exam management splash screen
   const splashConfig = getSplashConfig('exam-management');
@@ -102,7 +106,7 @@ const ExamManagement: React.FC = () => {
       const data = await response.json();
       setExams(data);
     } catch (error) {
-      console.error('Error loading exam data:', error);
+      setError('Failed to load exam data. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -196,13 +200,36 @@ const ExamManagement: React.FC = () => {
 
           <Box display="flex" gap={1} justifyContent="flex-end">
             <Tooltip title="View Details">
-              <IconButton size="small">
+              <IconButton
+                size="small"
+                onClick={() => {
+                  setSelectedExam(exam);
+                  setViewDialog(true);
+                }}
+              >
                 <ViewIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Edit">
-              <IconButton size="small">
+              <IconButton
+                size="small"
+                onClick={() => {
+                  setSelectedExam(exam);
+                  setEditDialog(true);
+                }}
+              >
                 <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Security Settings">
+              <IconButton
+                size="small"
+                onClick={() => {
+                  setSelectedExam(exam);
+                  setSettingsDialog(true);
+                }}
+              >
+                <SecurityIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Analytics">
@@ -334,10 +361,18 @@ const ExamManagement: React.FC = () => {
       >
         {exams
           .filter(exam => {
-            if (activeTab === 0) return true;
-            if (activeTab === 1) return exam.status === 'scheduled';
-            if (activeTab === 2) return exam.status === 'active';
-            if (activeTab === 3) return exam.status === 'completed';
+            if (activeTab === 0) {
+              return true;
+            }
+            if (activeTab === 1) {
+              return exam.status === 'scheduled';
+            }
+            if (activeTab === 2) {
+              return exam.status === 'active';
+            }
+            if (activeTab === 3) {
+              return exam.status === 'completed';
+            }
             return true;
           })
           .map((exam) => (
@@ -393,7 +428,7 @@ const ExamManagement: React.FC = () => {
                         <InputLabel>Exam Type</InputLabel>
                         <Select
                           value={newExam.examType || ''}
-                          onChange={(e) => setNewExam({ ...newExam, examType: e.target.value as any })}
+                          onChange={(e) => setNewExam({ ...newExam, examType: e.target.value as 'practice' | 'assessment' | 'final' | 'talent' })}
                         >
                           <MenuItem value="practice">Practice Test</MenuItem>
                           <MenuItem value="assessment">Assessment</MenuItem>
@@ -406,7 +441,7 @@ const ExamManagement: React.FC = () => {
                         <InputLabel>Difficulty</InputLabel>
                         <Select
                           value={newExam.difficulty || ''}
-                          onChange={(e) => setNewExam({ ...newExam, difficulty: e.target.value as any })}
+                          onChange={(e) => setNewExam({ ...newExam, difficulty: e.target.value as 'easy' | 'medium' | 'hard' })}
                         >
                           <MenuItem value="easy">Easy</MenuItem>
                           <MenuItem value="medium">Medium</MenuItem>
@@ -523,6 +558,144 @@ const ExamManagement: React.FC = () => {
           <Button onClick={() => setCreateDialog(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>
+
+      {/* View Exam Dialog */}
+      <Dialog open={viewDialog} onClose={() => setViewDialog(false)} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={2}>
+            <ViewIcon />
+            Exam Details: {selectedExam?.title}
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {selectedExam && (
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                {selectedExam.title}
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {selectedExam.description}
+              </Typography>
+              <Box display="flex" gap={2} mb={2}>
+                <Chip label={selectedExam.subject} />
+                <Chip label={selectedExam.difficulty} color="warning" />
+                <Chip label={selectedExam.examType} variant="outlined" />
+                <Chip label={selectedExam.status} color="primary" />
+              </Box>
+              <Divider sx={{ my: 2 }} />
+              <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={2}>
+                <Typography><strong>Duration:</strong> {selectedExam.duration} minutes</Typography>
+                <Typography><strong>Questions:</strong> {selectedExam.totalQuestions}</Typography>
+                <Typography><strong>Total Marks:</strong> {selectedExam.totalMarks}</Typography>
+                <Typography><strong>Enrolled Students:</strong> {selectedExam.enrolledStudents}</Typography>
+                <Typography><strong>Completed:</strong> {selectedExam.completedStudents}</Typography>
+                <Typography><strong>Average Score:</strong> {selectedExam.averageScore}%</Typography>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setViewDialog(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit Exam Dialog */}
+      <Dialog open={editDialog} onClose={() => setEditDialog(false)} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={2}>
+            <EditIcon />
+            Edit Exam: {selectedExam?.title}
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {selectedExam && (
+            <Box sx={{ mt: 2 }}>
+              <TextField
+                fullWidth
+                label="Exam Title"
+                value={selectedExam.title}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Description"
+                multiline
+                rows={3}
+                value={selectedExam.description}
+                margin="normal"
+              />
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Status</InputLabel>
+                <Select value={selectedExam.status}>
+                  <MenuItem value="draft">Draft</MenuItem>
+                  <MenuItem value="scheduled">Scheduled</MenuItem>
+                  <MenuItem value="active">Active</MenuItem>
+                  <MenuItem value="completed">Completed</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditDialog(false)}>Cancel</Button>
+          <Button variant="contained">Save Changes</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Security Settings Dialog */}
+      <Dialog open={settingsDialog} onClose={() => setSettingsDialog(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={2}>
+            <SecurityIcon />
+            Security Settings: {selectedExam?.title}
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {selectedExam && (
+            <Box sx={{ mt: 2 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={selectedExam.proctoring}
+                    icon={<SecurityIcon />}
+                    checkedIcon={<SecurityIcon />}
+                  />
+                }
+                label="Enable Proctoring"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={selectedExam.randomizeQuestions}
+                    icon={<SettingsIcon />}
+                    checkedIcon={<SettingsIcon />}
+                  />
+                }
+                label="Randomize Questions"
+              />
+              <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
+                Proctoring helps prevent cheating by monitoring student activity during the exam.
+                Question randomization ensures each student gets questions in a different order.
+              </Typography>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setSettingsDialog(false)}>Cancel</Button>
+          <Button variant="contained">Save Settings</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Error Alert */}
+      {error && (
+        <Alert
+          severity="error"
+          onClose={() => setError(null)}
+          sx={{ position: 'fixed', top: 16, right: 16, zIndex: 9999 }}
+        >
+          {error}
+        </Alert>
+      )}
     </Box>
   );
 };
