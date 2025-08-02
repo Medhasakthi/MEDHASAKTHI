@@ -40,7 +40,7 @@ def generate_api_documentation():
                 "description": "Staging server"
             },
             {
-                "url": "http://localhost:8000/api/v1",
+                "url": "http://localhost:8080/api/v1",
                 "description": "Development server"
             }
         ],
@@ -619,7 +619,7 @@ def generate_postman_collection(api_docs):
         "variable": [
             {
                 "key": "base_url",
-                "value": "http://localhost:8000/api/v1",
+                "value": "http://localhost:8080/api/v1",
                 "type": "string"
             },
             {

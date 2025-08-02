@@ -63,7 +63,7 @@ monitor_production() {
     print_header "Application Health"
     
     # Backend API
-    if curl -f -s http://localhost:8000/health >/dev/null; then
+    if curl -f -s http://localhost:8080/health >/dev/null; then
         print_status "Backend API: Healthy"
     else
         print_error "Backend API: Unhealthy"

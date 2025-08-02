@@ -121,7 +121,7 @@
       "prettier --write"
     ]
   },
-  "proxy": "http://localhost:8000",
+  "proxy": "http://localhost:8080",
   "homepage": ".",
   "engines": {
     "node": ">=16.0.0",

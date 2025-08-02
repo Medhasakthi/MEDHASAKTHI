@@ -60,8 +60,8 @@ echo "  2. Frontend: npm run dev:frontend"
 echo
 echo "Available URLs:"
 echo "  - Frontend:  http://localhost:3000"
-echo "  - Backend:   http://localhost:8000"
-echo "  - API Docs:  http://localhost:8000/docs"
+echo "  - Backend:   http://localhost:8080"
+echo "  - API Docs:  http://localhost:8080/docs"
 echo
 echo "To stop services: npm run dev:stop"
 echo "========================================"

@@ -78,8 +78,8 @@ chmod +x deploy.sh
 ## Step 3: Access Your Application
 
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
+- **Backend API**: http://localhost:8080
+- **API Docs**: http://localhost:8080/docs
 
 ## 🔧 Useful Commands
 

@@ -89,7 +89,7 @@ sleep 30
 print_info "Running health checks..."
 
 # Check backend
-if curl -f http://localhost:8000/health &> /dev/null; then
+if curl -f http://localhost:8080/health &> /dev/null; then
     print_status "Backend service is healthy"
 else
     print_warning "Backend service may not be ready yet"
@@ -107,8 +107,8 @@ echo -e "${GREEN}🎉 MEDHASAKTHI Deployment Complete!${NC}"
 echo ""
 echo "Access your application:"
 echo "  Frontend: http://localhost:3000"
-echo "  Backend API: http://localhost:8000"
-echo "  API Docs: http://localhost:8000/docs"
+echo "  Backend API: http://localhost:8080"
+echo "  API Docs: http://localhost:8080/docs"
 echo ""
 echo "To view logs: docker-compose logs -f"
 echo "To stop: docker-compose down"

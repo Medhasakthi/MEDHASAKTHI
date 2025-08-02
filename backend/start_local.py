@@ -68,8 +68,8 @@ def setup_local_environment():
 def start_server():
     """Start the FastAPI server"""
     print("\n🌟 Starting MEDHASAKTHI backend server...")
-    print("📍 Server will be available at: http://localhost:8000")
-    print("📚 API Documentation: http://localhost:8000/docs")
+    print("📍 Server will be available at: http://localhost:8080")
+    print("📚 API Documentation: http://localhost:8080/docs")
     print("🔄 Auto-reload enabled for development")
     print("\n" + "="*50)
     

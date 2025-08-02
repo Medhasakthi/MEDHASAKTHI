@@ -4,7 +4,7 @@ import { refreshAccessToken, clearAuthState } from '../../store/slices/authSlice
 import toast from 'react-hot-toast';
 
 // API configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 const API_TIMEOUT = 30000; // 30 seconds
 
 // Create axios instance

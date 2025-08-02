@@ -53,9 +53,9 @@ python main.py
 ```
 
 The API will be available at:
-- **API**: http://localhost:8000
-- **Documentation**: http://localhost:8000/docs
-- **Health Check**: http://localhost:8000/health
+- **API**: http://localhost:8080
+- **Documentation**: http://localhost:8080/docs
+- **Health Check**: http://localhost:8080/health
 
 ## 📚 API Documentation
 
@@ -142,7 +142,7 @@ pytest --cov=app
 ### Manual Testing
 ```bash
 # Test registration
-curl -X POST "http://localhost:8000/api/v1/auth/register" \
+curl -X POST "http://localhost:8080/api/v1/auth/register" \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
@@ -156,7 +156,7 @@ curl -X POST "http://localhost:8000/api/v1/auth/register" \
   }'
 
 # Test login
-curl -X POST "http://localhost:8000/api/v1/auth/login" \
+curl -X POST "http://localhost:8080/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",

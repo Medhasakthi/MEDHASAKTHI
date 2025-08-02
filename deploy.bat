@@ -71,7 +71,7 @@ REM Health checks
 echo ℹ️  Running health checks...
 
 REM Check backend
-curl -f http://localhost:8000/health >nul 2>&1
+curl -f http://localhost:8080/health >nul 2>&1
 if %errorlevel% equ 0 (
     echo ✅ Backend service is healthy
 ) else (
@@ -91,8 +91,8 @@ echo 🎉 MEDHASAKTHI Deployment Complete!
 echo.
 echo Access your application:
 echo   Frontend: http://localhost:3000
-echo   Backend API: http://localhost:8000
-echo   API Docs: http://localhost:8000/docs
+echo   Backend API: http://localhost:8080
+echo   API Docs: http://localhost:8080/docs
 echo.
 echo To view logs: docker-compose logs -f
 echo To stop: docker-compose down

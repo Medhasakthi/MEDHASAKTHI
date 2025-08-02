@@ -62,7 +62,7 @@ fi
 print_info "Checking health endpoints..."
 
 # Backend health check
-if curl -f -s http://localhost:8000/health >/dev/null; then
+if curl -f -s http://localhost:8080/health >/dev/null; then
     print_status "Backend health check passed"
 else
     print_error "Backend health check failed"

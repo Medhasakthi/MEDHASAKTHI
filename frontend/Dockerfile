@@ -11,7 +11,7 @@ WORKDIR /app
 ENV HUSKY=0
 ENV NODE_OPTIONS=--max-old-space-size=4096
 ENV GENERATE_SOURCEMAP=false
-ENV REACT_APP_API_URL=/api
+ENV REACT_APP_API_URL=http://localhost:8080/api
 ENV REACT_APP_APP_NAME=MEDHASAKTHI
 ENV REACT_APP_STUDENT_URL=https://student.medhasakthi.com
 ENV REACT_APP_TEACHER_URL=https://teacher.medhasakthi.com
@@ -27,7 +27,7 @@ RUN npm cache clean --force && \
 COPY . .
 
 # Create environment file for build
-RUN echo "REACT_APP_API_URL=/api" > .env.local && \
+RUN echo "REACT_APP_API_URL=http://localhost:8080/api" > .env.local && \
     echo "REACT_APP_APP_NAME=MEDHASAKTHI" >> .env.local && \
     echo "REACT_APP_STUDENT_URL=https://student.medhasakthi.com" >> .env.local && \
     echo "REACT_APP_TEACHER_URL=https://teacher.medhasakthi.com" >> .env.local && \

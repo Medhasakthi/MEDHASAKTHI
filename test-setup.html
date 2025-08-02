@@ -103,7 +103,7 @@
             <code>pip install -r requirements.txt</code><br>
             <code>copy .env.local .env</code><br>
             <code>python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload</code><br>
-            <small>Backend will be at: <strong>http://localhost:8000</strong></small>
+            <small>Backend will be at: <strong>http://localhost:8080</strong></small>
         </div>
 
         <div class="status success">
@@ -120,7 +120,7 @@
     <script>
         // Test if we can reach the backend
         setTimeout(() => {
-            fetch('http://localhost:8000/health')
+            fetch('http://localhost:8080/health')
                 .then(response => {
                     if (response.ok) {
                         document.body.innerHTML += '<div class="status success">✅ Backend is running!</div>';

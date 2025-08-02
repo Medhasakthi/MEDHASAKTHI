@@ -370,8 +370,8 @@ async def startup_message():
     print(f"📱 Application: {settings.APP_NAME}")
     print(f"🔢 Version: {settings.APP_VERSION}")
     print(f"🌍 Environment: {'Development' if settings.DEBUG else 'Production'}")
-    print(f"📚 Documentation: http://localhost:8000/docs" if settings.DEBUG else "📚 Documentation: Disabled in production")
-    print(f"🏥 Health Check: http://localhost:8000/health")
+    print(f"📚 Documentation: http://localhost:8080/docs" if settings.DEBUG else "📚 Documentation: Disabled in production")
+    print(f"🏥 Health Check: http://localhost:8080/health")
     print("="*60)
 
     # Start scaling scheduler
@@ -400,7 +400,7 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
+        port=8080,
         reload=settings.DEBUG,
         log_level="info"
     )

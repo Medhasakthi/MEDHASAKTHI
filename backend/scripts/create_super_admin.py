@@ -368,9 +368,9 @@ def main():
     print("4. Start onboarding institutes and learners")
     
     print("\n🌐 Access URLs:")
-    print("- Admin Panel: http://localhost:8000/admin")
-    print("- API Documentation: http://localhost:8000/docs")
-    print("- Health Check: http://localhost:8000/health")
+    print("- Admin Panel: http://localhost:8080/admin")
+    print("- API Documentation: http://localhost:8080/docs")
+    print("- Health Check: http://localhost:8080/health")
 
 
 if __name__ == "__main__":

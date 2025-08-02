@@ -7,9 +7,9 @@
 | Service | Status | URL | Description |
 |---------|--------|-----|-------------|
 | **Frontend** | ✅ Running | [http://localhost:3000](http://localhost:3000) | React app with Material-UI |
-| **Backend API** | ✅ Running | [http://localhost:8000](http://localhost:8000) | FastAPI with mock data |
-| **API Documentation** | ✅ Available | [http://localhost:8000/docs](http://localhost:8000/docs) | Interactive Swagger UI |
-| **Health Check** | ✅ Available | [http://localhost:8000/health](http://localhost:8000/health) | Service status |
+| **Backend API** | ✅ Running | [http://localhost:8080](http://localhost:8080) | FastAPI with mock data |
+| **API Documentation** | ✅ Available | [http://localhost:8080/docs](http://localhost:8080/docs) | Interactive Swagger UI |
+| **Health Check** | ✅ Available | [http://localhost:8080/health](http://localhost:8080/health) | Service status |
 
 ## 🔧 **What Was Fixed & Deployed**
 
@@ -36,9 +36,9 @@ Features: Full React application with updated dependencies
 
 ### **Backend API**
 ```
-URL: http://localhost:8000
-Docs: http://localhost:8000/docs
-Health: http://localhost:8000/health
+URL: http://localhost:8080
+Docs: http://localhost:8080/docs
+Health: http://localhost:8080/health
 ```
 
 ### **Available API Endpoints**
@@ -93,7 +93,7 @@ python simple_main.py
 
 ### **Immediate Development**
 1. **Test the frontend** at http://localhost:3000
-2. **Explore API docs** at http://localhost:8000/docs
+2. **Explore API docs** at http://localhost:8080/docs
 3. **Make changes** to see hot reload in action
 4. **Add features** as needed
 
@@ -123,7 +123,7 @@ python simple_main.py
 
 ### **Check Service Status**
 - Open `deployment-status.html` in browser
-- Or check manually: http://localhost:3000 and http://localhost:8000
+- Or check manually: http://localhost:3000 and http://localhost:8080
 
 ## 🎉 **Success Metrics**
 
@@ -148,6 +148,6 @@ python simple_main.py
 **🚀 Your MEDHASAKTHI application is now running locally and ready for development!**
 
 **Frontend**: http://localhost:3000  
-**Backend**: http://localhost:8000/docs
+**Backend**: http://localhost:8080/docs
 
 **Happy coding! 🎉**

@@ -31,7 +31,7 @@ class ApiService {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
     
     this.api = axios.create({
       baseURL: this.baseURL,

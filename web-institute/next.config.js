@@ -6,7 +6,7 @@ const nextConfig = {
 
   // Environment variables
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
     NEXT_PUBLIC_APP_NAME: 'MEDHASAKTHI Institute Portal',
     NEXT_PUBLIC_APP_VERSION: '1.0.0',
   },

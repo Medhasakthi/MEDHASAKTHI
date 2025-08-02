@@ -24,7 +24,7 @@ npm run install:all
 npm run dev:all
 
 # Option B: Start services individually
-npm run dev:backend    # Backend API (http://localhost:8000)
+npm run dev:backend    # Backend API (http://localhost:8080)
 npm run dev:frontend   # Frontend App (http://localhost:3000)
 npm run dev:web-institute  # Institute Portal (http://localhost:3001)
 npm run dev:web-student    # Student Portal (http://localhost:3002)
@@ -64,8 +64,8 @@ npm run build:all       # Build all applications
 | Service | URL | Description |
 |---------|-----|-------------|
 | Frontend | http://localhost:3000 | Main React application |
-| Backend API | http://localhost:8000 | FastAPI backend |
-| API Documentation | http://localhost:8000/docs | Swagger UI |
+| Backend API | http://localhost:8080 | FastAPI backend |
+| API Documentation | http://localhost:8080/docs | Swagger UI |
 | Institute Portal | http://localhost:3001 | Next.js institute app |
 | Student Portal | http://localhost:3002 | Next.js student app |
 | Database | localhost:5432 | PostgreSQL (admin/devpassword123) |

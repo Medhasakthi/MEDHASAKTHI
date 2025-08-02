@@ -121,10 +121,10 @@
                 Backend (FastAPI)
             </div>
             <div class="service-url">
-                <strong>API:</strong> <a href="http://localhost:8000" target="_blank">http://localhost:8000</a>
+                <strong>API:</strong> <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>
             </div>
             <div class="service-url">
-                <strong>Docs:</strong> <a href="http://localhost:8000/docs" target="_blank">http://localhost:8000/docs</a>
+                <strong>Docs:</strong> <a href="http://localhost:8080/docs" target="_blank">http://localhost:8080/docs</a>
             </div>
             <div>Status: <span id="backend-status">Installing dependencies...</span></div>
         </div>
@@ -200,7 +200,7 @@
             }
 
             // Check backend
-            const backendRunning = await checkService('http://localhost:8000');
+            const backendRunning = await checkService('http://localhost:8080');
             const backendService = document.getElementById('backend-service');
             const backendStatus = document.getElementById('backend-status');
             
@@ -219,7 +219,7 @@
         }
 
         function openBackendDocs() {
-            window.open('http://localhost:8000/docs', '_blank');
+            window.open('http://localhost:8080/docs', '_blank');
         }
 
         // Check services every 5 seconds

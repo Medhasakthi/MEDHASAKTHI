@@ -29,7 +29,7 @@ class ApiService {
 
   constructor() {
     this.baseURL = __DEV__ 
-      ? 'http://localhost:8000' 
+      ? 'http://localhost:8080' 
       : 'https://api.medhasakthi.com';
     
     this.api = axios.create({

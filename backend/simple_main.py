@@ -165,8 +165,8 @@ async def get_subjects():
 if __name__ == "__main__":
     import uvicorn
     print("🚀 Starting MEDHASAKTHI Backend (Simple Mode)")
-    print("📍 Server: http://localhost:8000")
-    print("📚 API Docs: http://localhost:8000/docs")
+    print("📍 Server: http://localhost:8080")
+    print("📚 API Docs: http://localhost:8080/docs")
     print("🔄 Auto-reload enabled")
     
     uvicorn.run(

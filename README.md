@@ -98,8 +98,8 @@ UPI_PRIMARY_ID=yourbusiness@paytm
 
 After deployment, access:
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Documentation**: http://localhost:8000/docs
+- **Backend API**: http://localhost:8080
+- **API Documentation**: http://localhost:8080/docs
 
 ---
 

@@ -46,7 +46,7 @@ services:
       - DEBUG=true
       - CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:3002
     ports:
-      - "8000:8000"
+      - "8080:8080"
     volumes:
       - ./backend:/app
       - ./backend/uploads:/app/uploads
@@ -56,7 +56,7 @@ services:
     networks:
       - medhasakthi-dev-network
     restart: unless-stopped
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 
 volumes:
   postgres_dev_data:
