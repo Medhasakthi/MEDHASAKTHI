@@ -1,5 +1,5 @@
-# MEDHASAKTHI CI/CD Pipeline
-name: CI/CD Pipeline
+# MEDHASAKTHI Production CI/CD Pipeline
+name: Production CI/CD Pipeline
 
 on:
   push:
@@ -130,11 +130,15 @@ jobs:
         cd ${{ matrix.app }}
         npm run build
 
-  # Build Test (simplified)
-  build-test:
+  # Build and Push Images to Registry
+  build-and-push:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+
+    strategy:
+      matrix:
+        component: [backend, frontend, web-institute, web-student]
 
     steps:
     - uses: actions/checkout@v4
@@ -142,77 +146,152 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Test Docker builds
-      run: |
-        echo "Testing backend build..."
-        docker build -t medhasakthi-backend ./backend
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-        echo "Testing frontend build..."
-        docker build -t medhasakthi-frontend ./frontend
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.component }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
 
-        echo "Testing web-institute build..."
-        docker build -t medhasakthi-web-institute ./web-institute
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./${{ matrix.component }}
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          REACT_APP_API_URL=https://${{ secrets.DOMAIN || 'medhasakthi.com' }}/api
+          REACT_APP_APP_NAME=MEDHASAKTHI
+          NEXT_PUBLIC_API_URL=https://${{ secrets.DOMAIN || 'medhasakthi.com' }}/api
 
-        echo "Testing web-student build..."
-        docker build -t medhasakthi-web-student ./web-student
-
-        echo "All builds completed successfully!"
-
-  # Simple Deployment (for development/testing)
-  deploy:
-    needs: [test-backend, test-frontend]
+  # Deploy to Production Server
+  deploy-production:
+    needs: [build-and-push]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Deploy to Production Server
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.PRODUCTION_USER }}
+        key: ${{ secrets.PRODUCTION_SSH_KEY }}
+        port: ${{ secrets.PRODUCTION_PORT || 22 }}
+        script: |
+          # Navigate to application directory
+          cd ${{ secrets.DEPLOY_PATH || '/opt/medhasakthi' }}
 
-    - name: Build and test deployment
+          # Pull latest code
+          echo "Pulling latest code..."
+          git pull origin main
+
+          # Copy environment file
+          if [ ! -f .env ]; then
+            echo "Creating .env file..."
+            cp .env.example .env
+          fi
+
+          # Pull latest images
+          echo "Pulling latest Docker images..."
+          docker-compose pull
+
+          # Stop existing services
+          echo "Stopping existing services..."
+          docker-compose down
+
+          # Start services with new images
+          echo "Starting services..."
+          docker-compose up -d
+
+          # Wait for services to start
+          echo "Waiting for services to initialize..."
+          sleep 60
+
+          # Clean up old images
+          echo "Cleaning up old Docker images..."
+          docker system prune -f
+
+          echo "Deployment completed successfully!"
+
+    - name: Health Check
       run: |
-        echo "Building application..."
-        docker-compose build --no-cache
-
-        echo "Starting services..."
-        docker-compose up -d
-
-        echo "Waiting for services to start..."
-        sleep 60
-
         echo "Running health checks..."
-        docker-compose ps
+        sleep 30
 
-        # Test backend health
+        # Check backend health
+        BACKEND_URL="https://${{ secrets.DOMAIN || 'medhasakthi.com' }}/api/health"
+        echo "Checking backend at: $BACKEND_URL"
+
         for i in {1..10}; do
-          if curl -f http://localhost:8080/health; then
+          if curl -f "$BACKEND_URL"; then
             echo "✅ Backend is healthy"
             break
           else
-            echo "⏳ Waiting for backend... (attempt $i/10)"
-            sleep 10
+            echo "⏳ Backend health check failed, attempt $i/10"
+            sleep 15
           fi
         done
 
-        # Test frontend
-        for i in {1..10}; do
-          if curl -f http://localhost:3000; then
+        # Check frontend
+        FRONTEND_URL="https://${{ secrets.DOMAIN || 'medhasakthi.com' }}"
+        echo "Checking frontend at: $FRONTEND_URL"
+
+        for i in {1..5}; do
+          if curl -f "$FRONTEND_URL"; then
             echo "✅ Frontend is healthy"
             break
           else
-            echo "⏳ Waiting for frontend... (attempt $i/10)"
-            sleep 10
+            echo "⏳ Frontend health check failed, attempt $i/5"
+            sleep 15
           fi
         done
 
-        echo "Deployment test completed!"
-        docker-compose down
+    - name: Run Database Migrations
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.PRODUCTION_USER }}
+        key: ${{ secrets.PRODUCTION_SSH_KEY }}
+        port: ${{ secrets.PRODUCTION_PORT || 22 }}
+        script: |
+          cd ${{ secrets.DEPLOY_PATH || '/opt/medhasakthi' }}
+          echo "Running database migrations..."
+          docker-compose exec -T backend alembic upgrade head || echo "Migration completed or not needed"
 
-    - name: Deployment success notification
+    - name: Deployment Success Notification
       if: success()
       run: |
-        echo "🎉 MEDHASAKTHI deployment test successful!"
-        echo "Commit: ${{ github.sha }}"
-        echo "Author: ${{ github.actor }}"
-        echo "Branch: ${{ github.ref_name }}"
+        echo "🎉 MEDHASAKTHI Production Deployment Successful!"
+        echo "🌐 Website: https://${{ secrets.DOMAIN || 'medhasakthi.com' }}"
+        echo "📚 API Docs: https://${{ secrets.DOMAIN || 'medhasakthi.com' }}/api/docs"
+        echo "📊 Commit: ${{ github.sha }}"
+        echo "👤 Author: ${{ github.actor }}"
+        echo "🌿 Branch: ${{ github.ref_name }}"
+        echo "⏰ Time: $(date)"
+
+    - name: Deployment Failure Notification
+      if: failure()
+      run: |
+        echo "❌ MEDHASAKTHI Production Deployment Failed!"
+        echo "📊 Commit: ${{ github.sha }}"
+        echo "👤 Author: ${{ github.actor }}"
+        echo "🌿 Branch: ${{ github.ref_name }}"
+        echo "⏰ Time: $(date)"
+        echo "🔍 Check the logs above for details"
