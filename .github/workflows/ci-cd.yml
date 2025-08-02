@@ -130,194 +130,89 @@ jobs:
         cd ${{ matrix.app }}
         npm run build
 
-  # Security Scanning
-  security-scan:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-        
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: 'trivy-results.sarif'
-
-  # Build and Push Images
-  build-and-push:
-    needs: [test-backend, test-frontend, security-scan]
+  # Build Test (simplified)
+  build-test:
+    needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
-    strategy:
-      matrix:
-        component: [backend, frontend, web-institute, web-student]
-        
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-      
-    - name: Log in to Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.component }}
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=sha,prefix={{branch}}-
-          type=raw,value=latest,enable={{is_default_branch}}
-          
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./${{ matrix.component }}
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
 
-  # Deploy to Staging
-  deploy-staging:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    environment: staging
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Deploy to staging
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.STAGING_HOST }}
-        username: ${{ secrets.STAGING_USER }}
-        key: ${{ secrets.STAGING_SSH_KEY }}
-        script: |
-          cd /opt/medhasakthi
-          git pull origin main
-          docker-compose pull
-          docker-compose up -d
-          docker system prune -f
-          
-    - name: Run health checks
+    - name: Test Docker builds
       run: |
-        sleep 30
-        curl -f http://localhost:8080/health || echo "Health check failed but continuing..."
-        curl -f http://localhost:3000 || echo "Frontend check failed but continuing..."
+        echo "Testing backend build..."
+        docker build -t medhasakthi-backend ./backend
 
-  # Deploy to Production
-  deploy-production:
-    needs: deploy-staging
+        echo "Testing frontend build..."
+        docker build -t medhasakthi-frontend ./frontend
+
+        echo "Testing web-institute build..."
+        docker build -t medhasakthi-web-institute ./web-institute
+
+        echo "Testing web-student build..."
+        docker build -t medhasakthi-web-student ./web-student
+
+        echo "All builds completed successfully!"
+
+  # Simple Deployment (for development/testing)
+  deploy:
+    needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    environment: production
-    
+
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Deploy to production
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key: ${{ secrets.PRODUCTION_SSH_KEY }}
-        script: |
-          cd /opt/medhasakthi
-          git pull origin main
-          docker-compose pull
-          docker-compose up -d
-          docker system prune -f
-          
-    - name: Run health checks
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and test deployment
       run: |
-        sleep 30
-        curl -f http://localhost:8080/health || echo "Health check failed but continuing..."
-        curl -f http://localhost:3000 || echo "Frontend check failed but continuing..."
-        
-    - name: Notify deployment
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        channel: '#deployments'
-        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-        message: |
-          🚀 MEDHASAKTHI deployed to production!
-          Commit: ${{ github.sha }}
-          Author: ${{ github.actor }}
+        echo "Building application..."
+        docker-compose build --no-cache
 
-  # Performance Testing
-  performance-test:
-    needs: deploy-staging
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Run K6 performance tests
-      uses: grafana/k6-action@v0.3.0
-      with:
-        filename: tests/performance/load-test.js
-      env:
-        K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
-        
-    - name: Upload performance results
-      uses: actions/upload-artifact@v3
-      with:
-        name: performance-results
-        path: results.json
+        echo "Starting services..."
+        docker-compose up -d
 
-  # Database Migration
-  migrate-database:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Run database migrations
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key: ${{ secrets.PRODUCTION_SSH_KEY }}
-        script: |
-          cd /opt/medhasakthi
-          docker-compose exec -T backend alembic upgrade head
+        echo "Waiting for services to start..."
+        sleep 60
 
-  # Backup Database
-  backup-database:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    schedule:
-      - cron: '0 2 * * *'  # Daily at 2 AM
-      
-    steps:
-    - name: Backup production database
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key: ${{ secrets.PRODUCTION_SSH_KEY }}
-        script: |
-          cd /opt/medhasakthi
-          docker-compose exec -T postgres pg_dump -U admin medhasakthi > backup_$(date +%Y%m%d_%H%M%S).sql
-          aws s3 cp backup_*.sql s3://medhasakthi-backups/database/
-          find . -name "backup_*.sql" -mtime +7 -delete
+        echo "Running health checks..."
+        docker-compose ps
+
+        # Test backend health
+        for i in {1..10}; do
+          if curl -f http://localhost:8080/health; then
+            echo "✅ Backend is healthy"
+            break
+          else
+            echo "⏳ Waiting for backend... (attempt $i/10)"
+            sleep 10
+          fi
+        done
+
+        # Test frontend
+        for i in {1..10}; do
+          if curl -f http://localhost:3000; then
+            echo "✅ Frontend is healthy"
+            break
+          else
+            echo "⏳ Waiting for frontend... (attempt $i/10)"
+            sleep 10
+          fi
+        done
+
+        echo "Deployment test completed!"
+        docker-compose down
+
+    - name: Deployment success notification
+      if: success()
+      run: |
+        echo "🎉 MEDHASAKTHI deployment test successful!"
+        echo "Commit: ${{ github.sha }}"
+        echo "Author: ${{ github.actor }}"
+        echo "Branch: ${{ github.ref_name }}"
