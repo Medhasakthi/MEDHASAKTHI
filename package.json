@@ -1,0 +1,42 @@
+{
+  "name": "medhasakthi",
+  "version": "1.0.0",
+  "description": "MEDHASAKTHI - World-Class Educational Technology Platform",
+  "private": true,
+  "scripts": {
+    "dev:setup": "npm run install:all",
+    "dev:backend": "cd backend && python -m uvicorn main:app --host 0.0.0.0 --port 8080 --reload",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:web-institute": "cd web-institute && npm run dev",
+    "dev:web-student": "cd web-student && npm run dev",
+    "dev:mobile": "cd mobile-admin && npm start",
+    "dev:frontend-only": "concurrently \"npm run dev:frontend\" \"npm run dev:web-institute\" \"npm run dev:web-student\"",
+    "install:all": "npm install && cd frontend && npm install && cd ../web-institute && npm install && cd ../web-student && npm install && cd ../mobile-admin && npm install",
+    "install:backend": "cd backend && pip install -r requirements.txt",
+    "build:all": "cd frontend && npm run build && cd ../web-institute && npm run build && cd ../web-student && npm run build",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && python -m pytest",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:all": "npm run lint:frontend",
+    "start:frontend": "npm run dev:frontend",
+    "start:backend": "npm run dev:backend",
+    "check:python": "python --version",
+    "check:node": "node --version"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "education",
+    "e-learning",
+    "talent-exam",
+    "ai-powered",
+    "full-stack"
+  ],
+  "author": "MEDHASAKTHI Team",
+  "license": "MIT"
+}

@@ -1,0 +1,180 @@
+{% extends "emails/base_template.html" %}
+
+{% block content %}
+<div class="greeting">
+    Dear {{ learner_name }},
+</div>
+
+<div class="message">
+    Welcome to <strong>MEDHASAKTHI</strong>! Your independent learner account has been successfully created. You're now part of our global community of learners pursuing professional certifications and skill development.
+</div>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #2c3e50;">Your Account Details</h3>
+    <table class="info-table">
+        <tr>
+            <th>Learner ID</th>
+            <td>{{ learner_id }}</td>
+        </tr>
+        <tr>
+            <th>Email Address</th>
+            <td>{{ email }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ category }}</td>
+        </tr>
+        <tr>
+            <th>Education Level</th>
+            <td>{{ education_level }}</td>
+        </tr>
+        <tr>
+            <th>Referral Code</th>
+            <td><strong>{{ referral_code }}</strong></td>
+        </tr>
+    </table>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">🎯 Your Learning Journey Starts Here</h3>
+    <ol style="padding-left: 20px;">
+        <li><strong>Verify your email</strong> by clicking the verification link</li>
+        <li><strong>Complete your profile</strong> for personalized recommendations</li>
+        <li><strong>Browse certification programs</strong> in your area of interest</li>
+        <li><strong>Check personalized pricing</strong> based on your category</li>
+        <li><strong>Register for your first certification</strong> and start learning</li>
+    </ol>
+</div>
+
+<div style="text-align: center;">
+    <a href="{{ verification_url }}" class="button">Verify Email & Get Started</a>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">🌟 What Makes MEDHASAKTHI Special</h3>
+    <ul style="padding-left: 20px;">
+        <li>🎓 <strong>Industry-Recognized Certifications:</strong> Boost your career prospects</li>
+        <li>💰 <strong>Flexible Pricing:</strong> Special rates based on your learner category</li>
+        <li>📚 <strong>Comprehensive Study Materials:</strong> Everything you need to succeed</li>
+        <li>🏆 <strong>Digital Certificates:</strong> Blockchain-verified and shareable</li>
+        <li>📊 <strong>Progress Tracking:</strong> Monitor your learning journey</li>
+        <li>💬 <strong>24/7 Support:</strong> Get help whenever you need it</li>
+        <li>🌐 <strong>Global Recognition:</strong> Certificates accepted worldwide</li>
+    </ul>
+</div>
+
+<div class="highlight-box" style="border-left-color: #27ae60; background-color: #f0fff4;">
+    <h4 style="margin-top: 0; color: #27ae60;">💸 Your Pricing Benefits</h4>
+    <p>As a <strong>{{ category }}</strong>, you're eligible for special pricing:</p>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+        {% if category == "School Student" or category == "College Student" %}
+        <li>🎓 <strong>Student Discount:</strong> Up to 30% off on all certifications</li>
+        <li>📖 <strong>Free Study Materials:</strong> Access to premium resources</li>
+        {% elif category == "Working Professional" %}
+        <li>💼 <strong>Professional Rates:</strong> Competitive pricing for career growth</li>
+        <li>⏰ <strong>Flexible Scheduling:</strong> Weekend and evening exam slots</li>
+        {% elif category == "Job Seeker" %}
+        <li>🔍 <strong>Job Seeker Special:</strong> Reduced rates to help you get hired</li>
+        <li>📝 <strong>Career Support:</strong> Resume enhancement tips included</li>
+        {% endif %}
+        <li>🔄 <strong>Retake Options:</strong> Affordable retake fees if needed</li>
+    </ul>
+</div>
+
+<div class="highlight-box" style="border-left-color: #f39c12; background-color: #fffbf0;">
+    <h4 style="margin-top: 0; color: #f39c12;">🎁 Referral Program</h4>
+    <p>Share your referral code and earn rewards:</p>
+    <div style="text-align: center; margin: 15px 0;">
+        <div style="background-color: #fff; border: 2px dashed #f39c12; padding: 15px; border-radius: 8px; display: inline-block;">
+            <strong style="font-size: 18px; color: #f39c12;">{{ referral_code }}</strong>
+        </div>
+    </div>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+        <li>💰 <strong>Earn ₹100</strong> for each successful referral</li>
+        <li>🎯 <strong>No Limit:</strong> Refer as many friends as you want</li>
+        <li>💳 <strong>Instant Credit:</strong> Bonus added to your account immediately</li>
+    </ul>
+    <p style="text-align: center; margin: 15px 0;">
+        <a href="{{ referral_link }}" style="color: #f39c12; text-decoration: none; font-weight: 600;">
+            Share Your Referral Link: {{ referral_link }}
+        </a>
+    </p>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">🚀 Popular Certification Programs</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #495057;">💻 Technology</h4>
+            <ul style="margin: 0; padding-left: 15px; font-size: 14px;">
+                <li>Web Development</li>
+                <li>Data Science</li>
+                <li>Cybersecurity</li>
+                <li>Cloud Computing</li>
+            </ul>
+        </div>
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px;">
+            <h4 style="margin: 0 0 10px 0; color: #495057;">📊 Business</h4>
+            <ul style="margin: 0; padding-left: 15px; font-size: 14px;">
+                <li>Digital Marketing</li>
+                <li>Project Management</li>
+                <li>Financial Analysis</li>
+                <li>Leadership Skills</li>
+            </ul>
+        </div>
+    </div>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="{{ programs_url }}" style="color: #667eea; text-decoration: none; font-weight: 600;">
+            View All Programs →
+        </a>
+    </div>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">📱 Payment Options</h3>
+    <p>We support multiple convenient payment methods:</p>
+    <ul style="padding-left: 20px;">
+        <li>💳 <strong>UPI Payments:</strong> PhonePe, Google Pay, Paytm, BHIM</li>
+        <li>🏦 <strong>Net Banking:</strong> All major banks supported</li>
+        <li>💰 <strong>Digital Wallets:</strong> Quick and secure payments</li>
+        <li>📱 <strong>Mobile Payments:</strong> Pay directly from your phone</li>
+    </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">🆘 Need Help Getting Started?</h3>
+    <p>Our support team is here to help you succeed:</p>
+    <ul style="padding-left: 20px;">
+        <li>📧 <strong>Email:</strong> <a href="mailto:learners@medhasakthi.com">learners@medhasakthi.com</a></li>
+        <li>📞 <strong>Phone:</strong> +91-XXX-XXX-XXXX (24/7 Support)</li>
+        <li>💬 <strong>Live Chat:</strong> Available on our website</li>
+        <li>📖 <strong>Help Center:</strong> <a href="{{ help_url }}">Comprehensive guides and FAQs</a></li>
+        <li>🎥 <strong>Video Tutorials:</strong> Step-by-step learning guides</li>
+    </ul>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">🎯 Next Steps</h3>
+    <div style="background-color: #e8f4fd; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db;">
+        <ol style="margin: 0; padding-left: 20px;">
+            <li><strong>Verify your email</strong> using the button above</li>
+            <li><strong>Complete your profile</strong> for better recommendations</li>
+            <li><strong>Browse our certification catalog</strong></li>
+            <li><strong>Choose your first certification program</strong></li>
+            <li><strong>Start your learning journey!</strong></li>
+        </ol>
+    </div>
+</div>
+
+<div class="message">
+    Welcome to the future of professional learning! We're excited to be part of your journey toward achieving your career goals and unlocking new opportunities.
+</div>
+
+<div class="message" style="margin-top: 30px; font-style: italic; color: #7f8c8d;">
+    Best regards,<br>
+    <strong>The MEDHASAKTHI Team</strong><br>
+    Your Partner in Professional Growth
+</div>
+{% endblock %}

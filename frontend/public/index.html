@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medhasakthi | Business IT Solutions</title>
+<style>
+    * {
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+    }
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fc;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Video Header */
+    header {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+    }
+    header video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -2;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+    }
+    header::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.55);
+        z-index: -1;
+    }
+    header h1 {
+        font-size: 3.5rem;
+        margin: 0;
+        animation: fadeDown 1.2s ease-out;
+    }
+    header p {
+        font-size: 1.3rem;
+        margin-top: 15px;
+        animation: fadeUp 1.2s ease-out;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 60px 20px;
+    }
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #005bea;
+    }
+    .fade-section {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    /* Services */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    .service-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .service-card img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 15px;
+    }
+
+    /* Why Choose Us */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    .feature-box {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    /* Process */
+    .process-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .step {
+        flex: 1 1 200px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    /* Testimonials */
+    .testimonials {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .testimonial {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        font-style: italic;
+    }
+
+    /* Tech Logos */
+    .tech-logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+    .tech-logos img {
+        height: 50px;
+        filter: grayscale(100%);
+        transition: filter 0.3s ease;
+    }
+    .tech-logos img:hover {
+        filter: grayscale(0%);
+    }
+
+    /* Contact */
+    .contact {
+        background: linear-gradient(135deg, #00c6fb, #005bea);
+        padding: 40px;
+        border-radius: 12px;
+        color: white;
+        text-align: center;
+    }
+
+    /* Footer */
+    footer {
+        background: #002c5f;
+        color: white;
+        padding: 40px 20px;
+    }
+    .footer-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+        max-width: 1100px;
+        margin: auto;
+    }
+    .footer-col {
+        flex: 1 1 250px;
+    }
+    .footer-col h4 {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #00c6fb;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.85rem;
+        color: #ccc;
+    }
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+    }
+    .footer-col ul li {
+        margin: 8px 0;
+    }
+    .footer-col ul li a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .footer-col ul li a:hover {
+        color: #00c6fb;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <!-- Background Video with poster fallback -->
+    <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1556761175-129418cb2dfe?auto=format&fit=crop&w=1500&q=80">
+        <source src="https://cdn.coverr.co/videos/coverr-business-team-in-office-9235/1080p.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div>
+        <h1>Medhasakthi</h1>
+        <p>Your Perfect Partner for Business IT Solutions</p>
+    </div>
+</header>
+
+<div class="container">
+    <section class="about fade-section">
+        <h2>About Us</h2>
+        <p>At <strong>Medhasakthi</strong>, we believe innovation fuels growth. As a dynamic startup, we provide tailor-made IT solutions that help businesses transform, compete, and thrive in the digital era. Led by our visionary Managing Director, <strong>Giridhar Reddy</strong>, we combine cutting-edge technology with strategic thinking to deliver measurable results.</p>
+        <p>From concept to execution, we ensure your business leverages the power of IT to its fullest potential. We don’t just deliver services – we create success stories.</p>
+    </section>
+
+    <section class="services fade-section">
+        <h2>Our Expertise</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="https://img.icons8.com/color/96/000000/cloud-computing.png" alt="Cloud Solutions">
+                <h3>Cloud Solutions</h3>
+                <p>Empower your business with secure, scalable, and cost-effective cloud infrastructure.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://img.icons8.com/color/96/000000/artificial-intelligence.png" alt="AI & Automation">
+                <h3>AI & Automation</h3>
+                <p>Streamline operations and enhance decision-making with AI-powered business tools.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://img.icons8.com/color/96/000000/web-design.png" alt="Web Development">
+                <h3>Web & App Development</h3>
+                <p>From idea to launch, we build responsive, high-performance digital platforms.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://img.icons8.com/color/96/000000/cyber-security.png" alt="Cybersecurity">
+                <h3>Cybersecurity</h3>
+                <p>Protect your business data with top-tier security protocols and threat monitoring.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fade-section">
+        <h2>Why Choose Us</h2>
+        <div class="features-grid">
+            <div class="feature-box">✅ Client-Centric Approach</div>
+            <div class="feature-box">🚀 Scalable & Future-Ready Solutions</div>
+            <div class="feature-box">💡 Innovation-Driven Team</div>
+            <div class="feature-box">🔒 Uncompromised Security</div>
+        </div>
+    </section>
+
+    <section class="fade-section">
+        <h2>Our Process</h2>
+        <div class="process-steps">
+            <div class="step">1️⃣ Consultation & Discovery</div>
+            <div class="step">2️⃣ Strategy & Planning</div>
+            <div class="step">3️⃣ Design & Development</div>
+            <div class="step">4️⃣ Testing & Deployment</div>
+            <div class="step">5️⃣ Ongoing Support</div>
+        </div>
+    </section>
+
+    <section class="fade-section">
+        <h2>Client Testimonials</h2>
+        <div class="testimonials">
+            <div class="testimonial">"Medhasakthi transformed our outdated system into a high-performing platform. Highly recommend!" – ABC Corp</div>
+            <div class="testimonial">"The team’s dedication and expertise made our app launch seamless." – Startup X</div>
+            <div class="testimonial">"Secure, scalable, and innovative – exactly what we needed." – GlobalTech</div>
+        </div>
+    </section>
+
+    <section class="fade-section">
+        <h2>Technologies We Use</h2>
+        <div class="tech-logos">
+            <img src="https://img.icons8.com/color/96/000000/html-5.png" alt="HTML5">
+            <img src="https://img.icons8.com/color/96/000000/css3.png" alt="CSS3">
+            <img src="https://img.icons8.com/color/96/000000/javascript.png" alt="JavaScript">
+            <img src="https://img.icons8.com/color/96/000000/react-native.png" alt="React">
+            <img src="https://img.icons8.com/color/96/000000/python.png" alt="Python">
+            <img src="https://img.icons8.com/color/96/000000/aws.png" alt="AWS">
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h4>Medhasakthi</h4>
+            <p>Your trusted partner for Business IT Solutions.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+                <li>Email: support@medhasakthi.com</li>
+                <li>Managing Director: Giridhar Reddy</li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Our Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2025 Medhasakthi. All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+    // Fade-in Animation on Scroll
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.transition = 'all 0.8s ease-out';
+            }
+        });
+    }, { threshold: 0.15 });
+    fadeSections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>

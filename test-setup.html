@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDHASAKTHI - Setup Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4CAF50;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #FFC107;
+        }
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #F44336;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .highlight {
+            background: rgba(255, 255, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 MEDHASAKTHI Development Setup</h1>
+        
+        <div class="status error">
+            <strong>⚠️ PowerShell Execution Policy Issue Detected</strong><br>
+            PowerShell is blocking npm scripts. This is a common Windows security feature.
+        </div>
+
+        <div class="highlight">
+            <strong>🔧 Quick Fix:</strong> Use Command Prompt instead of PowerShell for npm commands
+        </div>
+
+        <div class="step">
+            <h3>Step 1: Open Command Prompt</h3>
+            <p>Press <code>Win + R</code>, type <code>cmd</code>, press Enter</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Navigate to Project</h3>
+            <code>cd "C:\Users\vboxuser\Documents\GitHub\MEDHASAKTHI"</code>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Install Frontend Dependencies</h3>
+            <code>cd frontend</code><br>
+            <code>npm install</code>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Start Frontend</h3>
+            <code>npm start</code><br>
+            <small>Frontend will open at: <strong>http://localhost:3000</strong></small>
+        </div>
+
+        <div class="step">
+            <h3>Step 5: Start Backend (New Command Prompt)</h3>
+            <code>cd backend</code><br>
+            <code>pip install -r requirements.txt</code><br>
+            <code>copy .env.local .env</code><br>
+            <code>python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload</code><br>
+            <small>Backend will be at: <strong>http://localhost:8080</strong></small>
+        </div>
+
+        <div class="status success">
+            <strong>✅ Alternative: Use the Batch Files</strong><br>
+            Double-click <code>start-frontend.bat</code> and <code>start-backend.bat</code>
+        </div>
+
+        <div class="status warning">
+            <strong>📝 Note:</strong> The backend might initially fail due to database connection issues. 
+            That's normal - we'll set up SQLite for local development.
+        </div>
+    </div>
+
+    <script>
+        // Test if we can reach the backend
+        setTimeout(() => {
+            fetch('http://localhost:8080/health')
+                .then(response => {
+                    if (response.ok) {
+                        document.body.innerHTML += '<div class="status success">✅ Backend is running!</div>';
+                    }
+                })
+                .catch(() => {
+                    console.log('Backend not running yet - that\'s expected');
+                });
+        }, 2000);
+    </script>
+</body>
+</html>

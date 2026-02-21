@@ -1,0 +1,94 @@
+{% extends "emails/base_template.html" %}
+
+{% block content %}
+<div class="greeting">
+    Dear {{ student_name }},
+</div>
+
+<div class="message">
+    Welcome to <strong>MEDHASAKTHI</strong>! Your student account has been successfully created and you're now part of our innovative educational platform.
+</div>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #2c3e50;">Your Account Details</h3>
+    <table class="info-table">
+        <tr>
+            <th>Student ID</th>
+            <td>{{ student_id }}</td>
+        </tr>
+        <tr>
+            <th>Email Address</th>
+            <td>{{ email }}</td>
+        </tr>
+        <tr>
+            <th>Class</th>
+            <td>{{ class_level }} {{ section }}</td>
+        </tr>
+        <tr>
+            <th>Institute</th>
+            <td>{{ institute_name }}</td>
+        </tr>
+        <tr>
+            <th>Academic Year</th>
+            <td>{{ academic_year }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">Getting Started</h3>
+    <ol style="padding-left: 20px;">
+        <li><strong>Login to your account</strong> using the credentials provided</li>
+        <li><strong>Complete your profile</strong> with additional information</li>
+        <li><strong>Explore available exams</strong> and register for upcoming tests</li>
+        <li><strong>Access study materials</strong> and practice tests</li>
+        <li><strong>Track your progress</strong> through the dashboard</li>
+    </ol>
+</div>
+
+<div style="text-align: center;">
+    <a href="{{ login_url }}" class="button">Login to Your Account</a>
+</div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">What You Can Do</h3>
+    <ul style="padding-left: 20px;">
+        <li>📚 <strong>Take Exams:</strong> Register and participate in various assessments</li>
+        <li>📊 <strong>View Results:</strong> Check your scores and performance analytics</li>
+        <li>🏆 <strong>Earn Certificates:</strong> Download certificates for passed exams</li>
+        <li>📈 <strong>Track Progress:</strong> Monitor your learning journey</li>
+        <li>💬 <strong>Communicate:</strong> Receive messages from teachers and administrators</li>
+    </ul>
+</div>
+
+{% if default_password %}
+<div class="highlight-box" style="border-left-color: #e74c3c; background-color: #fdf2f2;">
+    <h4 style="margin-top: 0; color: #e74c3c;">🔒 Important Security Notice</h4>
+    <p>Your temporary password is: <strong>{{ default_password }}</strong></p>
+    <p><strong>Please change your password immediately after your first login for security purposes.</strong></p>
+</div>
+{% endif %}
+
+<div class="divider"></div>
+
+<div class="message">
+    <h3 style="color: #2c3e50;">Need Help?</h3>
+    <p>If you have any questions or need assistance, please don't hesitate to reach out:</p>
+    <ul style="padding-left: 20px;">
+        <li>📧 Email: <a href="mailto:support@medhasakthi.com">support@medhasakthi.com</a></li>
+        <li>📞 Phone: +91-XXX-XXX-XXXX</li>
+        <li>🌐 Help Center: <a href="{{ help_url }}">medhasakthi.com/help</a></li>
+        <li>💬 Live Chat: Available on our website</li>
+    </ul>
+</div>
+
+<div class="message">
+    We're excited to be part of your educational journey and look forward to helping you achieve your academic goals!
+</div>
+
+<div class="message" style="margin-top: 30px; font-style: italic; color: #7f8c8d;">
+    Best regards,<br>
+    <strong>The MEDHASAKTHI Team</strong><br>
+    Empowering Education Through Technology
+</div>
+{% endblock %}
