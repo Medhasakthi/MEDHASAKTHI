@@ -1,3 +1,0 @@
-"""
-Certificate API module
-"""
