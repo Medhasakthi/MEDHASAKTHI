@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /
-
-# Institute portal - prevent indexing for security
